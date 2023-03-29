@@ -1,0 +1,36 @@
+{
+  "name": "ecs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ecs/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ecs",
+        "main": "packages/ecs/src/index.ts",
+        "tsConfig": "packages/ecs/tsconfig.lib.json",
+        "assets": [],
+        "project": "packages/ecs/package.json",
+        "compiler": "swc"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ecs/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/ecs"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/ecs"
+      }
+    }
+  },
+  "tags": []
+}
