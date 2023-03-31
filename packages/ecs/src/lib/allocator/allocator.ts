@@ -5,6 +5,7 @@ import {
   ILazyStructConstructor,
   IPtrAccessor,
 } from './allocator.types'
+import { StructCollection } from './collections/struct-collection'
 import { TupleCollection } from './collections/tuple-collection'
 import { DataType } from './data-type'
 import { MEM_BLOCK_BUFFER_1, MEM_BLOCK_BUFFER_2, MemoryBlock } from './misc/memory-block'
@@ -85,9 +86,12 @@ export class Allocator {
 
     if (!block) throw new Error(`Invalid address ${ptr}`)
 
+    console.log(`[Allocator] free:`, ptr, block.byteLength)
+
     const blockIndex = this._usedMemList.indexOf(block.byteOffset, 1)
 
     this._usedMemList.remove(blockIndex)
+    console.log(`[Allocator] added free block:`, block.byteOffset, block.byteLength)
     this.addFreeBlock(block)
   }
 
@@ -104,7 +108,7 @@ export class Allocator {
     this._heap = snapshot
   }
 
-  public createRef(): IPtrAccessor {
+  public createPtr(): IPtrAccessor {
     return this._registry.create()
   }
 
@@ -114,6 +118,8 @@ export class Allocator {
   >(Struct: TConstructor, ...args: DropFirst<ConstructorParameters<TConstructor>>): InstanceType<TConstructor> {
     const struct = new Struct(this, ...args)
     this._structures.push(struct)
+
+    console.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength, (struct instanceof StructCollection) ? struct['_struct'].keys : struct.constructor.name)
 
     return struct as InstanceType<TConstructor>
   }
@@ -132,6 +138,7 @@ export class Allocator {
   }
 
   private resize(newByteLength: number) {
+    console.log(`[Allocator] resize: ${this._heap.byteLength} -> ${newByteLength}`)
     const oldByteLength = this._heap.byteLength
     const byteLengthDiff = newByteLength - oldByteLength
     const newHeap = new ArrayBuffer(newByteLength)

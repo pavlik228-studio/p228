@@ -54,17 +54,29 @@ describe('List', () => {
 
   test('Resize', () => {
     const allocator = new Allocator(1024, 16, 16)
+    const list1 = allocator.allocateStruct(List, 10)
     const list = allocator.allocateStruct(List, 4)
+    const list2 = allocator.allocateStruct(List, 10)
 
     list.add(2000)
     list.add(3000)
     list.add(5000)
     list.add(6000)
 
+    for (let i = 0; i < 11; i++) {
+      list1.add(88)
+      list2.add(88)
+    }
+
     expect(list.length).toBe(4)
     expect(list.size).toBe(4)
 
     list.add(7000)
+
+    for (let i = 0; i < 40; i++) {
+      list1.add(88)
+      list2.add(88)
+    }
 
     expect(list.length).toBe(5)
     expect(list.size).toBe(8)
@@ -148,5 +160,20 @@ describe('List', () => {
     expect(list2.get(2)).toBe(5000)
     expect(list2.get(3)).toBe(6000)
     expect(list2.get(4)).toBe(6000)
+  })
+
+  test('Pop/Shift', () => {
+    const allocator = new Allocator(1024, 16, 16)
+    const list = allocator.allocateStruct(List, 4)
+
+    list.add(2000)
+    list.add(3000)
+    list.add(5000)
+    list.add(6000)
+    list.add(6000)
+
+    expect(list.pop()).toBe(6000)
+    expect(list.shift()).toBe(2000)
+    expect(list.length).toBe(3)
   })
 })

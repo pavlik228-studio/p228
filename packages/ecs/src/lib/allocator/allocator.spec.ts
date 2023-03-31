@@ -1,4 +1,4 @@
-import { describe, expect } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import { Allocator } from './allocator'
 import { TupleCollection } from './collections/tuple-collection'
 import { DataType } from './data-type'

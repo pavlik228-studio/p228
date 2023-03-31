@@ -17,7 +17,7 @@ export class TupleCollection implements ILazyAllocatorStructure {
     private readonly _initialSize: number,
     private readonly _dataType = DataType.u32,
   ) {
-    this.ptr = this._allocator.createRef()
+    this.ptr = this._allocator.createPtr()
     this._size = new PrimitiveLazy(0, DataType.u32, DataTypeSize[DataType.u32])
     this._length = new PrimitiveLazy(this._size.byteLength, DataType.u32, DataTypeSize[DataType.u32])
     this._collectionOffset = this._length.byteLength + this._length.byteLength
@@ -157,7 +157,7 @@ export class TupleCollection implements ILazyAllocatorStructure {
     this._byteLength = TupleCollection.calculateByteLength(this._size.value, this._tupleSize, this._dataType)
   }
 
-  public resize(newSize: number): void {14
+  public resize(newSize: number): void {
     const oldRef = this.ptr.value
     const oldLength = this._length.value
     const newRef = this._allocator.allocate(this._byteLength)

@@ -14,7 +14,7 @@ export class Registry {
     private _registrySize: number,
     private _offset = 0
   ) {
-    this._dataView = new DataView(this._heap, this._offset, this._registrySize)
+    this._dataView = new DataView(this._heap, this._offset, this._registrySize * DataTypeSize[DataType.u32])
   }
 
   public create(): IPtrAccessor {
@@ -44,6 +44,6 @@ export class Registry {
 
   public transfer(heap: ArrayBuffer): void {
     this._heap = heap
-    this._dataView = new DataView(this._heap, this._offset, this._registrySize)
+    this._dataView = new DataView(this._heap, this._offset, this._registrySize * DataTypeSize[DataType.u32])
   }
 }

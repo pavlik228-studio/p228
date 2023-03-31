@@ -32,7 +32,7 @@ export class List implements IAllocatorStructure {
     private readonly _initialSize: number,
     private readonly _dataType = DataType.u32,
   ) {
-    this._ptr = this._allocator.createRef()
+    this._ptr = this._allocator.createPtr()
     let offset = 0
     this._size = new PrimitiveLazy(offset, DataType.u32, DataTypeSize[DataType.u32])
     offset += this._size.byteLength
@@ -43,13 +43,15 @@ export class List implements IAllocatorStructure {
     this.allocate()
   }
 
-  public add(value: number): void {
+  public add(value: number): number {
     const index = this._length.value
 
     if (index >= this._size.value) this.resize(this._size.value * 2)
 
     this._heapView[index] = value
     this._length.value = index + 1
+
+    return index
   }
 
   public remove(index: number): void {
@@ -58,9 +60,32 @@ export class List implements IAllocatorStructure {
     this._length.value = last
   }
 
+  public removeByValue(value: number): void {
+    console.warn(`CHECK THIS: List.removeByValue`)
+    const index = this._heapView.indexOf(value)
+    if (index === -1) return
+    this.remove(index)
+  }
+
   public get(index: number): number | undefined {
     if (index >= this._length.value) return undefined
     return this._heapView[index]
+  }
+
+  public shift(): number | undefined {
+    if (this._length.value === 0) return undefined
+    const value = this._heapView[0]
+    this.remove(0)
+
+    return value
+  }
+
+  public pop(): number | undefined {
+    if (this._length.value === 0) return undefined
+    const value = this._heapView[this._length.value - 1]
+    this.remove(this._length.value - 1)
+
+    return value
   }
 
   public *[Symbol.iterator](): Iterator<number> {
@@ -76,7 +101,7 @@ export class List implements IAllocatorStructure {
     offset += this._size.byteLength
     this._length.allocate(ptr, heap)
     offset += this._length.byteLength
-    size = List.calculateByteLength(size ?? this._size.value, this._dataType)
+    size = size ?? this._size.value
     this._heapView = new DataTypeViewConstructor[this._dataType](heap, ptr + offset, size)
   }
 
@@ -88,12 +113,17 @@ export class List implements IAllocatorStructure {
   }
 
   private resize(newSize: number): void {
+    const oldPr = this._ptr.value
+    const oldLength = this._length.value
     const oldHeapView = this._heapView
     this._byteLength = List.calculateByteLength(newSize, this._dataType)
     this._ptr.value = this._allocator.allocate(this._byteLength)
+    console.log(`[List] resize:`, this._ptr.value, this._byteLength)
     this.allocateInternal(this._allocator.heap, newSize)
     this._heapView.set(oldHeapView)
     this._size.value = newSize
+    this._length.value = oldLength
+    this._allocator.free(oldPr)
   }
 
   public transfer(heap: ArrayBuffer): void {
