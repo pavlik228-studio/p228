@@ -22,7 +22,7 @@ export abstract class ECSWorld {
   public abstract registerComponents(): Array<IComponentConstructor>
   public abstract registerSystems(): Array<IAbstractSystemConstructor>
 
-  public getEntityManager(): EntityManager {
+  public get entityManager(): EntityManager {
     return this._entityManager
   }
 
@@ -43,8 +43,7 @@ export abstract class ECSWorld {
   }
 
   public registerFilter(filter: Filter): Filter {
-    this._filterRegistry.registerFilter(filter)
-    return filter
+    return this._filterRegistry.registerFilter(filter)
   }
 
   public createEntity(): EntityRef {

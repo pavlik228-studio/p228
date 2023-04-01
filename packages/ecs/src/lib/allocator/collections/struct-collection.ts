@@ -1,6 +1,7 @@
 import { createComponentDataAccessor } from '../../components/component-data-acessor'
 import { ComponentSchema } from '../../components/component-schema'
 import { IComponentDataAccessor, IComponentSchema } from '../../components/component.types'
+import { Logger } from '../../misc/logger'
 import { Allocator } from '../allocator'
 import { IAllocatorStructure, IPtrAccessor } from '../allocator.types'
 import { DataType, DataTypeSize } from '../data-type'
@@ -97,7 +98,7 @@ export class StructCollection<TSchema extends IComponentSchema = IComponentSchem
     const oldLength = this._length.value
     this._byteLength = StructCollection.calculateByteLength(newSize, this._struct.byteLength)
     this.ptr.value = this._allocator.allocate(this._byteLength)
-    console.log(`[StructCollection] resize:`, this.ptr.value, this._byteLength, this._length.value, this._struct.keys)
+    Logger.log(`[StructCollection] resize:`, this.ptr.value, this._byteLength, this._length.value, this._struct.keys)
     this.allocateInternal(this._allocator.heap, newSize)
     // copy old data view to new data view
     const oldData = new Uint8Array(oldDataView.buffer, oldDataView.byteOffset, oldDataView.byteLength)

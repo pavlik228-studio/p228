@@ -1,3 +1,4 @@
+import { Logger } from '../misc/logger'
 import {
   DropFirst,
   IAllocatorStructure,
@@ -86,12 +87,11 @@ export class Allocator {
 
     if (!block) throw new Error(`Invalid address ${ptr}`)
 
-    console.log(`[Allocator] free:`, ptr, block.byteLength)
+    Logger.log(`[Allocator] free:`, ptr, block.byteLength)
 
     const blockIndex = this._usedMemList.indexOf(block.byteOffset, 1)
 
     this._usedMemList.remove(blockIndex)
-    console.log(`[Allocator] added free block:`, block.byteOffset, block.byteLength)
     this.addFreeBlock(block)
   }
 
@@ -119,7 +119,7 @@ export class Allocator {
     const struct = new Struct(this, ...args)
     this._structures.push(struct)
 
-    console.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength, (struct instanceof StructCollection) ? struct['_struct'].keys : struct.constructor.name)
+    Logger.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength, (struct instanceof StructCollection) ? struct['_struct'].keys : struct.constructor.name)
 
     return struct as InstanceType<TConstructor>
   }
@@ -138,7 +138,7 @@ export class Allocator {
   }
 
   private resize(newByteLength: number) {
-    console.log(`[Allocator] resize: ${this._heap.byteLength} -> ${newByteLength}`)
+    Logger.log(`[Allocator] resize: ${this._heap.byteLength} -> ${newByteLength}`)
     const oldByteLength = this._heap.byteLength
     const byteLengthDiff = newByteLength - oldByteLength
     const newHeap = new ArrayBuffer(newByteLength)

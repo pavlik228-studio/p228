@@ -16,8 +16,8 @@ export class FilterRegistry {
     return this.filtersById.size
   }
 
-  public registerFilter(filter: Filter): void {
-    const includeBitmask = this.getComponentBitmask(filter.include)
+  public registerFilter(filter: Filter): Filter {
+    const includeBitmask = this.getComponentBitmask(filter.include) << 16
     const excludeBitmask = this.getComponentBitmask(filter.exclude)
     const filterBitmask = includeBitmask | excludeBitmask
 
@@ -28,10 +28,13 @@ export class FilterRegistry {
       this.filterBitmaskIds.set(filterBitmask, filterId)
     } else {
       filterId = this.filterBitmaskIds.get(filterBitmask)!
+      filter = this.filtersById.get(filterId)!
     }
 
     this.filterBitmaskIds.set(filterBitmask, filterId)
     this.filtersById.set(filterId, filter)
+
+    return filter
   }
 
   private getComponentBitmask(components: Array<IComponentConstructor>): number {

@@ -2,6 +2,9 @@ import { Allocator } from '../allocator/allocator'
 import { List } from '../allocator/collections/list'
 import { DataType } from '../allocator/data-type'
 import { ComponentRegistry } from '../components/component-registry'
+import { Logger } from '../misc/logger'
+import { EntityRef } from '../types'
+import { Filter } from './filter'
 import { FilterRegistry } from './filter-registry'
 
 export class FilterCollection {
@@ -28,13 +31,36 @@ export class FilterCollection {
     }
   }
 
-  public updateFilters(entityRef: number) {
-    // TODO: remove entity from filter if it doesn't match anymore
+  public updateFilters(entityRef: EntityRef): void {
+    Logger.log(`[Filters] Updating filters for entity ${entityRef}`)
     const entityBitmask = this._componentRegistry.getEntityComponentsBitmask(entityRef)
     for (const [ filterId, filter ] of this._filterRegistry.filtersById) {
-      if ((!entityBitmask || filter.includeBitmask) !== filter.includeBitmask) continue
-      if (entityBitmask & filter.excludeBitmask) continue
-      this._filterEntitiesLists[filterId].add(entityRef)
+      const entityIdx = this._filterEntitiesLists[filterId].indexOf(entityRef)
+      if (entityIdx === -1) {
+        this.tryAddFilterEntity(entityRef, entityBitmask, filterId, filter)
+      } else {
+        this.tryRemoveFilterEntity(entityIdx, entityBitmask, filterId, filter)
+      }
     }
+  }
+
+  private tryRemoveFilterEntity(entityIdx: number, entityBitmask: number, filterId: number, filter: Filter): void {
+    if (
+      ((entityBitmask | filter.includeBitmask) === entityBitmask)
+      && ((entityBitmask & filter.excludeBitmask) === 0)
+    ) return
+
+    Logger.log(`[Filters] Removing entity ${entityIdx} from filter ${filterId}`)
+
+    this._filterEntitiesLists[filterId].remove(entityIdx)
+  }
+
+  public tryAddFilterEntity(entityRef: EntityRef, entityBitmask: number, filterId: number, filter: Filter): void {
+    if ((entityBitmask | filter.includeBitmask) !== entityBitmask) return
+    if ((entityBitmask & filter.excludeBitmask) !== 0) return
+
+    Logger.log(`[Filters] Adding entity ${entityRef} to filter ${filterId}`)
+
+    this._filterEntitiesLists[filterId].add(entityRef)
   }
 }

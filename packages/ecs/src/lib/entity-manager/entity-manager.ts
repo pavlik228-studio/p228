@@ -60,12 +60,25 @@ export class EntityManager {
     return result
   }
 
+  public putManyComponents<
+    T extends readonly unknown[]
+  >(entityRef: EntityRef, components: T) {
+    const returnValues: T extends IComponentConstructor[] ? { -readonly [P in keyof T]: IComponentData<ReturnType<InstanceType<T[P]>['registerSchema']>> } : { -readonly [P in keyof T]: T[P] } = [] as any
+    for (let i = 0; i < components.length; i++) {
+      returnValues[i] = this._componentRegistry.addComponent(entityRef, components[i] as any) as any
+    }
+
+    this._filterCollection.updateFilters(entityRef)
+
+    return returnValues
+  }
+
   public addComponent<
     TSchema extends IComponentSchema,
     TComponentConstructor extends IComponentConstructor<TSchema>,
   >(entityRef: number, component: TComponentConstructor, values: IComponentData<TSchema>) {
-    this._filterCollection.updateFilters(entityRef)
     const accessor = this._componentRegistry.addComponent<TSchema, TComponentConstructor>(entityRef, component)
+    this._filterCollection.updateFilters(entityRef)
 
     for (const key in values) accessor[key] = values[key] as never
 

@@ -1,31 +1,15 @@
+import { Logger } from '../../misc/logger'
 import { Allocator } from '../allocator'
 import { IAllocatorStructure, IPtrAccessor } from '../allocator.types'
 import { DataType, DataTypeSize, DataTypeViewConstructor, TypedArray } from '../data-type'
 import { PrimitiveLazy } from '../misc/primitive-lazy'
 
 export class List implements IAllocatorStructure {
-  private _byteLength: number
   private _heapView!: TypedArray
   private readonly _ptr: IPtrAccessor
   private readonly _size: PrimitiveLazy
   private readonly _length: PrimitiveLazy
   private readonly _collectionOffset: number
-
-  public get byteLength(): number {
-    return this._byteLength
-  }
-
-  public get length(): number {
-    return this._length.value
-  }
-
-  public get size(): number {
-    return this._size.value
-  }
-
-  public get ptr(): IPtrAccessor {
-    return this._ptr
-  }
 
   constructor(
     private readonly _allocator: Allocator,
@@ -43,6 +27,28 @@ export class List implements IAllocatorStructure {
     this.allocate()
   }
 
+  private _byteLength: number
+
+  public get byteLength(): number {
+    return this._byteLength
+  }
+
+  public get length(): number {
+    return this._length.value
+  }
+
+  public get size(): number {
+    return this._size.value
+  }
+
+  public get ptr(): IPtrAccessor {
+    return this._ptr
+  }
+
+  public static calculateByteLength(collectionSize: number, dataType: DataType): number {
+    return collectionSize * DataTypeSize[dataType] + DataTypeSize[DataType.u32] * 2
+  }
+
   public add(value: number): number {
     const index = this._length.value
 
@@ -58,13 +64,6 @@ export class List implements IAllocatorStructure {
     const last = this._length.value - 1
     this._heapView[index] = this._heapView[last]
     this._length.value = last
-  }
-
-  public removeByValue(value: number): void {
-    console.warn(`CHECK THIS: List.removeByValue`)
-    const index = this._heapView.indexOf(value)
-    if (index === -1) return
-    this.remove(index)
   }
 
   public get(index: number): number | undefined {
@@ -88,10 +87,23 @@ export class List implements IAllocatorStructure {
     return value
   }
 
-  public *[Symbol.iterator](): Iterator<number> {
+  public* [Symbol.iterator](): Iterator<number> {
     for (let i = 0; i < this._length.value; i++) {
       yield this._heapView[i]
     }
+  }
+
+  public transfer(heap: ArrayBuffer): void {
+    this.allocateInternal(heap)
+    this._byteLength = List.calculateByteLength(this._size.value, this._dataType)
+  }
+
+  public indexOf(value: number): number {
+    for (let i = 0; i < this._length.value; i++) {
+      if (this._heapView[i] === value) return i
+    }
+
+    return -1
   }
 
   private allocateInternal(heap: ArrayBuffer, size?: number): void {
@@ -118,20 +130,11 @@ export class List implements IAllocatorStructure {
     const oldHeapView = this._heapView
     this._byteLength = List.calculateByteLength(newSize, this._dataType)
     this._ptr.value = this._allocator.allocate(this._byteLength)
-    console.log(`[List] resize:`, this._ptr.value, this._byteLength)
+    Logger.log(`[List] resize:`, this._ptr.value, this._byteLength)
     this.allocateInternal(this._allocator.heap, newSize)
     this._heapView.set(oldHeapView)
     this._size.value = newSize
     this._length.value = oldLength
     this._allocator.free(oldPr)
-  }
-
-  public transfer(heap: ArrayBuffer): void {
-    this.allocateInternal(heap)
-    this._byteLength = List.calculateByteLength(this._size.value, this._dataType)
-  }
-
-  public static calculateByteLength(collectionSize: number, dataType: DataType): number {
-    return collectionSize * DataTypeSize[dataType] + DataTypeSize[DataType.u32] * 2
   }
 }

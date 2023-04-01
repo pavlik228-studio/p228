@@ -7,6 +7,10 @@ export class Filter {
   private _includeBitmask!: number
   private _excludeBitmask!: number
 
+  public get length(): number {
+    return this._list.length
+  }
+
   public get includeBitmask(): number {
     return this._includeBitmask
   }

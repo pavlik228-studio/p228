@@ -16,7 +16,7 @@ export class ComponentRegistry {
   ) {
     let idx = 0
     for (const Component of _componentConstructors) {
-      const component = new Component(Math.pow(2, idx))
+      const component = new Component(Math.pow(2, idx++))
       this._registry.set(Component, component)
       this.componentIds.set(Component, component.id)
       this.byteLength += component.byteLength
