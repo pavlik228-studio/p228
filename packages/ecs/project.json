@@ -5,22 +5,10 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/ecs",
-        "main": "packages/ecs/src/index.ts",
-        "tsConfig": "packages/ecs/tsconfig.lib.json",
-        "assets": [],
-        "project": "packages/ecs/package.json",
-        "compiler": "swc"
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/ecs/**/*.ts"]
+        "outputPath": "dist/packages/ecs"
       }
     },
     "test": {
@@ -29,6 +17,13 @@
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/packages/ecs"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ecs/**/*.ts"]
       }
     }
   },

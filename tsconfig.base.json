@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@p228/ecs": ["packages/ecs/src/index.ts"],
-      "@p228/ecs-legacy": ["packages/ecs-legacy/src/index.ts"],
-      "@p228/ecs-old": ["packages/ecs-old/src/index.ts"]
+      "@p228/ecs": ["packages/ecs/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
