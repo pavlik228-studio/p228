@@ -6,7 +6,6 @@ import {
   ILazyStructConstructor,
   IPtrAccessor,
 } from './allocator.types'
-import { StructCollection } from './collections/struct-collection'
 import { TupleCollection } from './collections/tuple-collection'
 import { DataType } from './data-type'
 import { MEM_BLOCK_BUFFER_1, MEM_BLOCK_BUFFER_2, MemoryBlock } from './misc/memory-block'
@@ -39,6 +38,7 @@ export class Allocator {
     this._usedMemList.add(MEM_BLOCK_BUFFER_1.set(this._usedMemList.byteLength, this._usedMemList.ptr.value).toRaw())
 
     this._lazyStructures.push(this._freeMemList, this._usedMemList)
+    Logger.log(`[Allocator] initialized`, this._heap.byteLength, this._memoryBlocks, this._registrySize)
   }
 
   private _heap!: ArrayBuffer
@@ -119,7 +119,7 @@ export class Allocator {
     const struct = new Struct(this, ...args)
     this._structures.push(struct)
 
-    Logger.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength, (struct instanceof StructCollection) ? struct['_struct'].keys : struct.constructor.name)
+    Logger.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength)
 
     return struct as InstanceType<TConstructor>
   }

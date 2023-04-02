@@ -1,79 +1,45 @@
+import { DataTypeViewConstructor } from '../allocator/data-type'
 import { Allocator } from '../allocator/allocator'
-import { ComponentCollection } from './component-collection'
-import { ComponentSchema } from './component-schema'
-import { IComponentConstructor, IComponentDataAccessor, IComponentSchema } from './component.types'
+import { ECSConfig } from '../ecs-config'
+import { IComponent, IComponentInternal, IComponentSchema } from './component.types'
+import { FixedListAccessor } from './fixed-list-accessor'
 
 export class ComponentRegistry {
-  public readonly byteLength = 0
-  public readonly ptrPerComponent = 3
-  public readonly componentIds = new Map<IComponentConstructor, number>()
-  private readonly _registry = new Map<IComponentConstructor, ComponentSchema>()
-  private readonly _componentData = new Map<IComponentConstructor, ComponentCollection>()
-  private readonly _componentIdData = new Map<number, ComponentCollection>()
-
+  public readonly byteLength: number
+  public readonly registrySize: number
+  private readonly _nextComponentIdx: number
   constructor(
-    private readonly _componentConstructors: IComponentConstructor[],
+    private readonly _config: ECSConfig,
+    private readonly _components: Array<IComponentInternal>
   ) {
-    let idx = 0
-    for (const Component of _componentConstructors) {
-      const component = new Component(Math.pow(2, idx++))
-      this._registry.set(Component, component)
-      this.componentIds.set(Component, component.id)
-      this.byteLength += component.byteLength
+    this.byteLength = 0
+    this.registrySize = 0
+    this._nextComponentIdx = 0
+
+    for (const component of _components) {
+      if (this._nextComponentIdx >= 32) throw new Error('Too many components')
+      component._ID = Math.pow(2, this._nextComponentIdx++)
+      this.byteLength += component._BYTES_PER_ELEMENT
+      this.registrySize += component._FIELDS_COUNT
     }
   }
 
-  public get count(): number {
-    return this._registry.size
-  }
-
-  public getComponentSchema(component: IComponentConstructor): ComponentSchema {
-    return this._registry.get(component)!
-  }
-
-  public destroyEntity(entityRef: number) {
-    for (const [ , dataCollection ] of this._componentData) {
-      dataCollection.remove(entityRef)
+  public initialize(allocator: Allocator): void {
+    for (const component of (this._components as Array<IComponent<IComponentSchema>>)) {
+      const byteLength = component._BYTES_PER_ELEMENT * this._config.entityPoolSize
+      component._PTR = allocator.allocate(byteLength)
+      component._BYTE_LENGTH = byteLength
+      const schema = component._SCHEMA
+      for (const key in schema) {
+        const schemaField = schema[key]
+        if (Array.isArray(schemaField)) {
+          const [ dataType, size ] = schemaField
+          const typedArray = new (DataTypeViewConstructor[dataType])(allocator.heap, component._PTR, size * this._config.entityPoolSize)
+          component[key] = new FixedListAccessor(typedArray, size)
+        } else {
+          component[key] = new DataTypeViewConstructor[schemaField](allocator.heap, component._PTR, this._config.entityPoolSize)
+        }
+      }
     }
-  }
-
-  public createCollections(allocator: Allocator, maxSize: number, initialSize: number) {
-    for (const [ Component, component ] of this._registry) {
-      const componentCollection = new ComponentCollection(allocator, component, maxSize, initialSize)
-      this._componentData.set(Component, componentCollection)
-      this._componentIdData.set(component.id, componentCollection)
-    }
-  }
-
-  public addComponent<
-    TSchema extends IComponentSchema,
-    TComponentConstructor extends IComponentConstructor<TSchema>
-  >(entityRef: number, component: TComponentConstructor, reset = false): IComponentDataAccessor<ReturnType<InstanceType<TComponentConstructor>['registerSchema']>> {
-    return this._componentData.get(component as never)!.add(entityRef, reset) as IComponentDataAccessor<ReturnType<InstanceType<TComponentConstructor>['registerSchema']>>
-  }
-
-  public getComponent<
-    TSchema extends IComponentSchema,
-    TComponentConstructor extends IComponentConstructor
-  >(entityRef: number, component: TComponentConstructor): IComponentDataAccessor<ReturnType<InstanceType<TComponentConstructor>['registerSchema']>> {
-    return this._componentData.get(component)!.get(entityRef) as IComponentDataAccessor<ReturnType<InstanceType<TComponentConstructor>['registerSchema']>>
-  }
-
-  public hasComponent(entityRef: number, component: IComponentConstructor) {
-    return this._componentData.get(component)!.has(entityRef)
-  }
-
-  public removeComponent(entityRef: number, component: IComponentConstructor) {
-    this._componentData.get(component)!.remove(entityRef)
-  }
-
-  public getEntityComponentsBitmask(entityRef: number): number {
-    let bitmask = 0
-
-    for (const [ componentId, collection ] of this._componentIdData) {
-      if (collection.has(entityRef)) bitmask |= componentId
-    }
-
-    return bitmask
   }
 }

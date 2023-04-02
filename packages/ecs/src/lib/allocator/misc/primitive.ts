@@ -3,6 +3,7 @@ import { IAllocatorStructure, IPtrAccessor } from '../allocator.types'
 import { DataType, DataTypeViewConstructor, TypedArray } from '../data-type'
 
 export class Primitive implements IAllocatorStructure {
+  public static readonly byteLength = 8
   public readonly byteLength: number
   public readonly ptr: IPtrAccessor
   private _heapView!: TypedArray

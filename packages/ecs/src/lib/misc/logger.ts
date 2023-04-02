@@ -1,5 +1,3 @@
-import * as process from 'process'
-
 export class Logger {
   public static log(...args: unknown[]): void {}
 }
