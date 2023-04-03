@@ -8,6 +8,7 @@ export interface IComponentSchema {
 export interface IComponentInternal {
   _ID: number,
   _PTR: number
+  _LIMIT: number,
   _BYTE_LENGTH: number,
   _FIELDS_COUNT: number,
   _BYTES_PER_ELEMENT: number,

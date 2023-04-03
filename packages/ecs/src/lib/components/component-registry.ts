@@ -26,7 +26,7 @@ export class ComponentRegistry {
 
   public initialize(allocator: Allocator): void {
     for (const component of (this._components as Array<IComponent<IComponentSchema>>)) {
-      const byteLength = component._BYTES_PER_ELEMENT * this._config.entityPoolSize
+      const byteLength = component._BYTES_PER_ELEMENT * (component._LIMIT ?? this._config.entityPoolSize)
       component._PTR = allocator.allocate(byteLength)
       component._BYTE_LENGTH = byteLength
       const schema = component._SCHEMA

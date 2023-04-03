@@ -1,4 +1,4 @@
-import { AbstractSystem, DataType, declareComponent, ECSWorld, Filter } from '@p228/ecs'
+import { AbstractSystem, DataType, defineComponent, ECSWorld, Filter } from '@p228/ecs'
 import { describe, expect, test } from 'vitest'
 import { ECSConfig } from '../ecs-config'
 import { TestComponent } from './test-component'
@@ -29,11 +29,11 @@ describe('ecs', () => {
   })
 
   test('Benchmark', () => {
-    const A = declareComponent({value: DataType.i32});
-    const B = declareComponent({value: DataType.i32});
-    const C = declareComponent({value: DataType.i32});
-    const D = declareComponent({value: DataType.i32});
-    const E = declareComponent({value: DataType.i32});
+    const A = defineComponent({value: DataType.i32});
+    const B = defineComponent({value: DataType.i32});
+    const C = defineComponent({value: DataType.i32});
+    const D = defineComponent({value: DataType.i32});
+    const E = defineComponent({value: DataType.i32});
     class TestSystem extends AbstractSystem {
       public readonly filterAB: Filter
       public readonly filterCD: Filter
