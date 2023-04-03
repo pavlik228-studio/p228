@@ -2,7 +2,7 @@ import { Allocator } from './allocator/allocator'
 import { List } from './allocator/collections/list'
 import { DataType } from './allocator/data-type'
 import { ComponentRegistry } from './components/component-registry'
-import { IComponentInternal } from './components/component.types'
+import { IComponentInternal, ISingletonComponentInternal } from './components/component.types'
 import { ECSConfig } from './ecs-config'
 import { EntityManager } from './entity-manager'
 import { Filter } from './filters/filter'
@@ -11,15 +11,15 @@ import { ISystemConstructor } from './systems/abstract-system'
 import { SystemRegistry } from './systems/system-registry'
 
 export abstract class ECSWorld {
+  public readonly update: () => void
   private readonly _componentRegistry: ComponentRegistry
   private readonly _allocator: Allocator
   private readonly _filterRegistry: FilterRegistry
   private readonly _systemRegistry: SystemRegistry
   private readonly _entityManager: EntityManager
-  public readonly update: () => void
 
   constructor(public readonly config: ECSConfig) {
-    this._componentRegistry = new ComponentRegistry(config, this.registerComponents())
+    this._componentRegistry = new ComponentRegistry(config, this.registerComponents(), this.registerSingletonComponents())
     this._filterRegistry = new FilterRegistry()
     this._systemRegistry = new SystemRegistry(this, this.registerSystems())
     const byteLength = this.calculateAllocatorByteLength()
@@ -36,6 +36,8 @@ export abstract class ECSWorld {
 
   public abstract registerComponents(): Array<IComponentInternal>
 
+  public abstract registerSingletonComponents(): Array<ISingletonComponentInternal>
+
   public abstract registerSystems(): Array<ISystemConstructor>
 
   public registerFilter(filter: Filter): Filter {
@@ -48,7 +50,7 @@ export abstract class ECSWorld {
 
   private calculateAllocatorByteLength(): number {
     const filtersByteLength = this._filterRegistry.count * (List.calculateByteLength(this.config.filterPoolSize, DataType.u32))
-    const componentsByteLength = this._componentRegistry.byteLength * this.config.entityPoolSize
+    const componentsByteLength = this._componentRegistry.byteLength
     const entityManagerByteLength = EntityManager.calculateByteLength(this.config)
 
     return filtersByteLength + componentsByteLength + entityManagerByteLength

@@ -6,7 +6,7 @@ const defaultOptions = {
 }
 
 export function defineComponent<T extends IComponentSchema>(schema: T, options = defaultOptions): IComponent<T> {
-  const component = Object.create(null) as IComponent<T>
+  const component = {} as IComponent<T>
 
   let bytesPerElement = 0
   for (const key in schema) {
@@ -23,7 +23,6 @@ export function defineComponent<T extends IComponentSchema>(schema: T, options =
   component._FIELDS_COUNT = Object.keys(schema).length
   component._SCHEMA = schema
   if (options.dangerouslySetLimit > 0) component._LIMIT = options.dangerouslySetLimit
-
 
   return component
 }

@@ -48,8 +48,8 @@ export class Allocator {
   }
 
   public allocate(byteLength: number, reset = true): number {
-    // byteLength should be a multiple of 8
-    byteLength = Math.ceil(byteLength / 8) * 8
+    // byteLength should be a multiple of 4
+    byteLength = Math.ceil(byteLength / 4) * 4
     let block = this.findFreeBlock(byteLength)
     if (!block) {
       // throw new Error('Out of memory')

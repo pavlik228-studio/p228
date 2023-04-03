@@ -1,7 +1,8 @@
-import { AbstractSystem, DataType, defineComponent, ECSWorld, Filter } from '@p228/ecs'
 import { describe, expect, test } from 'vitest'
 import { ECSConfig } from '../ecs-config'
+import { PositionComponent } from './position-component'
 import { TestComponent } from './test-component'
+import { TestSingleton } from './test-singleton'
 import { TestSystem } from './test-system'
 import { TestWorld } from './world'
 
@@ -26,119 +27,85 @@ describe('ecs', () => {
     expect(positionFilter.entities.length).toBe(0)
 
     TestComponent.a[entityRef1] = 1
+
+    TestSingleton.level = 1
+
+    for (let i = 0; i < 10; i++) {
+      TestSingleton.bullets[i] = i + 10
+    }
+
+    expect(TestSingleton.level).toBe(1)
+    expect(TestSingleton.bullets).toEqual(new Uint32Array([10, 11, 12, 13, 14, 15, 16, 17, 18, 19]))
   })
 
-  test('Benchmark', () => {
-    const A = defineComponent({value: DataType.i32});
-    const B = defineComponent({value: DataType.i32});
-    const C = defineComponent({value: DataType.i32});
-    const D = defineComponent({value: DataType.i32});
-    const E = defineComponent({value: DataType.i32});
-    class TestSystem extends AbstractSystem {
-      public readonly filterAB: Filter
-      public readonly filterCD: Filter
-      public readonly filterCE: Filter
-      constructor(world: ECSWorld) {
-        super(world)
-        this.filterAB = this.world.registerFilter(new Filter([ A, B ]))
-        this.filterCD = this.world.registerFilter(new Filter([ C, D ]))
-        this.filterCE = this.world.registerFilter(new Filter([ C, E ]))
+  test('fill', () => {
+    const world = new TestWorld(new ECSConfig(100))
+    const entityManager = world.entityManager
+
+    TestSingleton.level = 1
+    TestSingleton.bullets.fill(99)
+
+    for (let i = 0; i < 100; i++) {
+      const entityRef = entityManager.createEntity()
+      entityManager.addComponent(entityRef, TestComponent)
+
+      TestComponent.a[entityRef] = i
+      TestComponent.b[entityRef] = i + 1
+    }
+
+    expect(TestSingleton.level).toBe(1)
+    expect(TestSingleton.bullets).toEqual(new Uint32Array(10).fill(99))
+
+    for (let i = 0; i < 100; i++) {
+      expect(TestComponent.a[i]).toBe(i)
+      expect(TestComponent.b[i]).toBe(i + 1)
+    }
+
+    expect(TestSingleton.level).toBe(1)
+    expect(TestSingleton.bullets).toEqual(new Uint32Array(10).fill(99))
+  })
+
+  test('filters', () => {
+    const world = new TestWorld(new ECSConfig(100))
+    const entityManager = world.entityManager
+    const testSystem = world.getSystem(TestSystem)
+    const testFilter = testSystem.testFilter
+    const positionFilter = testSystem.positionFilter
+    const testAndPositionFilter = testSystem.testAndPositionFilter
+
+    for (let i = 0; i < 100; i++) {
+      const entityRef = entityManager.createEntity()
+
+      if (i % 2 === 0) {
+        entityManager.addComponent(entityRef, TestComponent)
+        TestComponent.a[entityRef] = i
+        TestComponent.b[entityRef] = i + 1
+      } else {
+        entityManager.addComponent(entityRef, PositionComponent)
+        PositionComponent.x[entityRef] = i
+        PositionComponent.y[entityRef] = i + 1
       }
     }
 
-    const config = new ECSConfig(4000)
-    class SimpleIterWorld extends ECSWorld {
-      constructor() {
-        super(config)
-      }
+    expect(testFilter.entities.length).toBe(50)
+    expect(positionFilter.entities.length).toBe(50)
+    expect(testAndPositionFilter.entities.length).toBe(0)
 
-      registerSystems() {
-        return [
-          TestSystem,
-        ]
-      }
-
-      registerComponents() {
-        return [
-          A,
-          B,
-          C,
-          D,
-          E,
-        ]
-      }
-    }
-    const simpleIterWorld = new SimpleIterWorld()
-    const entityManager = simpleIterWorld.entityManager
-
-    for (let i = 0; i < 1000; i++) {
-      let e1 = entityManager.createEntity()
-      entityManager.addComponent(e1, A)
-      A.value[e1] = 0
-      entityManager.addComponent(e1, B);
-      B.value[e1] = 1
-
-      let e2 = entityManager.createEntity()
-      entityManager.addComponent(e2, A);
-      A.value[e2] = 0;
-      entityManager.addComponent(e2, B);
-      B.value[e2] = 1;
-      entityManager.addComponent(e2, C);
-      C.value[e2] = 2;
-
-      let e3 = entityManager.createEntity()
-      entityManager.addComponent(e3, A);
-      A.value[e3] = 0;
-      entityManager.addComponent(e3, B);
-      B.value[e3] = 1;
-      entityManager.addComponent(e3, C);
-      C.value[e3] = 2;
-      entityManager.addComponent(e3, D);
-      D.value[e3] = 3;
-
-      let e4 = entityManager.createEntity()
-      entityManager.addComponent(e4, A);
-      A.value[e4] = 0;
-      entityManager.addComponent(e4, B);
-      B.value[e4] = 1;
-      entityManager.addComponent(e4, C);
-      C.value[e4] = 2;
-      entityManager.addComponent(e4, E);
-      E.value[e4] = 3;
+    for (const testEntity of testFilter.entities) {
+      entityManager.addComponent(testEntity, PositionComponent)
+      PositionComponent.x[testEntity] = 500
+      PositionComponent.y[testEntity] = 501
     }
 
-    const testSystem = simpleIterWorld.getSystem(TestSystem)
-    const filterAB = Array.from(testSystem.filterAB.entities)
-    const filterCD = Array.from(testSystem.filterCD.entities)
-    const filterCE = Array.from(testSystem.filterCE.entities)
+    expect(testFilter.entities.length).toBe(50)
 
-    let OPERATIONS = 0
-
-    const update = () => {
-      // console.time('P228')
-      for (const eid of filterAB) {
-        OPERATIONS++
-        const x = A.value[eid];
-        A.value[eid] = B.value[eid];
-        D.value[eid] = x;
-      }
-      for (const eid of filterCD) {
-        OPERATIONS++
-        const x = C.value[eid];
-        C.value[eid] = D.value[eid];
-        D.value[eid] = x;
-      }
-      for (const eid of filterCE) {
-        OPERATIONS++
-        const x = C.value[eid];
-        C.value[eid] = E.value[eid];
-        E.value[eid] = x;
-      }
-      // console.timeEnd('P228')
+    const arr = Array.from(testFilter.entities)
+    for (const testEntity of arr) {
+      entityManager.removeComponent(testEntity, TestComponent)
     }
-    console.time('P228')
-    update()
-    console.timeEnd('P228')
-    console.log(OPERATIONS)
+
+    expect(testFilter.entities.length).toBe(0)
+    expect(positionFilter.entities.length).toBe(100)
+    expect(testAndPositionFilter.entities.length).toBe(0)
   })
 })
