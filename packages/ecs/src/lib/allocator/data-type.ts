@@ -15,8 +15,7 @@ export type TypedArray =
   | Uint8Array
   | Uint16Array
   | Uint32Array
-  | Float32Array
-  | Float64Array;
+  | Float32Array;
 export type TypedArrayConstructor =
   | typeof Int8Array
   | typeof Int16Array
@@ -24,8 +23,7 @@ export type TypedArrayConstructor =
   | typeof Uint8Array
   | typeof Uint16Array
   | typeof Uint32Array
-  | typeof Float32Array
-  | typeof Float64Array;
+  | typeof Float32Array;
 
 export const DataTypeViewConstructor: {
   [key in DataType]: TypedArrayConstructor;

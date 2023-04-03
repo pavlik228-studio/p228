@@ -1,13 +1,13 @@
 import { ECSWorld } from '../ecs-world'
 
-export interface ISystemConstructor {
-  new(world: ECSWorld): AbstractSystem
+export interface ISystemConstructor<TWorld extends ECSWorld = ECSWorld> {
+  new(world: TWorld): AbstractSystem<TWorld>
 }
 
-export abstract class AbstractSystem {
+export abstract class AbstractSystem<TWorld extends ECSWorld = ECSWorld> {
   // Constructor is called before initialize, allocation isn't allowed here
   // Used for registering filters
-  constructor(public readonly world: ECSWorld) {
+  constructor(public readonly world: TWorld) {
 
   }
 

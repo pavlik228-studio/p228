@@ -11,9 +11,9 @@ import { ISystemConstructor } from './systems/abstract-system'
 import { SystemRegistry } from './systems/system-registry'
 
 export abstract class ECSWorld {
-  public readonly update: () => void
+  protected readonly _updatePipeline: () => void
+  protected readonly _allocator: Allocator
   private readonly _componentRegistry: ComponentRegistry
-  private readonly _allocator: Allocator
   private readonly _filterRegistry: FilterRegistry
   private readonly _systemRegistry: SystemRegistry
   private readonly _entityManager: EntityManager
@@ -22,12 +22,12 @@ export abstract class ECSWorld {
     this._componentRegistry = new ComponentRegistry(config, this.registerComponents(), this.registerSingletonComponents())
     this._filterRegistry = new FilterRegistry()
     this._systemRegistry = new SystemRegistry(this, this.registerSystems())
-    const byteLength = this.calculateAllocatorByteLength()
-    const registrySize = this._componentRegistry.registrySize * config.registrySize
-    this._allocator = new Allocator(byteLength, config.memoryBlocks, registrySize)
+    const byteLength = this.calculateAllocatorByteLength() + config.allocatorBuffer
+    this._allocator = new Allocator(byteLength, config.memoryBlocks, config.registrySize)
     this._componentRegistry.initialize(this._allocator)
     this._entityManager = new EntityManager(config, this._allocator, this._filterRegistry)
-    this.update = this._systemRegistry.initializePipeline()
+    this._updatePipeline = this._systemRegistry.initializePipeline()
+    this.onInitialize()
   }
 
   public get entityManager(): EntityManager {
@@ -38,14 +38,17 @@ export abstract class ECSWorld {
 
   public abstract registerSingletonComponents(): Array<ISingletonComponentInternal>
 
-  public abstract registerSystems(): Array<ISystemConstructor>
+  public abstract registerSystems(): Array<ISystemConstructor<any>>
 
   public registerFilter(filter: Filter): Filter {
     return this._filterRegistry.registerFilter(filter)
   }
 
-  public getSystem<T extends ISystemConstructor>(system: T): InstanceType<T> {
+  public getSystem<T extends ISystemConstructor<any>>(system: T): InstanceType<T> {
     return this._systemRegistry._registry.get(system) as InstanceType<T>
+  }
+
+  protected onInitialize(): void {
   }
 
   private calculateAllocatorByteLength(): number {

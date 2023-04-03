@@ -41,26 +41,38 @@ export class ComponentRegistry {
       const byteLength = component._BYTES_PER_ELEMENT * (component._LIMIT ?? this._config.entityPoolSize)
       component._PTR = allocator.allocate(byteLength)
       component._BYTE_LENGTH = byteLength
-      const schema = component._SCHEMA
-      let offset = 0
-      for (const key in schema) {
-        const schemaField = schema[key]
-        if (Array.isArray(schemaField)) {
-          const [ dataType, size ] = schemaField
-          const typedArray = new (DataTypeViewConstructor[dataType])(allocator.heap, component._PTR + offset, size * this._config.entityPoolSize)
-          component[key] = new FixedListAccessor(typedArray, size)
-          offset += DataTypeSize[dataType] * size * this._config.entityPoolSize
-        } else {
-          component[key] = new DataTypeViewConstructor[schemaField](allocator.heap, component._PTR + offset, this._config.entityPoolSize)
-          offset += DataTypeSize[schemaField] * this._config.entityPoolSize
-        }
-      }
     }
 
     for (const component of (this._singletonComponents as Array<ISingletonComponent<IComponentSchema>>)) {
       const byteLength = component._BYTES_PER_ELEMENT
       component._PTR = allocator.allocate(byteLength)
       component._BYTE_LENGTH = byteLength
+    }
+
+    this.allocateComponentsInternal(allocator.heap)
+
+    allocator.onTransfer(this.allocateComponentsInternal)
+  }
+
+  private allocateComponentsInternal = (heap: ArrayBuffer): void => {
+    for (const component of (this._components as Array<IComponent<IComponentSchema>>)) {
+      const schema = component._SCHEMA
+      let offset = 0
+      for (const key in schema) {
+        const schemaField = schema[key]
+        if (Array.isArray(schemaField)) {
+          const [ dataType, size ] = schemaField
+          const typedArray = new (DataTypeViewConstructor[dataType])(heap, component._PTR + offset, size * this._config.entityPoolSize)
+          component[key] = new FixedListAccessor(typedArray, size)
+          offset += DataTypeSize[dataType] * size * this._config.entityPoolSize
+        } else {
+          component[key] = new DataTypeViewConstructor[schemaField](heap, component._PTR + offset, this._config.entityPoolSize)
+          offset += DataTypeSize[schemaField] * this._config.entityPoolSize
+        }
+      }
+    }
+
+    for (const component of (this._singletonComponents as Array<ISingletonComponent<IComponentSchema>>)) {
       const schema = component._SCHEMA
       const raw = {} as typeof component.raw
       let offset = 0
@@ -68,10 +80,10 @@ export class ComponentRegistry {
         const schemaField = schema[key]
         if (Array.isArray(schemaField)) {
           const [ dataType, size ] = schemaField
-          raw[key] = new DataTypeViewConstructor[dataType](allocator.heap, component._PTR + offset, size)
+          raw[key] = new DataTypeViewConstructor[dataType](heap, component._PTR + offset, size)
           offset += DataTypeSize[dataType] * size
         } else {
-          raw[key] = new DataTypeViewConstructor[schemaField](allocator.heap, component._PTR + offset, 1)
+          raw[key] = new DataTypeViewConstructor[schemaField](heap, component._PTR + offset, 1)
           offset += Math.ceil(DataTypeSize[schemaField] / 4) * 4
         }
       }

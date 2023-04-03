@@ -26,22 +26,16 @@ export class Primitive implements IAllocatorStructure {
     this._heapView[0] = value
   }
 
-  private allocateInternal(): void {
-    try {
-      this._heapView = new DataTypeViewConstructor[this._dataType](this._allocator.heap, this.ptr.value, 1)
-    }
-     catch (e) {
-       debugger
-       throw e
-     }
+  private allocateInternal(heap: ArrayBuffer): void {
+    this._heapView = new DataTypeViewConstructor[this._dataType](heap, this.ptr.value, 1)
   }
 
   public transfer(heap: ArrayBuffer): void {
-    this.allocateInternal()
+    this.allocateInternal(heap)
   }
 
   private allocate() {
     this.ptr.value = this._allocator.allocate(this.byteLength)
-    this.allocateInternal()
+    this.allocateInternal(this._allocator.heap)
   }
 }
