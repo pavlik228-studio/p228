@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@dimforge/rapier2d': ^0.11.2
+  '@dimforge/rapier2d-compat': ^0.11.2
   '@nrwl/eslint-plugin-nx': 15.9.2
   '@nrwl/js': 15.9.2
   '@nrwl/linter': 15.9.2
@@ -30,6 +32,8 @@ specifiers:
   vitest: ^0.25.8
 
 dependencies:
+  '@dimforge/rapier2d': 0.11.2
+  '@dimforge/rapier2d-compat': 0.11.2
   '@swc/helpers': 0.4.14
 
 devDependencies:
@@ -1301,6 +1305,14 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
+
+  /@dimforge/rapier2d-compat/0.11.2:
+    resolution: {integrity: sha512-HOyo/akJqvZhgB4iaIzeysBiXrewpIHVDpf71HDxC6UwfjL5hFS8CKoW4Lex30KD+ntA865Yz3664e24QJPpqA==}
+    dev: false
+
+  /@dimforge/rapier2d/0.11.2:
+    resolution: {integrity: sha512-sCq8Kdg4w+J8XwE1Jkb0Un5eduVXOuLWzBTZfiiwY4CZu12QfJE+2zUdZs3bYsNREP1Ois8IxpiEIL8ZBEyesg==}
+    dev: false
 
   /@esbuild/android-arm/0.17.14:
     resolution: {integrity: sha512-0CnlwnjDU8cks0yJLXfkaU/uoLyRf9VZJs4p1PskBr2AlAHeEsFEwJEo0of/Z3g+ilw5mpyDwThlxzNEIxOE4g==}

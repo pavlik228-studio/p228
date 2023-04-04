@@ -12,10 +12,6 @@ export abstract class SimulationWorld extends ECSWorld {
   private readonly _snapshotHistory: SnapshotHistory
   private readonly _simulationEvents: SimulationEvents
 
-  public get simulationEvents(): ISimulationEvents {
-    return this._simulationEvents
-  }
-
   constructor(
     public readonly simulationConfig: SimulationConfig,
     private readonly _inputProvider: InputProvider,
@@ -27,6 +23,10 @@ export abstract class SimulationWorld extends ECSWorld {
     this._initialSnapshot = this._allocator.createSnapshot()
     this._frameRate = simulationConfig.deltaTime
     this._snapshotHistory = new SnapshotHistory(simulationConfig.snapshotHistoryLength)
+  }
+
+  public get simulationEvents(): ISimulationEvents {
+    return this._simulationEvents
   }
 
   private _tick: Primitive
@@ -42,6 +42,7 @@ export abstract class SimulationWorld extends ECSWorld {
 
     this.checkAndRollback(currentTick)
     this.simulationTicks(currentTick, toTick)
+    console.log(`Interpolation factor: ${this._interpolationFactor}`)
 
     this._interpolationFactor = (this._accumulatedTime - (toTick * this._frameRate)) / this._frameRate
   }
@@ -90,7 +91,7 @@ export abstract class SimulationWorld extends ECSWorld {
       )
     while (tick < toTick) {
       this._tick.value = ++tick
-      this._updatePipeline()
+      this.updateSystems()
       this._simulationEvents.verify(tick)
       this.storeSnapshotIfNeeded(tick)
     }

@@ -33,6 +33,7 @@ export class Allocator {
     offset += this._freeMemList.byteLength
     this._usedMemList = new TupleCollection(this, 2, this._memoryBlocks).allocate(this._heap, offset)
     offset += this._usedMemList.byteLength
+    offset = Math.ceil(offset / 8) * 8
 
     this._freeMemList.add(MEM_BLOCK_BUFFER_1.set(this._byteLength, offset).toRaw())
     this._usedMemList.add(MEM_BLOCK_BUFFER_1.set(this._freeMemList.byteLength, this._freeMemList.ptr.value).toRaw())
@@ -49,8 +50,8 @@ export class Allocator {
   }
 
   public allocate(byteLength: number, reset = true): number {
-    // byteLength should be a multiple of 4
-    byteLength = Math.ceil(byteLength / 4) * 4
+    // byteLength should be a multiple of 8
+    byteLength = Math.ceil(byteLength / 8) * 8
     let block = this.findFreeBlock(byteLength)
     if (!block) {
       // throw new Error('Out of memory')

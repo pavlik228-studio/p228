@@ -84,7 +84,7 @@ export class ComponentRegistry {
           offset += DataTypeSize[dataType] * size
         } else {
           raw[key] = new DataTypeViewConstructor[schemaField](heap, component._PTR + offset, 1)
-          offset += Math.ceil(DataTypeSize[schemaField] / 4) * 4
+          offset += Math.ceil(DataTypeSize[schemaField] / 8) * 8
         }
       }
       component.raw = raw

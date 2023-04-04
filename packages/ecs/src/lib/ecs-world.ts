@@ -11,7 +11,7 @@ import { ISystemConstructor } from './systems/abstract-system'
 import { SystemRegistry } from './systems/system-registry'
 
 export abstract class ECSWorld {
-  protected readonly _updatePipeline: () => void
+  private _updatePipeline!: () => void
   protected readonly _allocator: Allocator
   private readonly _componentRegistry: ComponentRegistry
   private readonly _filterRegistry: FilterRegistry
@@ -26,8 +26,6 @@ export abstract class ECSWorld {
     this._allocator = new Allocator(byteLength, config.memoryBlocks, config.registrySize)
     this._componentRegistry.initialize(this._allocator)
     this._entityManager = new EntityManager(config, this._allocator, this._filterRegistry)
-    this._updatePipeline = this._systemRegistry.initializePipeline()
-    this.onInitialize()
   }
 
   public get entityManager(): EntityManager {
@@ -48,7 +46,16 @@ export abstract class ECSWorld {
     return this._systemRegistry._registry.get(system) as InstanceType<T>
   }
 
+  protected initializeInternal(): void {
+    this._updatePipeline = this._systemRegistry.initializePipeline()
+    this.onInitialize()
+  }
+
   protected onInitialize(): void {
+  }
+
+  protected updateSystems(): void {
+    this._updatePipeline()
   }
 
   private calculateAllocatorByteLength(): number {
