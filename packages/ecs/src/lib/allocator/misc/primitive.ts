@@ -3,6 +3,7 @@ import { IAllocatorStructure, IPtrAccessor } from '../allocator.types'
 import { DataType, DataTypeViewConstructor, TypedArray } from '../data-type'
 
 export class Primitive implements IAllocatorStructure {
+  public static readonly byteLength = 8
   public readonly byteLength: number
   public readonly ptr: IPtrAccessor
   private _heapView!: TypedArray
@@ -25,22 +26,16 @@ export class Primitive implements IAllocatorStructure {
     this._heapView[0] = value
   }
 
-  private allocateInternal(): void {
-    try {
-      this._heapView = new DataTypeViewConstructor[this._dataType](this._allocator.heap, this.ptr.value, 1)
-    }
-     catch (e) {
-       debugger
-       throw e
-     }
+  private allocateInternal(heap: ArrayBuffer): void {
+    this._heapView = new DataTypeViewConstructor[this._dataType](heap, this.ptr.value, 1)
   }
 
   public transfer(heap: ArrayBuffer): void {
-    this.allocateInternal()
+    this.allocateInternal(heap)
   }
 
   private allocate() {
     this.ptr.value = this._allocator.allocate(this.byteLength)
-    this.allocateInternal()
+    this.allocateInternal(this._allocator.heap)
   }
 }

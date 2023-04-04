@@ -6,7 +6,6 @@ import {
   ILazyStructConstructor,
   IPtrAccessor,
 } from './allocator.types'
-import { StructCollection } from './collections/struct-collection'
 import { TupleCollection } from './collections/tuple-collection'
 import { DataType } from './data-type'
 import { MEM_BLOCK_BUFFER_1, MEM_BLOCK_BUFFER_2, MemoryBlock } from './misc/memory-block'
@@ -18,6 +17,7 @@ export class Allocator {
   private readonly _usedMemList: TupleCollection
   private readonly _structures = new Array<IAllocatorStructure>()
   private readonly _lazyStructures = new Array<ILazyAllocatorStructure>()
+  private readonly _onTransferHandlers = new Array<(heap: ArrayBuffer) => void>()
 
   constructor(
     private _byteLength: number,
@@ -33,12 +33,14 @@ export class Allocator {
     offset += this._freeMemList.byteLength
     this._usedMemList = new TupleCollection(this, 2, this._memoryBlocks).allocate(this._heap, offset)
     offset += this._usedMemList.byteLength
+    offset = Math.ceil(offset / 8) * 8
 
     this._freeMemList.add(MEM_BLOCK_BUFFER_1.set(this._byteLength, offset).toRaw())
     this._usedMemList.add(MEM_BLOCK_BUFFER_1.set(this._freeMemList.byteLength, this._freeMemList.ptr.value).toRaw())
     this._usedMemList.add(MEM_BLOCK_BUFFER_1.set(this._usedMemList.byteLength, this._usedMemList.ptr.value).toRaw())
 
     this._lazyStructures.push(this._freeMemList, this._usedMemList)
+    Logger.log(`[Allocator] initialized`, this._heap.byteLength, this._memoryBlocks, this._registrySize)
   }
 
   private _heap!: ArrayBuffer
@@ -96,7 +98,7 @@ export class Allocator {
   }
 
   public createSnapshot(): ArrayBuffer {
-    return this._heap.slice(0, this._byteLength)
+    return this._heap.slice(0)
   }
 
   public applySnapshot(snapshot: ArrayBuffer): void {
@@ -104,6 +106,7 @@ export class Allocator {
 
     for (const structure of this._structures) structure.transfer(snapshot)
     for (const structure of this._lazyStructures) structure.transfer(snapshot)
+    for (const transferHandler of this._onTransferHandlers) transferHandler(snapshot)
 
     this._heap = snapshot
   }
@@ -119,7 +122,7 @@ export class Allocator {
     const struct = new Struct(this, ...args)
     this._structures.push(struct)
 
-    Logger.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength, (struct instanceof StructCollection) ? struct['_struct'].keys : struct.constructor.name)
+    Logger.log(`[Allocator] alloateStruct: ${struct.constructor.name}`, struct.ptr.value, struct.byteLength)
 
     return struct as InstanceType<TConstructor>
   }
@@ -137,6 +140,10 @@ export class Allocator {
     return struct as InstanceType<TConstructor>
   }
 
+  public onTransfer(handler: (newHeap: ArrayBuffer) => void): void {
+    this._onTransferHandlers.push(handler)
+  }
+
   private resize(newByteLength: number) {
     Logger.log(`[Allocator] resize: ${this._heap.byteLength} -> ${newByteLength}`)
     const oldByteLength = this._heap.byteLength
@@ -148,6 +155,7 @@ export class Allocator {
 
     for (const structure of this._structures) structure.transfer(newHeap)
     for (const structure of this._lazyStructures) structure.transfer(newHeap)
+    for (const transferHandler of this._onTransferHandlers) transferHandler(newHeap)
 
     this._heap = newHeap
     this.addFreeBlock(MEM_BLOCK_BUFFER_1.set(byteLengthDiff, oldByteLength))

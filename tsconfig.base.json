@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@p228/ecs": ["packages/ecs/src/index.ts"]
+      "@p228/ecs": ["packages/ecs/src/index.ts"],
+      "@p228/engine": ["packages/engine/src/index.ts"],
+      "@p228/physics2d": ["packages/physics2d/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

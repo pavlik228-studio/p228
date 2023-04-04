@@ -1,85 +1,68 @@
-import { EcsConfig } from './configs/ecs-config'
 import { Allocator } from './allocator/allocator'
-import { EntityManager } from './entity-manager/entity-manager'
+import { List } from './allocator/collections/list'
+import { DataType } from './allocator/data-type'
 import { ComponentRegistry } from './components/component-registry'
-import {
-  IComponentConstructor,
-  IComponentData,
-  IComponentSchema,
-} from './components/component.types'
+import { IComponentInternal, ISingletonComponentInternal } from './components/component.types'
+import { ECSConfig } from './ecs-config'
+import { EntityManager } from './entity-manager'
 import { Filter } from './filters/filter'
 import { FilterRegistry } from './filters/filter-registry'
-import { AbstractSystem, IAbstractSystemConstructor } from './systems/abstract-system'
+import { ISystemConstructor } from './systems/abstract-system'
 import { SystemRegistry } from './systems/system-registry'
-import { EntityRef } from './types'
 
 export abstract class ECSWorld {
+  private _updatePipeline!: () => void
+  protected readonly _allocator: Allocator
   private readonly _componentRegistry: ComponentRegistry
-  private readonly _entityManager: EntityManager
-  private readonly _allocator: Allocator
   private readonly _filterRegistry: FilterRegistry
   private readonly _systemRegistry: SystemRegistry
-  public abstract registerComponents(): Array<IComponentConstructor>
-  public abstract registerSystems(): Array<IAbstractSystemConstructor>
+  private readonly _entityManager: EntityManager
+
+  constructor(public readonly config: ECSConfig) {
+    this._componentRegistry = new ComponentRegistry(config, this.registerComponents(), this.registerSingletonComponents())
+    this._filterRegistry = new FilterRegistry()
+    this._systemRegistry = new SystemRegistry(this, this.registerSystems())
+    const byteLength = this.calculateAllocatorByteLength() + config.allocatorBuffer
+    this._allocator = new Allocator(byteLength, config.memoryBlocks, config.registrySize)
+    this._componentRegistry.initialize(this._allocator)
+    this._entityManager = new EntityManager(config, this._allocator, this._filterRegistry)
+  }
 
   public get entityManager(): EntityManager {
     return this._entityManager
   }
 
-  constructor(
-    public readonly ecsConfig: EcsConfig,
-  ) {
-    this._componentRegistry = new ComponentRegistry(this.registerComponents())
-    this._filterRegistry = new FilterRegistry(this._componentRegistry)
-    const allocatorByteLength = Math.ceil(ecsConfig.calculateInitialAllocatorByteLength(this._componentRegistry.byteLength) / 8) * 8
-    const registrySize = ecsConfig.registrySize + this._componentRegistry.count * this._componentRegistry.ptrPerComponent
-    this._allocator = new Allocator(allocatorByteLength, ecsConfig.memoryBlocks, registrySize)
-    this._systemRegistry = new SystemRegistry(this)
-    this._entityManager = new EntityManager(ecsConfig, this._allocator, this._componentRegistry, this._filterRegistry)
-  }
+  public abstract registerComponents(): Array<IComponentInternal>
 
-  public getSystem<T extends AbstractSystem>(system: IAbstractSystemConstructor<T>): T {
-    return this._systemRegistry.getSystem(system)
-  }
+  public abstract registerSingletonComponents(): Array<ISingletonComponentInternal>
+
+  public abstract registerSystems(): Array<ISystemConstructor<any>>
 
   public registerFilter(filter: Filter): Filter {
     return this._filterRegistry.registerFilter(filter)
   }
 
-  public createEntity(): EntityRef {
-    return this._entityManager.createEntity()
+  public getSystem<T extends ISystemConstructor<any>>(system: T): InstanceType<T> {
+    return this._systemRegistry._registry.get(system) as InstanceType<T>
   }
 
-  public destroyEntity(entityRef: EntityRef) {
-    this._entityManager.destroyEntity(entityRef)
+  protected initializeInternal(): void {
+    this._updatePipeline = this._systemRegistry.initializePipeline()
+    this.onInitialize()
   }
 
-  public putComponent<
-    TSchema extends IComponentSchema,
-    TComponentConstructor extends IComponentConstructor<TSchema>
-  >(entityRef: EntityRef, component: TComponentConstructor) {
-    return this._entityManager.putComponent<TSchema, TComponentConstructor>(entityRef, component)
+  protected onInitialize(): void {
   }
 
-  public addComponent<
-    TSchema extends IComponentSchema,
-    TComponentConstructor extends IComponentConstructor<TSchema>,
-  >(entityRef: number, component: TComponentConstructor, values: IComponentData<TSchema>) {
-    return this._entityManager.addComponent<TSchema, TComponentConstructor>(entityRef, component, values)
+  protected updateSystems(): void {
+    this._updatePipeline()
   }
 
-  public getComponent<
-    TSchema extends IComponentSchema,
-    TComponentConstructor extends IComponentConstructor,
-  >(entityRef: EntityRef, component: TComponentConstructor) {
-    return this._entityManager.getComponent<TSchema, TComponentConstructor>(entityRef, component)
-  }
+  private calculateAllocatorByteLength(): number {
+    const filtersByteLength = this._filterRegistry.count * (List.calculateByteLength(this.config.filterPoolSize, DataType.u32))
+    const componentsByteLength = this._componentRegistry.byteLength
+    const entityManagerByteLength = EntityManager.calculateByteLength(this.config)
 
-  public hasComponent(entityRef: EntityRef, component: IComponentConstructor) {
-    return this._entityManager.hasComponent(entityRef, component)
-  }
-
-  public removeComponent(entityRef: EntityRef, component: IComponentConstructor) {
-    this._entityManager.removeComponent(entityRef, component)
+    return filtersByteLength + componentsByteLength + entityManagerByteLength
   }
 }

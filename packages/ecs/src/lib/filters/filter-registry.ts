@@ -1,16 +1,10 @@
-import { ComponentRegistry } from '../components/component-registry'
-import { IComponentConstructor } from '../components/component.types'
+import { IComponentInternal } from '../components/component.types'
 import { Filter } from './filter'
 
 export class FilterRegistry {
   public readonly filtersById = new Map<number, Filter>()
   public readonly filterBitmaskIds = new Map<number, number>()
   private _nextFilterId = 0
-
-  constructor(
-    private readonly _componentRegistry: ComponentRegistry,
-  ) {
-  }
 
   public get count(): number {
     return this.filtersById.size
@@ -37,7 +31,7 @@ export class FilterRegistry {
     return filter
   }
 
-  private getComponentBitmask(components: Array<IComponentConstructor>): number {
-    return components.reduce((acc, componentConstructor) => acc | this._componentRegistry.getComponentSchema(componentConstructor)!.id, 0)
+  private getComponentBitmask(components: Array<IComponentInternal>): number {
+    return components.reduce((acc, component) => acc | component._ID, 0)
   }
 }
