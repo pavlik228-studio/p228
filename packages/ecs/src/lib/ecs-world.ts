@@ -25,6 +25,7 @@ export abstract class ECSWorld {
     const byteLength = this.calculateAllocatorByteLength() + config.allocatorBuffer
     this._allocator = new Allocator(byteLength, config.memoryBlocks, config.registrySize)
     this._componentRegistry.initialize(this._allocator)
+    this.onBeforeInitialize()
     this._entityManager = new EntityManager(config, this._allocator, this._filterRegistry)
   }
 
@@ -44,6 +45,10 @@ export abstract class ECSWorld {
 
   public getSystem<T extends ISystemConstructor<any>>(system: T): InstanceType<T> {
     return this._systemRegistry._registry.get(system) as InstanceType<T>
+  }
+
+  protected onBeforeInitialize(): void {
+
   }
 
   protected initializeInternal(): void {

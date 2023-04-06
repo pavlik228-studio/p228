@@ -1,6 +1,6 @@
 import { InputProvider } from '@p228/engine'
 import { describe, expect, test } from 'vitest'
-import { PhysicsRefs } from '../components/collider-ref'
+import { PhysicsRefs } from '../components/physics-ref'
 import { Physics2dConfig } from '../physics-config'
 import { GameWorld } from './world'
 import RAPIER from '@dimforge/rapier2d-compat'

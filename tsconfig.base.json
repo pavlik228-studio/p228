@@ -17,7 +17,10 @@
     "paths": {
       "@p228/ecs": ["packages/ecs/src/index.ts"],
       "@p228/engine": ["packages/engine/src/index.ts"],
-      "@p228/physics2d": ["packages/physics2d/src/index.ts"]
+      "@p228/math": ["packages/math/src/index.ts"],
+      "@p228/physics2d": ["packages/physics2d/src/index.ts"],
+      "@p228/renderer-2d": ["packages/renderer-2d/src/index.ts"],
+      "@p228/survivor-simulation": ["packages/survivor-simulation/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

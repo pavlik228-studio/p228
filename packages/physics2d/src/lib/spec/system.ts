@@ -1,5 +1,5 @@
 import { AbstractSystem } from '@p228/ecs'
-import { PhysicsRefs } from '../components/collider-ref'
+import { PhysicsRefs } from '../components/physics-ref'
 import { Physics2dWorld } from '../physics2d-world'
 
 export class TestSystem extends AbstractSystem<Physics2dWorld> {

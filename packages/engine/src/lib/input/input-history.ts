@@ -52,6 +52,22 @@ export class InputHistory {
 
     return out
   }
+
+  public getRPCsByType(tick: number, rpcType: number, out: Rpc[]): Rpc[] {
+    const tickData = this._history.get(tick)
+    if (tickData === undefined) return EMPTY_DATA
+
+    out.length = 0
+
+    for (const playerData of Object.values(tickData)) {
+      for (const rpc of playerData) {
+        if (rpc.rpc !== rpcType) continue
+        out.push(rpc)
+      }
+    }
+
+    return out
+  }
 }
 
 function sortRpcsByTs(a: Rpc, b: Rpc): number {

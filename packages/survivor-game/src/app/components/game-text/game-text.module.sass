@@ -1,0 +1,13 @@
+@import "../../mixins"
+
+.root
+  font-family: 'Russo One', sans-serif
+  line-height: 1
+  background: linear-gradient(0deg, #263346 -16.67%, #FFFFFF 50%)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+  background-clip: text
+  text-fill-color: transparent
+
+  @include desktop()
+    -webkit-text-stroke: dvh(1px) #000

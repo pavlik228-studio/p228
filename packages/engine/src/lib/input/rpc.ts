@@ -4,7 +4,7 @@ export class Rpc<TData = unknown> {
     public readonly ts: number,
     public readonly playerSlot: number,
     public readonly rpc: number,
-    public readonly data?: TData,
+    public readonly data: TData,
   ) {
   }
 }

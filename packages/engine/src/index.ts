@@ -1,4 +1,10 @@
+export * from './lib/misc/interpolation'
+export * from './lib/misc/typed-event'
 export * from './lib/simulation-world'
 export * from './lib/simulation-config'
+export * from './lib/input/rpc'
 export * from './lib/input/input-provider'
 export * from './lib/misc/snapshot-history'
+
+export * from './lib/components/transform-2d'
+export * from './lib/systems/prev-transform-system'

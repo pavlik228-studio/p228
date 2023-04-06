@@ -1,4 +1,4 @@
-import { PhysicsRefs } from '../components/collider-ref'
+import { PhysicsRefs } from '../components/physics-ref'
 import { Physics2dWorld } from '../physics2d-world'
 import { TestSystem } from './system'
 

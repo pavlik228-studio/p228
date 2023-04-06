@@ -1,0 +1,19 @@
+@import "../../mixins"
+
+.root
+  position: relative
+  display: flex
+  align-items: center
+  flex-direction: column
+.logo
+  background: url(../../../assets/icons/desktop-splash-logo.svg) no-repeat center/contain
+
+@include desktop()
+  .logo
+    width: dvh(379px)
+    height: dvh(379px)
+    margin-top: dvh(50px)
+    margin-bottom: dvh(21px)
+    filter: drop-shadow(0px dvh(13px) dvh(19px) rgba(0, 0, 0, 0.5))
+  .loading
+    font-size: dvh(60px)

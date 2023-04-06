@@ -1,4 +1,5 @@
 import { DataType, ECSWorld, Primitive } from '@p228/ecs'
+import { MathOps } from '@p228/math'
 import { ISimulationEvents, SimulationEvents } from './events/simulation-events'
 import { InputProvider } from './input/input-provider'
 import { SnapshotHistory } from './misc/snapshot-history'
@@ -12,9 +13,13 @@ export abstract class SimulationWorld extends ECSWorld {
   private readonly _snapshotHistory: SnapshotHistory
   private readonly _simulationEvents: SimulationEvents
 
+  public get interpolationFactor(): number {
+    return this._interpolationFactor
+  }
+
   constructor(
     public readonly simulationConfig: SimulationConfig,
-    private readonly _inputProvider: InputProvider,
+    public readonly inputProvider: InputProvider,
   ) {
     super(simulationConfig)
     this._tick = this._allocator.allocateStruct(Primitive, DataType.u32)
@@ -42,9 +47,8 @@ export abstract class SimulationWorld extends ECSWorld {
 
     this.checkAndRollback(currentTick)
     this.simulationTicks(currentTick, toTick)
-    console.log(`Interpolation factor: ${this._interpolationFactor}`)
 
-    this._interpolationFactor = (this._accumulatedTime - (toTick * this._frameRate)) / this._frameRate
+    this._interpolationFactor = MathOps.clamp01((this._accumulatedTime % this._frameRate) / this._frameRate)
   }
 
   protected registerEvents(simulationEvents: SimulationEvents): void {
@@ -71,12 +75,11 @@ export abstract class SimulationWorld extends ECSWorld {
 
   protected saveSnapshot(tick: number): void {
     const snapshot = this._allocator.createSnapshot()
-    console.log(`Snapshot tick: ${tick} (${new Uint32Array(snapshot, 1884, 1)[0]})`)
     this._snapshotHistory.set(tick, snapshot)
   }
 
   private checkAndRollback(tick: number): void {
-    const rollbackTick = this._inputProvider.getInvalidateTick()
+    const rollbackTick = this.inputProvider.getInvalidateTick()
     if (rollbackTick === undefined || rollbackTick > tick) return
 
     this.rollback(rollbackTick)
@@ -99,7 +102,6 @@ export abstract class SimulationWorld extends ECSWorld {
 
   private storeSnapshotIfNeeded(tick: number): void {
     if ((tick % this.simulationConfig.snapshotHistoryRate) === 0) {
-      console.log(`Snapshot tick ${tick}`)
       this.saveSnapshot(tick)
     }
   }

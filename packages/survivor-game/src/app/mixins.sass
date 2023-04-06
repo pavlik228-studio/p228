@@ -1,0 +1,44 @@
+@use 'sass:math'
+
+@function dvh($px, $base: 600px)
+  @return math.div(($px * 100vh), $base)
+
+@function mvh($px, $base: 320px)
+  @return math.div(($px * 100vh), $base)
+
+@function mvw($px, $base: 320px)
+  @return math.div(($px * 100vw), $base)
+
+@function pxvw($px, $base: 1440px)
+  @return math.div(($px * 100vw), $base)
+
+@mixin mobile()
+  @media (max-width: 659px)
+    @content
+
+@mixin desktop()
+  @media (min-width: 660px)
+    @content
+
+$retina: "only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 1.3/1), only screen and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 1.3dppx)"
+
+@mixin retina($url)
+  $path: '../assets/'
+  $filePath: str-slice($url, 0, -5)
+  $ext: str-slice($url, -3)
+  background-image: url($path + $filePath + '.' + $ext)
+  @media #{$retina}
+    background-image: url($path + $filePath + '@2x' + '.' + $ext)
+
+@mixin webpRetina($url, $isImportant: false)
+  $important: if($isImportant, ' !important', '')
+  $filePath: str-slice($url, 0, -5)
+  $ext: str-slice($url, -3)
+
+  background-image: url($filePath + '.' + $ext)#{$important}
+  :global(.webp-supported) &
+    background-image: url($filePath + '.webp')#{$important}
+  @media #{$retina}
+    background-image: url($filePath + '@2x' + '.' + $ext)#{$important}
+    :global(.webp-supported) &
+      background-image: url($filePath + '@2x' + '.webp')#{$important}

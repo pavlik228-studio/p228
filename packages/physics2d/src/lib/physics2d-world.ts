@@ -29,6 +29,10 @@ export abstract class Physics2dWorld extends SimulationWorld {
     return this._physicsWorld
   }
 
+  public debugRender() {
+    return this._physicsWorld.debugRender()
+  }
+
   protected override saveSnapshot(tick: number) {
     super.saveSnapshot(tick)
     this._physicsSnapshotHistory.set(tick, this._physicsWorld.takeSnapshot().buffer)
