@@ -1,0 +1,38 @@
+@import "../../mixins"
+
+.root
+  margin: 0
+  padding: 0
+  outline: 0
+  cursor: pointer
+  display: flex
+  position: relative
+  background: linear-gradient(180deg, #A92E26 0%, #050100 182.81%)
+  user-select: none
+  transition: transform 300ms ease
+  &.not-interactive
+    cursor: default
+  & > span
+    font-family: 'Russo One', sans-serif
+    line-height: 1
+    background: linear-gradient(0deg, #263346 -16.67%, #FFFFFF 50%)
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+    background-clip: text
+    text-fill-color: transparent
+
+
+@include desktop()
+  .root
+    border-radius: dvh(10px)
+    padding: dvh(8px) dvh(15px)
+    border: dvh(1px) solid #000000
+    filter: drop-shadow(dvh(5px) dvh(5px) dvh(2px) rgba(0, 0, 0, 0.5))
+    &:not(.not-interactive):hover
+      transform: scale(1.1)
+    &:not(.not-interactive):active
+      background: #A92E26
+    & > span
+      font-size: dvh(30px)
+      -webkit-text-stroke: dvh(1px) #000
+      filter: drop-shadow(0px dvh(3.23285px) 0px rgba(0, 0, 0, 0.5))

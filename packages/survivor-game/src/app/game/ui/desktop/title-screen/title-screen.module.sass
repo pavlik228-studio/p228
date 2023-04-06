@@ -1,0 +1,42 @@
+@import "../../../../mixins"
+
+@include desktop()
+  .content
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: center
+    margin: 0 auto
+    width: dvh(820px)
+    height: dvh(590px)
+  .button
+    text-align: left
+    width: dvh(256px)
+    margin-bottom: dvh(20px)
+  .logo
+    right: 0
+    top: dvh(10px)
+    display: block
+    position: absolute
+    width: dvh(506px)
+    height: dvh(590px)
+    filter: drop-shadow(dvh(27px) dvh(18px) dvh(4px) #000000)
+    &:before
+      content: ''
+      display: block
+      position: absolute
+      top: 0
+      left: dvh(8px)
+      width: dvh(460px)
+      height: dvh(460px)
+      background: url(../../../../../assets/icons/desktop-title-logo.svg) no-repeat center/contain
+    &:after
+      content: ''
+      display: block
+      position: absolute
+      bottom: dvh(28px)
+      left: 0
+      width: 100%
+      height: dvh(168px)
+      background: url(../../../../../assets/icons/desktop-logo-text.svg) no-repeat center left/contain

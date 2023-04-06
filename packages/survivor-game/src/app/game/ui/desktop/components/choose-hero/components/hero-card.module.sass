@@ -1,0 +1,87 @@
+@import "../../../../../../mixins"
+
+@include desktop()
+  .root
+    position: relative
+    flex-shrink: 0
+    cursor: pointer
+    width: dvh(268px)
+    height: dvh(342px)
+    background: linear-gradient(180deg, #912542 0%, #1A0B2B 100%)
+    border: dvh(1px) solid #000
+    box-shadow: 0 dvh(5px) dvh(2px) rgba(0, 0, 0, 0.5)
+    border-radius: dvh(10px)
+    margin-right: dvh(18px)
+    transition: transform 200ms ease, width 100ms ease, height 100ms ease
+    &:not(.selected)
+      &:hover
+        transform: scale(1.05)
+    &.selected
+      width: dvh(360px)
+      height: dvh(460px)
+    &.locked:before
+      z-index: 1
+      content: ''
+      position: absolute
+      top: dvh(34px)
+      left: dvh(105px)
+      width: dvh(57px)
+      height: dvh(74.1px)
+      background: url(../../../../../../../assets/icons/lock.svg) no-repeat center/contain
+  .img
+    width: dvh(181px)
+    height: dvh(147px)
+    background: no-repeat center/cover
+    margin: 0 auto
+    .selected &
+      width: dvh(256px)
+      height: dvh(191px)
+    .locked &
+      opacity: 50%
+  .stats
+    color: #fff
+    width: dvh(228px)
+    padding: dvh(10px) dvh(12px)
+    background: #252525
+    border: dvh(1px) solid #000
+    border-radius: dvh(10px)
+    box-sizing: border-box
+    margin: 0 auto
+    font-family: 'Solid Sans', monospace, 'Courier New', sans-serif
+    .selected &
+      width: dvh(304px)
+  .stat
+    display: flex
+    font-size: dvh(18px)
+    line-height: dvh(22px)
+    letter-spacing: 0.05em
+    justify-content: space-between
+    .selected &
+      font-size: dvh(22.63px)
+      line-height: dvh(27px)
+  .title
+    font-size: dvh(26px)
+    text-align: center
+    margin-top: dvh(-36px)
+    margin-bottom: dvh(10px)
+    transition: transform 100ms ease, margin-top 100ms ease
+    transform: scale(0)
+    .selected &
+      transform: scale(1)
+      margin-top: dvh(-6px)
+  .diamond
+    margin: 0 dvh(4px)
+  .buy
+    left: 50%
+    display: flex
+    bottom: dvh(-21px)
+    position: absolute
+    transform: translateX(-50%) !important
+    padding: dvh(4px) dvh(10px)
+    & > span
+      flex-shrink: 0
+      font-size: dvh(20px)
+  .x
+    display: inline-block
+    margin-right: dvh(4px)
+    font-size: dvh(16px)

@@ -1,0 +1,26 @@
+@import "../../../../../mixins"
+
+.header
+  display: flex
+.title-button
+  margin: 0 auto
+.heroes
+  display: flex
+  align-items: center
+  justify-content: center
+  scrollbar-width: none
+  &::-webkit-scrollbar
+    display: none
+
+@include desktop()
+  .header
+    width: dvh(960px)
+    margin: dvh(30px) auto dvh(30px)
+  .heroes
+    width: dvh(952px)
+    height: dvh(468px)
+    margin: 0 auto
+    justify-content: flex-start
+    overflow-x: auto
+    padding-bottom: dvh(24px)
+    padding-left: dvh(18px)

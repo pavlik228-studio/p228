@@ -1,11 +1,13 @@
 import { Assets } from 'pixi.js'
-import { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import { SplashScreen } from './components/splash-screen'
 import { GameCanvas } from './game-canvas'
 import { setRapierInstance } from './misc/rapier-store'
 import { ResourcesManifest } from './resource-manifest'
 
 export const GamePage: FC = () => {
+  const location = useLocation()
   const [ rapierInitialized, setRapierInitialized ] = useState(false)
   const [ isLoaded, setIsLoaded ] = useState(false)
 
@@ -18,5 +20,10 @@ export const GamePage: FC = () => {
     })
   }, [])
 
-  return (rapierInitialized && isLoaded) ? <GameCanvas /> : <SplashScreen />
+  return (rapierInitialized && isLoaded) ? (
+    <>
+      <GameCanvas isShown={location.pathname === '/game'} />
+      <Outlet />
+    </>
+  ) : <SplashScreen />
 }

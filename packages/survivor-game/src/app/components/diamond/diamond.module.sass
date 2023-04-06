@@ -1,0 +1,16 @@
+@import "../../mixins"
+
+.diamond
+  margin: 0
+  padding: 0
+  font-size: 0
+  display: inline-block
+  background: url("../../../assets/icons/diamond.svg") no-repeat center/contain
+
+@include desktop()
+  .sm
+    width: dvh(15px)
+    height: dvh(21px)
+  .md
+    width: dvh(27px)
+    height: dvh(35px)
