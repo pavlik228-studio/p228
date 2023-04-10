@@ -23,9 +23,9 @@ export abstract class ECSWorld {
     this._filterRegistry = new FilterRegistry()
     this._systemRegistry = new SystemRegistry(this, this.registerSystems())
     const byteLength = this.calculateAllocatorByteLength() + config.allocatorBuffer
-    this._allocator = new Allocator(byteLength, config.memoryBlocks, config.registrySize)
-    this._componentRegistry.initialize(this._allocator)
     this.onBeforeInitialize()
+    this._allocator = new Allocator(byteLength, config.memoryBlocks, config.registrySize + this._filterRegistry.count)
+    this._componentRegistry.initialize(this._allocator)
     this._entityManager = new EntityManager(config, this._allocator, this._filterRegistry)
   }
 

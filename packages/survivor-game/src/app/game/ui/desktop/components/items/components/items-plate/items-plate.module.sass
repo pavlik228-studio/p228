@@ -1,0 +1,19 @@
+@import "../../../../../../../mixins"
+
+.root
+  flex-shrink: 0
+
+@include desktop()
+  .title
+    text-align: center
+    font-size: dvh(30px)
+    margin-bottom: dvh(8px)
+    filter: drop-shadow(0 dvh(3.23285px) 0 rgba(0, 0, 0, 0.5))
+  .plate
+    position: relative
+    width: dvh(300px)
+    height: dvh(400px)
+    border-radius: dvh(10px)
+    border: dvh(1px) solid #000
+    box-shadow: 0 dvh(5px) dvh(2px) rgba(0, 0, 0, 0.5)
+    background: linear-gradient(180deg, #912542 0%, #1A0B2B 100%)

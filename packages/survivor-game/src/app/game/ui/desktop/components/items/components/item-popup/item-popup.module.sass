@@ -1,0 +1,51 @@
+@import '../../../../../../../mixins'
+
+.root
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+
+@include desktop()
+  .header
+    display: flex
+    width: dvh(960px)
+    justify-content: space-between
+    margin: dvh(30px) auto dvh(30px)
+  .subtitle
+    font-size: dvh(30px)
+    margin-bottom: dvh(4px)
+  .content
+    width: dvh(820px)
+    margin: 0 auto
+  .title
+    font-size: dvh(30px)
+    text-align: center
+    margin-bottom: dvh(5px)
+  .item
+    display: flex
+    box-sizing: border-box
+    border-radius: dvh(10px)
+    border: dvh(1px) solid #000
+    padding: dvh(26px) dvh(22px) dvh(30px)
+    box-shadow: 0 dvh(5px) dvh(2px) rgba(0, 0, 0, 0.5)
+    background: linear-gradient(180deg, #912542 0%, #1A0B2B 100%)
+    &__main
+      flex-shrink: 0
+      width: dvh(317px)
+      margin-right: dvh(30px)
+    &__info
+      flex-grow: 1
+      font-size: dvh(30px)
+    &__stat
+      color: #fff
+      display: flex
+      font-weight: 700
+      font-family: 'Sofia Sans', sans-serif
+    &__img
+      width: 100%
+      height: dvh(303px)
+  .stat__value
+    margin-left: auto
+

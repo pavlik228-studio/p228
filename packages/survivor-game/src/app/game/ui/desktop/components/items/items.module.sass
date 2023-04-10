@@ -1,0 +1,78 @@
+@import "../../../../../mixins"
+
+.root
+  --animate-duration: 0.25s
+.header
+  display: flex
+.title-button
+  margin: 0 auto
+.window
+  width: 100vw
+  height: 100vh
+  box-sizing: border-box
+  overflow: hidden
+
+@include desktop()
+  .header
+    width: dvh(960px)
+    margin: dvh(30px) auto dvh(30px)
+  .window
+    padding-bottom: dvh(20px)
+  .content
+    width: dvh(960px)
+    margin: 0 auto
+    display: flex
+    justify-content: space-between
+  .shop:before
+    content: ''
+    left: dvh(21px)
+    top: dvh(-34px)
+    position: absolute
+    width: dvh(40px)
+    height: dvh(40px)
+    transform: rotate(4deg)
+    transform-origin: center
+    filter: drop-shadow(dvh(1.61643px) dvh(3.23285px) 0 rgba(0, 0, 0, 0.5))
+    background: url(../../../../../../assets/icons/shop.svg) no-repeat center/contain
+  .weapon-list
+    display: flex
+    flex-wrap: wrap
+    padding: dvh(20px) dvh(30px)
+    & > div
+      &:nth-child(odd)
+        margin-right: dvh(20px)
+      // first 4
+      &:nth-child(-n+4)
+        margin-bottom: dvh(20px)
+  .item-list
+    display: flex
+    flex-wrap: wrap
+    padding: dvh(20px) dvh(30px)
+    & > div
+      margin-right: dvh(15px)
+      &:nth-child(3n)
+          margin-right: 0
+      &:nth-child(-n+9)
+        margin-bottom: dvh(16px)
+  .shop-list
+    display: flex
+    flex-wrap: wrap
+    padding: dvh(20px) dvh(30px) dvh(8px)
+    & > div
+      &:nth-child(odd)
+        margin-right: dvh(10px)
+      &:nth-child(-n+4)
+        margin-bottom: dvh(8px)
+  .shop-button
+    display: flex
+    align-items: center
+    margin: 0 auto
+    & > span:first-child
+      font-size: dvh(25px)
+    & > i
+      margin: 0 dvh(4px)
+    & > .x
+      vertical-align: middle
+      font-size: dvh(20px)
+      margin: 0 dvh(2px)
+

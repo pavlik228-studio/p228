@@ -6,6 +6,7 @@ import { AnimatedSprite, Assets, Point, Sprite, Spritesheet } from 'pixi.js'
 import { Player } from '../../../../../../../survivor-simulation/src/lib/features/player/components/player'
 import { GameSceneAssets } from '../../../resource-manifest'
 import { GameScene } from '../../game-scene'
+import { PlayerGroup, ShadowGroup } from '../../layer-groups'
 import { PlayerAnimator } from './player-animator'
 
 const COLLIDER_OFFSET = new Point(0, 54)
@@ -23,18 +24,21 @@ export class PlayerView extends EntityView<SurvivorWorld, GameScene> {
     }
     const miscSpritesheet = Assets.get(GameSceneAssets.Misc) as Spritesheet
     this._heroShadow = Sprite.from(miscSpritesheet.textures['HeroShadow'])
+    this._heroShadow.parentGroup = ShadowGroup
     this._heroShadow.scale.set(0.5)
     this._heroShadow.position.copyFrom(COLLIDER_OFFSET)
     this.addChild(this._heroShadow)
+
     this._heroSpritesheet = Assets.get(GameSceneAssets.Paladin)
     this._heroSprite = new AnimatedSprite(this._heroSpritesheet.animations['Idle'])
+    this._heroSprite.parentGroup = PlayerGroup
     this._scale = this._heroSpritesheet.resolution * 0.5
     this._heroSprite.scale.set(this._scale)
     this._heroSprite.animationSpeed = 0.5
     this._heroSprite.play()
     this._heroSprite.position.copyFrom(COLLIDER_OFFSET)
     this.addChild(this._heroSprite)
-    this.position.set(Transform2d.x[this.entityRef], Transform2d.y[this.entityRef])
+    this.position.set(Transform2d.x[this.entityRef], -Transform2d.y[this.entityRef])
     this._animator = new PlayerAnimator(this._heroSprite, this._heroSpritesheet, {
       health: 100,
       isDead: false,

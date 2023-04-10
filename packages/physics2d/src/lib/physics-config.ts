@@ -11,10 +11,10 @@ export class Physics2dConfig extends SimulationConfig {
     snapshotHistoryRate?: number, // How often to take snapshots (one per 10 ticks by default)
     recycledPoolSize?: number,
     filterPoolSize?: number,
-    memoryBlocks?: number,
+    memoryBlocks = 128,
     registrySize?: number,
     allocatorBuffer?: number,
   ) {
-    super(entityPoolSize, deltaTime, recycledPoolSize, filterPoolSize, memoryBlocks, registrySize, allocatorBuffer)
+    super(entityPoolSize, deltaTime, maxLagTicks, snapshotHistoryLength, snapshotHistoryRate, recycledPoolSize, filterPoolSize, memoryBlocks, registrySize, allocatorBuffer,)
   }
 }

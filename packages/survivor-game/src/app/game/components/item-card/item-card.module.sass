@@ -1,0 +1,69 @@
+@import "../../../mixins"
+
+.root
+  position: relative
+  flex-shrink: 0
+  box-sizing: border-box
+.common
+  background: radial-gradient(50% 50% at 50% 50%, #0C426C 0%, #04121E 100%), #D9D9D9
+.uncommon
+  background: radial-gradient(50% 50% at 50% 50%, #0E6C0C 0%, #04121E 100%), #D9D9D9
+.rare
+  background: radial-gradient(50% 50% at 50% 50%, #6A0C6C 0%, #04121E 100%), #D9D9D9
+.epic
+  background: radial-gradient(50% 50% at 50% 50%, #931B13 0%, #04121E 100%), #D9D9D9
+
+@include desktop()
+  .root
+    border: dvh(1px) solid #000
+    border-radius: dvh(10px)
+  .locked
+    &:after
+      content: ''
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      background: url(../../../../assets/icons/lock.svg) no-repeat center/contain
+    &.sm:after
+      width: dvh(34.42px)
+      height: dvh(45px)
+    &.md:after
+      width: dvh(42.31px)
+      height: dvh(55px)
+    &.lg:after
+      width: dvh(42.31px)
+      height: dvh(55px)
+  .item
+    pointer-events: none
+    transform: rotate(-30deg)
+    transform-origin: center
+    .locked &
+      filter: blur(dvh(4px))
+  .sm
+    width: dvh(70px)
+    height: dvh(78px)
+    .item
+      position: relative
+      top: dvh(4px)
+  .md
+    width: dvh(110px)
+    height: dvh(106px)
+    .item
+      position: relative
+      top: dvh(-4px)
+  .lg
+    width: dvh(115px)
+    height: dvh(95px)
+    .item
+      position: relative
+      top: dvh(-12px)
+  .huge
+    width: dvh(317px)
+    height: dvh(303px)
+    display: flex
+    align-items: center
+    justify-content: center
+    .item
+      position: relative
+      width: 100%

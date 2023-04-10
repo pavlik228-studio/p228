@@ -2,6 +2,7 @@ import { InputProvider } from '@p228/engine'
 import { Physics2dConfig } from '@p228/physics2d'
 import { AbstractGameScene } from '@p228/renderer-2d'
 import { PlayerJoinedData, SurvivorInputSchema, SurvivorRpc, SurvivorWorld } from '@p228/survivor-simulation'
+import { Layer } from '@pixi/layers'
 import { GameRenderer } from '../game-renderer'
 import { getRapierInstance } from '../misc/rapier-store'
 import { InputListener } from './components/input-listener'
@@ -9,6 +10,7 @@ import { Map1 } from './components/map-1'
 import { DebugRenderer } from './debug-renderer'
 import { SurvivorEntityViewUpdater } from './entity-view-updater'
 import { GameViewport } from './game-viewport'
+import { EnemyGroup, PlayerGroup, ShadowGroup } from './layer-groups'
 
 export class GameScene extends AbstractGameScene {
   private readonly _viewport: GameViewport
@@ -35,7 +37,11 @@ export class GameScene extends AbstractGameScene {
   }
 
   public async onAwake(): Promise<void> {
-
+    this.addChild(
+      new Layer(ShadowGroup),
+      new Layer(EnemyGroup),
+      new Layer(PlayerGroup)
+    )
   }
 
   public async onDestroy(): Promise<void> {
@@ -68,6 +74,7 @@ export class GameScene extends AbstractGameScene {
     this._playerSlot = this._inputProvider.playerSlot
     this._inputProvider.setRpc(SurvivorRpc.PlayerJoined, new PlayerJoinedData(this._playerSlot))
     this._debugRenderer = new DebugRenderer(this._world, this._renderer)
+    this._debugRenderer.parentGroup = PlayerGroup
     this._viewport.addChild(this._debugRenderer)
   }
 

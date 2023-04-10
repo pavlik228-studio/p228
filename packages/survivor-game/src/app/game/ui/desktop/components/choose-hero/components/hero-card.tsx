@@ -1,4 +1,5 @@
 import { FC, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '../../../../../../components/button/button'
 import { Diamond } from '../../../../../../components/diamond/diamond'
 import { GameText } from '../../../../../../components/game-text/game-text'
@@ -20,6 +21,7 @@ export const HeroCard: FC<HeroCardProps> = ({
   stats,
   onSelected,
 }) => {
+  const { t } = useTranslation()
   const cardRef = useRef<HTMLDivElement>(null)
   const onSelect = () => {
     if (!cardRef.current) return
@@ -33,18 +35,18 @@ export const HeroCard: FC<HeroCardProps> = ({
   return (
     <div className={cardClassName} ref={cardRef} onClick={onSelect}>
       <div className={classes['img']} style={{ backgroundImage: `url(${img})` }} />
-      <GameText text={id} className={classes['title']} />
+      <GameText text={t(`heroes.${id}`)} className={classes['title']} />
       <div className={classes['stats']}>
         {stats.map(([name, value]) => (
           <div className={classes['stat']} key={name}>
-            <div className={classes['name']}>{name}</div>
+            <div className={classes['name']}>{t(`stats.${name}`)}</div>
             <div className={classes['value']}>{value}</div>
           </div>
         ))}
       </div>
       {!locked ? null : (
         <Button className={classes['buy']}>
-          <span>Buy</span>
+          <span>{t('buy')}</span>
           <Diamond className={classes['diamond']} size={'sm'} />
           <span className={classes['x']}>x</span>
           <span>322</span>

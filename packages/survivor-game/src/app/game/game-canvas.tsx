@@ -6,7 +6,7 @@ import { GameScene } from './survivor/game-scene'
 interface GameCanvasProps {
   isShown: boolean
 }
-export const GameCanvas: FC<GameCanvasProps> = ({ isShown }) => {
+const GameCanvas: FC<GameCanvasProps> = ({ isShown }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const gameRendererRef = useRef<GameRenderer>()
 
@@ -26,3 +26,5 @@ export const GameCanvas: FC<GameCanvasProps> = ({ isShown }) => {
     <canvas className={classes['canvas']} ref={canvasRef} style={{ display: isShown ? 'block' : 'none' }} />
   )
 }
+
+export default GameCanvas

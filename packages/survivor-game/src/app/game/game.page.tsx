@@ -1,10 +1,11 @@
 import { Assets } from 'pixi.js'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, Suspense, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { SplashScreen } from './components/splash-screen'
-import { GameCanvas } from './game-canvas'
 import { setRapierInstance } from './misc/rapier-store'
 import { ResourcesManifest } from './resource-manifest'
+
+const GameCanvasLazy = React.lazy(() => import('./game-canvas'))
 
 export const GamePage: FC = () => {
   const location = useLocation()
@@ -22,7 +23,9 @@ export const GamePage: FC = () => {
 
   return (rapierInitialized && isLoaded) ? (
     <>
-      <GameCanvas isShown={location.pathname === '/game'} />
+      <Suspense fallback={<SplashScreen />}>
+        <GameCanvasLazy isShown={location.pathname === '/game'} />
+      </Suspense>
       <Outlet />
     </>
   ) : <SplashScreen />

@@ -4,6 +4,8 @@ import { MathOps } from '@p228/math'
 
 const TRANSFORM_LIKE_BUFFER = { x: 0, y: 0, rotation: 0 }
 
+export type ITransformLike = typeof TRANSFORM_LIKE_BUFFER
+
 export class Interpolation {
   public static interpolateTransform2d(entityRef: EntityRef, transform2d: typeof Transform2d, interpolationFactor: number): typeof TRANSFORM_LIKE_BUFFER {
     TRANSFORM_LIKE_BUFFER.x = MathOps.lerp(transform2d.prevX[entityRef], transform2d.x[entityRef], interpolationFactor)

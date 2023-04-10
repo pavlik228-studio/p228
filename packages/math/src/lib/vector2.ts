@@ -6,6 +6,7 @@ export interface IVector2Like {
 }
 
 export class Vector2 implements IVector2Like {
+  public static readonly Zero = Object.freeze(new Vector2(0, 0))
   public static readonly Forward = Object.freeze(new Vector2(1, 0))
   public static readonly Right = Object.freeze(new Vector2(0, -1))
 

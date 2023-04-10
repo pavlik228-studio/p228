@@ -1,4 +1,5 @@
 import { FC, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '../../../../../components/button/button'
 import classes from './choose-hero.module.sass'
 import { HeroCard } from './components/hero-card'
@@ -15,15 +16,16 @@ interface ChooseHeroProps {
   onBack: () => void
 }
 export const ChooseHero: FC<ChooseHeroProps> = ({ onNext, onBack }) => {
+  const { t } = useTranslation()
   const [ selectedHero, setSelectedHero ] = useState<string>(HEROES_MOCK[1].id)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className={classes['root']}>
       <div className={classes['header']}>
-        <Button onClick={onBack}><span>Back</span></Button>
-        <Button className={classes['title-button']} interactive={false}><span>Choose Hero</span></Button>
-        <Button onClick={onNext}><span>Next</span></Button>
+        <Button onClick={onBack}><span>{t('back')}</span></Button>
+        <Button className={classes['title-button']} interactive={false}><span>{t('chooseHero')}</span></Button>
+        <Button onClick={onNext}><span>{t('next')}</span></Button>
       </div>
       <div className={classes['heroes']} ref={scrollContainerRef}>
         {HEROES_MOCK.map((hero) => (
