@@ -173,9 +173,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">src/Weapons&amp;Items/dagger.png</key>
-            <key type="filename">src/Weapons&amp;Items/sword.png</key>
-            <key type="filename">src/Weapons&amp;Items/toxic-gun.png</key>
+            <key type="filename">src/Weapons&amp;Items/Dagger.png</key>
+            <key type="filename">src/Weapons&amp;Items/ToxicRpg.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -184,23 +183,27 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>160,160,320,320</rect>
+                <rect>80,80,160,161</rect>
                 <key>scale9Paddings</key>
-                <rect>160,160,320,320</rect>
+                <rect>80,80,160,161</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">src/Weapons&amp;Items/destructive-assault-riffle.png</key>
-            <key type="filename">src/Weapons&amp;Items/destructive-blaster.png</key>
-            <key type="filename">src/Weapons&amp;Items/destructive-riffle.png</key>
-            <key type="filename">src/Weapons&amp;Items/ethernal-blaster.png</key>
-            <key type="filename">src/Weapons&amp;Items/ethernal-riffle.png</key>
-            <key type="filename">src/Weapons&amp;Items/ethernal-rpg.png</key>
-            <key type="filename">src/Weapons&amp;Items/force-assault-riffle.png</key>
-            <key type="filename">src/Weapons&amp;Items/force-blaster.png</key>
-            <key type="filename">src/Weapons&amp;Items/force-riffle.png</key>
-            <key type="filename">src/Weapons&amp;Items/toxic-blaster.png</key>
-            <key type="filename">src/Weapons&amp;Items/toxic-riffle.png</key>
+            <key type="filename">src/Weapons&amp;Items/DestructiveAssaultRiffle.png</key>
+            <key type="filename">src/Weapons&amp;Items/DestructiveBlaster.png</key>
+            <key type="filename">src/Weapons&amp;Items/DestructiveRiffle.png</key>
+            <key type="filename">src/Weapons&amp;Items/EthernalBlaster.png</key>
+            <key type="filename">src/Weapons&amp;Items/EthernalGun.png</key>
+            <key type="filename">src/Weapons&amp;Items/EthernalRiffle.png</key>
+            <key type="filename">src/Weapons&amp;Items/EthernalRpg.png</key>
+            <key type="filename">src/Weapons&amp;Items/ForceAssaultRiffle.png</key>
+            <key type="filename">src/Weapons&amp;Items/ForceBlaster.png</key>
+            <key type="filename">src/Weapons&amp;Items/ForceGun.png</key>
+            <key type="filename">src/Weapons&amp;Items/ForceRiffle.png</key>
+            <key type="filename">src/Weapons&amp;Items/Sword.png</key>
+            <key type="filename">src/Weapons&amp;Items/ToxicBlaster.png</key>
+            <key type="filename">src/Weapons&amp;Items/ToxicGun.png</key>
+            <key type="filename">src/Weapons&amp;Items/ToxicRiffle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -209,15 +212,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>160,160,321,321</rect>
+                <rect>80,80,161,161</rect>
                 <key>scale9Paddings</key>
-                <rect>160,160,321,321</rect>
+                <rect>80,80,161,161</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">src/Weapons&amp;Items/destructive-gun.png</key>
-            <key type="filename">src/Weapons&amp;Items/ethernal-gun.png</key>
-            <key type="filename">src/Weapons&amp;Items/force-gun.png</key>
+            <key type="filename">src/Weapons&amp;Items/DestructiveGun.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -226,24 +227,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>160,160,321,320</rect>
+                <rect>80,80,161,160</rect>
                 <key>scale9Paddings</key>
-                <rect>160,160,321,320</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">src/Weapons&amp;Items/toxic-rpg.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>160,160,320,321</rect>
-                <key>scale9Paddings</key>
-                <rect>160,160,320,321</rect>
+                <rect>80,80,161,160</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -254,24 +240,24 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>src/Weapons&amp;Items/dagger.png</filename>
-                    <filename>src/Weapons&amp;Items/destructive-assault-riffle.png</filename>
-                    <filename>src/Weapons&amp;Items/destructive-blaster.png</filename>
-                    <filename>src/Weapons&amp;Items/destructive-gun.png</filename>
-                    <filename>src/Weapons&amp;Items/destructive-riffle.png</filename>
-                    <filename>src/Weapons&amp;Items/ethernal-blaster.png</filename>
-                    <filename>src/Weapons&amp;Items/ethernal-gun.png</filename>
-                    <filename>src/Weapons&amp;Items/ethernal-riffle.png</filename>
-                    <filename>src/Weapons&amp;Items/ethernal-rpg.png</filename>
-                    <filename>src/Weapons&amp;Items/force-assault-riffle.png</filename>
-                    <filename>src/Weapons&amp;Items/force-blaster.png</filename>
-                    <filename>src/Weapons&amp;Items/force-gun.png</filename>
-                    <filename>src/Weapons&amp;Items/force-riffle.png</filename>
-                    <filename>src/Weapons&amp;Items/sword.png</filename>
-                    <filename>src/Weapons&amp;Items/toxic-blaster.png</filename>
-                    <filename>src/Weapons&amp;Items/toxic-gun.png</filename>
-                    <filename>src/Weapons&amp;Items/toxic-riffle.png</filename>
-                    <filename>src/Weapons&amp;Items/toxic-rpg.png</filename>
+                    <filename>src/Weapons&amp;Items/Dagger.png</filename>
+                    <filename>src/Weapons&amp;Items/DestructiveAssaultRiffle.png</filename>
+                    <filename>src/Weapons&amp;Items/DestructiveBlaster.png</filename>
+                    <filename>src/Weapons&amp;Items/DestructiveGun.png</filename>
+                    <filename>src/Weapons&amp;Items/DestructiveRiffle.png</filename>
+                    <filename>src/Weapons&amp;Items/EthernalBlaster.png</filename>
+                    <filename>src/Weapons&amp;Items/EthernalGun.png</filename>
+                    <filename>src/Weapons&amp;Items/EthernalRiffle.png</filename>
+                    <filename>src/Weapons&amp;Items/EthernalRpg.png</filename>
+                    <filename>src/Weapons&amp;Items/ForceAssaultRiffle.png</filename>
+                    <filename>src/Weapons&amp;Items/ForceBlaster.png</filename>
+                    <filename>src/Weapons&amp;Items/ForceGun.png</filename>
+                    <filename>src/Weapons&amp;Items/ForceRiffle.png</filename>
+                    <filename>src/Weapons&amp;Items/Sword.png</filename>
+                    <filename>src/Weapons&amp;Items/ToxicBlaster.png</filename>
+                    <filename>src/Weapons&amp;Items/ToxicGun.png</filename>
+                    <filename>src/Weapons&amp;Items/ToxicRiffle.png</filename>
+                    <filename>src/Weapons&amp;Items/ToxicRpg.png</filename>
                 </array>
             </struct>
         </map>

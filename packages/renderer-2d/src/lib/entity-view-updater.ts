@@ -16,6 +16,7 @@ export class EntityViewUpdater<TWorld extends SimulationWorld = SimulationWorld,
   }
 
   public update(dt: number) {
+    const world = this._world
     this._worldEntitiesBuffer.clear()
 
     for (const [ filter, View ] of this._entityViewFilters) {
@@ -29,11 +30,22 @@ export class EntityViewUpdater<TWorld extends SimulationWorld = SimulationWorld,
         if (!this._entityViewMap.has(entityRef)) {
           const view = new View(entityRef, this._ctx)
           this._entityViewMap.set(entityRef, view)
-          view.onCreate(this._world)
+          view.onCreate(world)
           this.addChild(view)
         } else if (this._worldEntitiesBuffer.has(entityRef)) {
-          this._entityViewMap.get(entityRef)!.onUpdate(this._world, dt)
+          this._entityViewMap.get(entityRef)!.onUpdate(world, dt)
         }
+      }
+    }
+
+    for (const [ entityRef, view ] of this._entityViewMap) {
+      if (!this._worldEntitiesBuffer.has(entityRef)) {
+        view.onDestroy(world)
+        this._entityViewMap.delete(entityRef)
+        this._worldEntitiesBuffer.delete(entityRef)
+        view.destroy({
+          children: true,
+        })
       }
     }
   }

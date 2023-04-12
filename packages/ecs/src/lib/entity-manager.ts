@@ -27,7 +27,7 @@ export class EntityManager {
     this.byteLength = this._nextComponentIdx.byteLength
     this._recycledEntities = _allocator.allocateStruct(List, _config.recycledPoolSize, DataType.u32)
     this.byteLength += this._recycledEntities.byteLength
-    this._entityComponents = new HeapArray(_allocator, _config.entityPoolSize, DataType.i32)
+    this._entityComponents = new HeapArray(_allocator, _config.entityPoolSize, DataType.i32, -1)
     this.byteLength += this._entityComponents.byteLength
   }
 
@@ -57,6 +57,7 @@ export class EntityManager {
   public destroyEntity(entityRef: EntityRef): void {
     this._entityComponents.set(entityRef, -1)
     this._filterCollection.updateFilters(entityRef, 0)
+    this._recycledEntities.add(entityRef)
   }
 
   public hasEntity(entityRef: EntityRef): boolean {

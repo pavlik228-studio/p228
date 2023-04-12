@@ -10,7 +10,7 @@ import { Map1 } from './components/map-1'
 import { DebugRenderer } from './debug-renderer'
 import { SurvivorEntityViewUpdater } from './entity-view-updater'
 import { GameViewport } from './game-viewport'
-import { EnemyGroup, PlayerGroup, ShadowGroup } from './layer-groups'
+import { EnemyGroup, FxGroup, PlayerGroup, ShadowGroup } from './layer-groups'
 
 export class GameScene extends AbstractGameScene {
   private readonly _viewport: GameViewport
@@ -40,7 +40,8 @@ export class GameScene extends AbstractGameScene {
     this.addChild(
       new Layer(ShadowGroup),
       new Layer(EnemyGroup),
-      new Layer(PlayerGroup)
+      new Layer(PlayerGroup),
+      new Layer(FxGroup),
     )
   }
 

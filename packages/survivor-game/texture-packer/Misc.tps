@@ -173,6 +173,27 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">src/Misc/DamageFX_1.png</key>
+            <key type="filename">src/Misc/DamageFX_2.png</key>
+            <key type="filename">src/Misc/DamageFX_3.png</key>
+            <key type="filename">src/Misc/DamageFX_5.png</key>
+            <key type="filename">src/Misc/DamageFX_6.png</key>
+            <key type="filename">src/Misc/DamageFX_7.png</key>
+            <key type="filename">src/Misc/DamageFX_8.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9Paddings</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">src/Misc/EnemyShadow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -203,6 +224,73 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">src/Misc/ProjectileEnemy.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>45,46,90,92</rect>
+                <key>scale9Paddings</key>
+                <rect>45,46,90,92</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">src/Misc/ProjectileEthernal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.799127,0.505263</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>57,24,115,47</rect>
+                <key>scale9Paddings</key>
+                <rect>57,24,115,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">src/Misc/ProjectileStandard.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.799127,0.505263</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,57,47,115</rect>
+                <key>scale9Paddings</key>
+                <rect>24,57,47,115</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">src/Misc/ShootFX__1.png</key>
+            <key type="filename">src/Misc/ShootFX__2.png</key>
+            <key type="filename">src/Misc/ShootFX__3.png</key>
+            <key type="filename">src/Misc/ShootFX__4.png</key>
+            <key type="filename">src/Misc/ShootFX__5.png</key>
+            <key type="filename">src/Misc/ShootFX__6.png</key>
+            <key type="filename">src/Misc/ShootFX__7.png</key>
+            <key type="filename">src/Misc/ShootFX__8.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.35,0.45</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>66,64,131,128</rect>
+                <key>scale9Paddings</key>
+                <rect>66,64,131,128</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -212,6 +300,24 @@
                 <array>
                     <filename>src/Misc/EnemyShadow.png</filename>
                     <filename>src/Misc/HeroShadow.png</filename>
+                    <filename>src/Misc/ProjectileEnemy.png</filename>
+                    <filename>src/Misc/ProjectileStandard.png</filename>
+                    <filename>src/Misc/ProjectileEthernal.png</filename>
+                    <filename>src/Misc/DamageFX_1.png</filename>
+                    <filename>src/Misc/DamageFX_2.png</filename>
+                    <filename>src/Misc/DamageFX_3.png</filename>
+                    <filename>src/Misc/DamageFX_5.png</filename>
+                    <filename>src/Misc/DamageFX_6.png</filename>
+                    <filename>src/Misc/DamageFX_7.png</filename>
+                    <filename>src/Misc/DamageFX_8.png</filename>
+                    <filename>src/Misc/ShootFX__1.png</filename>
+                    <filename>src/Misc/ShootFX__2.png</filename>
+                    <filename>src/Misc/ShootFX__3.png</filename>
+                    <filename>src/Misc/ShootFX__4.png</filename>
+                    <filename>src/Misc/ShootFX__5.png</filename>
+                    <filename>src/Misc/ShootFX__6.png</filename>
+                    <filename>src/Misc/ShootFX__7.png</filename>
+                    <filename>src/Misc/ShootFX__8.png</filename>
                 </array>
             </struct>
         </map>

@@ -1,7 +1,7 @@
 import { Viewport } from 'pixi-viewport'
 import { GameRenderer } from '../game-renderer'
 
-const REFERENCE_SIZE = 1600
+const REFERENCE_SIZE = 1000
 
 export class GameViewport extends Viewport {
   constructor(private readonly _renderer: GameRenderer) {
@@ -21,7 +21,7 @@ export class GameViewport extends Viewport {
 
   private zoomAspectRatio(): void {
     const { width, height } = this._renderer.resizer
-    const size = Math.max(width, height)
+    const size = Math.min(width, height)
     const scale = size / REFERENCE_SIZE
 
     this.setZoom(scale)

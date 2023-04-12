@@ -1,0 +1,174 @@
+{"frames": {
+
+"Dagger":
+{
+	"frame": {"x":1289,"y":645,"w":320,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":320,"h":321},
+	"sourceSize": {"w":320,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"DestructiveAssaultRiffle":
+{
+	"frame": {"x":1,"y":1,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"DestructiveBlaster":
+{
+	"frame": {"x":1,"y":323,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"DestructiveGun":
+{
+	"frame": {"x":1611,"y":323,"w":321,"h":320},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":320},
+	"sourceSize": {"w":321,"h":320},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"DestructiveRiffle":
+{
+	"frame": {"x":1,"y":645,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"EthernalBlaster":
+{
+	"frame": {"x":323,"y":1,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"EthernalGun":
+{
+	"frame": {"x":323,"y":323,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"EthernalRiffle":
+{
+	"frame": {"x":323,"y":645,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"EthernalRpg":
+{
+	"frame": {"x":645,"y":1,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ForceAssaultRiffle":
+{
+	"frame": {"x":645,"y":323,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ForceBlaster":
+{
+	"frame": {"x":645,"y":645,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ForceGun":
+{
+	"frame": {"x":967,"y":1,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ForceRiffle":
+{
+	"frame": {"x":967,"y":323,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"Sword":
+{
+	"frame": {"x":967,"y":645,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ToxicBlaster":
+{
+	"frame": {"x":1289,"y":1,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ToxicGun":
+{
+	"frame": {"x":1611,"y":1,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ToxicRiffle":
+{
+	"frame": {"x":1289,"y":323,"w":321,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":321,"h":321},
+	"sourceSize": {"w":321,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"ToxicRpg":
+{
+	"frame": {"x":1610,"y":645,"w":320,"h":321},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":320,"h":321},
+	"sourceSize": {"w":320,"h":321},
+	"anchor": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "weapons-items.png",
+	"format": "RGBA8888",
+	"size": {"w":1933,"h":967},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ddd1b8ce22adc0621a8bf87f16ec23b5:e724e2252e26952102a2b24c40af480a:1c0cafc9d84b19895619ebe6540dddea$"
+}
+}

@@ -5,6 +5,7 @@ import { SurvivorWorld } from '@p228/survivor-simulation'
 import { KnockBack } from '../../components/effects/knock-back'
 
 const ENTITIES_TO_REMOVE_KNOCK_BACK = new Array<number>()
+const KNOCK_BACK_POWER = 1
 
 export class KnockBackSystem extends AbstractSystem<SurvivorWorld> {
   private readonly _knockBackFilter: Filter
@@ -31,9 +32,9 @@ export class KnockBackSystem extends AbstractSystem<SurvivorWorld> {
       const position = VECTOR2_BUFFER_2.from(rigidBody.translation())
 
       if (rigidBody.isKinematic()) {
-        rigidBody.setNextKinematicTranslation(position.add(movement.scale(this.world.config.deltaTime)))
+        rigidBody.setNextKinematicTranslation(position.add(movement.scale(this.world.config.deltaTime * KNOCK_BACK_POWER)))
       } else {
-        rigidBody.setLinvel(movement.scale(this.world.config.deltaTime / 1000), true)
+        rigidBody.setLinvel(movement.scale(KNOCK_BACK_POWER * 1000), true)
       }
 
       KnockBack.duration[entityRef]--

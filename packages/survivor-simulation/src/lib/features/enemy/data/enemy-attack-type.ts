@@ -7,13 +7,14 @@ export enum EnemyAttackType {
 export interface IEnemyAttackValues {
   cooldown: number
   chargeTime: number
-  damage: number
+  baseDamage: number
   chargeRange: number
   attackRange: number
+  projectileSpeed?: number
 }
 
 export const EnemyAttackData = new Map<EnemyAttackType, IEnemyAttackValues>([
-  [ EnemyAttackType.Melee, { cooldown: 60, chargeTime: 20, damage: 10, chargeRange: Math.pow(140, 2), attackRange: Math.pow(150, 2) } ],
-  [ EnemyAttackType.Ram, { cooldown: 180, chargeTime: 60, damage: 20, chargeRange: Math.pow(500, 2), attackRange: Math.pow(150, 2) } ],
-  [ EnemyAttackType.Shoot, { cooldown: 360, chargeTime: 24, damage: 20, chargeRange: Math.pow(400, 2), attackRange: 0 } ],
+  [ EnemyAttackType.Melee, { cooldown: 60, chargeTime: 20, baseDamage: 10, chargeRange: Math.pow(140, 2), attackRange: Math.pow(150, 2) } ],
+  [ EnemyAttackType.Ram, { cooldown: 180, chargeTime: 60, baseDamage: 20, chargeRange: Math.pow(500, 2), attackRange: Math.pow(150, 2) } ],
+  [ EnemyAttackType.Shoot, { cooldown: 120, chargeTime: 12, baseDamage: 20, chargeRange: Math.pow(400, 2), attackRange: 0, projectileSpeed: 10 } ],
 ])

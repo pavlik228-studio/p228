@@ -4,12 +4,16 @@ import { SurvivorWorld } from '@p228/survivor-simulation'
 import { GameScene } from './game-scene'
 import { EnemyView } from './views/enemy/enemy-view'
 import { PlayerView } from './views/player/player-view'
+import { ProjectileView } from './views/projectile/projectile-view'
+import { WeaponView } from './views/weapon/weapon-view'
 
 export class SurvivorEntityViewUpdater extends EntityViewUpdater<SurvivorWorld, GameScene> {
   constructor(world: SurvivorWorld, gameScene: GameScene) {
     const entityViews = new Map<Filter, IEntityViewConstructor<SurvivorWorld, GameScene>>([
       [ world.filterPlayer, PlayerView ],
       [ world.filterEnemy, EnemyView ],
+      [ world.filterProjectile, ProjectileView ],
+      [ world.filterWeapon, WeaponView ]
     ])
     super(gameScene, world, entityViews)
   }

@@ -87,6 +87,10 @@ export class List implements IAllocatorStructure {
     return value
   }
 
+  public clear(): void {
+    this._length.value = 0
+  }
+
   public* [Symbol.iterator](): Iterator<number> {
     for (let i = 0; i < this._length.value; i++) {
       yield this._heapView[i]

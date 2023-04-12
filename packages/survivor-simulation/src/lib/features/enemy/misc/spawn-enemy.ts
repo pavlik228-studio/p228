@@ -2,6 +2,7 @@ import { Transform2d } from '@p228/engine'
 import { IVector2Like } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
 import { SurvivorWorld } from '@p228/survivor-simulation'
+import { CollisionGroups } from '../../../collision-groups'
 import { Health } from '../../attack/components/health'
 import { Enemy } from '../components/enemy'
 import { EnemyAttack } from '../components/enemy-attack'
@@ -25,6 +26,9 @@ export function spawnEnemy(world: SurvivorWorld, enemyType: EnemyType, position:
 
   const enemyColliderDesc = rapierInstance.ColliderDesc.ball(enemyValues.collider.radius)
   enemyColliderDesc.friction = 0
+  enemyColliderDesc.setCollisionGroups(CollisionGroups.Enemy)
+  enemyColliderDesc.setSolverGroups(CollisionGroups.Enemy)
+  enemyColliderDesc.setActiveEvents(rapierInstance.ActiveEvents.COLLISION_EVENTS)
   const enemyRigidBodyDesc = rapierInstance.RigidBodyDesc.dynamic()
   enemyRigidBodyDesc.linearDamping = 0.5
   enemyRigidBodyDesc.lockRotations()
