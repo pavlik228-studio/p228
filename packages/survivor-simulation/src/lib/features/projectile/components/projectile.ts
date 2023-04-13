@@ -4,6 +4,8 @@ export enum ProjectileType {
   Standard = 0,
   Enemy,
   Ethernal,
+  EthernalShot,
+  Rocket,
 }
 
 export const Projectile = defineComponent({

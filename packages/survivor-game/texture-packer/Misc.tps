@@ -254,6 +254,36 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">src/Misc/ProjectileEthernalRocket.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.7,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,47,121,93</rect>
+                <key>scale9Paddings</key>
+                <rect>60,47,121,93</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">src/Misc/ProjectileEthernalShot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.597403,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>35,39,70,77</rect>
+                <key>scale9Paddings</key>
+                <rect>35,39,70,77</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">src/Misc/ProjectileStandard.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -318,6 +348,8 @@
                     <filename>src/Misc/ShootFX__6.png</filename>
                     <filename>src/Misc/ShootFX__7.png</filename>
                     <filename>src/Misc/ShootFX__8.png</filename>
+                    <filename>src/Misc/ProjectileEthernalShot.png</filename>
+                    <filename>src/Misc/ProjectileEthernalRocket.png</filename>
                 </array>
             </struct>
         </map>

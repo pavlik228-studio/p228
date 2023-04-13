@@ -5,6 +5,7 @@ import { SurvivorWorld } from '@p228/survivor-simulation'
 import { Weapon } from '../components/weapon'
 import { AbstractWeaponAttack } from '../data/attacks/abstract-weapon-attack'
 import { WeaponAttackProjectile } from '../data/attacks/weapon-attack-projectile'
+import { WeaponAttackSpotProjectile } from '../data/attacks/weapon-attack-spot-projectile'
 import { WeaponAttackThrust } from '../data/attacks/weapon-attack-thrust'
 import { WeaponAttackType } from '../data/weapon-type'
 import { WeaponTargetsAttackedPool } from '../misc/weapon-targets-attacked-pool'
@@ -26,6 +27,7 @@ export class WeaponAiSystem extends AbstractSystem<SurvivorWorld> {
 
     this._weaponAttacks.set(WeaponAttackType.Thrust, new WeaponAttackThrust(this.world, this._weaponTargetsAttackedPool))
     this._weaponAttacks.set(WeaponAttackType.Projectile, new WeaponAttackProjectile(this.world, this._weaponTargetsAttackedPool))
+    this._weaponAttacks.set(WeaponAttackType.SpotProjectile, new WeaponAttackSpotProjectile(this.world, this._weaponTargetsAttackedPool))
   }
 
   public override update(): void {

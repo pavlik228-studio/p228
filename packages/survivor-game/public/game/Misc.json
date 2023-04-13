@@ -2,8 +2,8 @@
 
 "DamageFX_1":
 {
-	"frame": {"x":385,"y":582,"w":17,"h":19},
-	"rotated": false,
+	"frame": {"x":450,"y":543,"w":17,"h":19},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":116,"y":119,"w":17,"h":19},
 	"sourceSize": {"w":256,"h":256},
@@ -11,7 +11,7 @@
 },
 "DamageFX_2":
 {
-	"frame": {"x":454,"y":712,"w":50,"h":48},
+	"frame": {"x":450,"y":491,"w":50,"h":48},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":100,"y":104,"w":50,"h":48},
@@ -20,7 +20,7 @@
 },
 "DamageFX_3":
 {
-	"frame": {"x":352,"y":839,"w":97,"h":76},
+	"frame": {"x":385,"y":1041,"w":97,"h":76},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":76,"y":90,"w":97,"h":76},
@@ -29,7 +29,7 @@
 },
 "DamageFX_5":
 {
-	"frame": {"x":320,"y":721,"w":132,"h":116},
+	"frame": {"x":1,"y":749,"w":132,"h":116},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":59,"y":70,"w":132,"h":116},
@@ -38,8 +38,8 @@
 },
 "DamageFX_6":
 {
-	"frame": {"x":202,"y":721,"w":116,"h":111},
-	"rotated": false,
+	"frame": {"x":387,"y":923,"w":116,"h":111},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":67,"y":73,"w":116,"h":111},
 	"sourceSize": {"w":256,"h":256},
@@ -47,8 +47,8 @@
 },
 "DamageFX_7":
 {
-	"frame": {"x":137,"y":838,"w":110,"h":108},
-	"rotated": true,
+	"frame": {"x":388,"y":813,"w":110,"h":108},
+	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":70,"y":74,"w":110,"h":108},
 	"sourceSize": {"w":256,"h":256},
@@ -56,7 +56,7 @@
 },
 "DamageFX_8":
 {
-	"frame": {"x":385,"y":619,"w":91,"h":101},
+	"frame": {"x":282,"y":1005,"w":91,"h":101},
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":79,"y":78,"w":91,"h":101},
@@ -65,7 +65,7 @@
 },
 "EnemyShadow":
 {
-	"frame": {"x":432,"y":303,"w":156,"h":56},
+	"frame": {"x":140,"y":749,"w":156,"h":56},
 	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":156,"h":56},
@@ -74,8 +74,8 @@
 },
 "HeroShadow":
 {
-	"frame": {"x":450,"y":461,"w":156,"h":56},
-	"rotated": true,
+	"frame": {"x":198,"y":859,"w":156,"h":56},
+	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":156,"h":56},
 	"sourceSize": {"w":156,"h":56},
@@ -83,7 +83,7 @@
 },
 "ProjectileEnemy":
 {
-	"frame": {"x":246,"y":303,"w":180,"h":184},
+	"frame": {"x":202,"y":677,"w":180,"h":184},
 	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":180,"h":184},
@@ -99,9 +99,27 @@
 	"sourceSize": {"w":229,"h":95},
 	"anchor": {"x":0.799127,"y":0.505263}
 },
+"ProjectileEthernalRocket":
+{
+	"frame": {"x":246,"y":303,"w":241,"h":186},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":241,"h":186},
+	"sourceSize": {"w":241,"h":186},
+	"anchor": {"x":0.7,"y":0.5}
+},
+"ProjectileEthernalShot":
+{
+	"frame": {"x":140,"y":923,"w":154,"h":140},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":140},
+	"sourceSize": {"w":154,"h":140},
+	"anchor": {"x":0.597403,"y":0.5}
+},
 "ProjectileStandard":
 {
-	"frame": {"x":219,"y":485,"w":229,"h":95},
+	"frame": {"x":1,"y":481,"w":229,"h":95},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":229,"h":95},
@@ -110,7 +128,7 @@
 },
 "ShootFX__1":
 {
-	"frame": {"x":247,"y":839,"w":103,"h":86},
+	"frame": {"x":282,"y":917,"w":103,"h":86},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":79,"y":70,"w":103,"h":86},
@@ -119,8 +137,8 @@
 },
 "ShootFX__2":
 {
-	"frame": {"x":1,"y":838,"w":134,"h":110},
-	"rotated": false,
+	"frame": {"x":388,"y":677,"w":134,"h":110},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":75,"y":58,"w":134,"h":110},
 	"sourceSize": {"w":262,"h":256},
@@ -128,8 +146,8 @@
 },
 "ShootFX__3":
 {
-	"frame": {"x":219,"y":582,"w":164,"h":137},
-	"rotated": false,
+	"frame": {"x":1,"y":923,"w":164,"h":137},
+	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":70,"y":44,"w":164,"h":137},
 	"sourceSize": {"w":262,"h":256},
@@ -137,7 +155,7 @@
 },
 "ShootFX__4":
 {
-	"frame": {"x":1,"y":667,"w":199,"h":169},
+	"frame": {"x":1,"y":578,"w":199,"h":169},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":60,"y":32,"w":199,"h":169},
@@ -146,7 +164,7 @@
 },
 "ShootFX__5":
 {
-	"frame": {"x":1,"y":481,"w":216,"h":184},
+	"frame": {"x":232,"y":491,"w":216,"h":184},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":46,"y":31,"w":216,"h":184},
@@ -189,8 +207,8 @@
 	"version": "1.1",
 	"image": "Misc.png",
 	"format": "RGBA8888",
-	"size": {"w":507,"h":949},
+	"size": {"w":499,"h":1118},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:7868235f01facd9bdbe7e8cfe3d98e9d:b59c1666e134625c9b00f8e1e79f29ff:65678b973d3ac8e1dd536acb732dd5ab$"
+	"smartupdate": "$TexturePacker:SmartUpdate:982eed6df83e55bb9638eecd754ba6f8:38c397a496eaa9d841e7fb626117170c:65678b973d3ac8e1dd536acb732dd5ab$"
 }
 }

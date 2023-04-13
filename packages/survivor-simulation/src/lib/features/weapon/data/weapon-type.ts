@@ -1,12 +1,16 @@
+import { MathOps } from '@p228/math'
+
 export enum WeaponType {
   Sword,
   EthernalGun,
-  Shotgun,
+  EthernalBlaster,
+  // DestructiveGun,
 }
 export enum WeaponAttackType {
   Thrust,
   Projectile,
   SpotProjectile,
+  // RocketProjectile,
 }
 
 interface IThrustWeapon {
@@ -44,6 +48,6 @@ TAttackType extends WeaponAttackType.Thrust
 export const WeaponData = {
   [WeaponType.Sword]: { attackType: WeaponAttackType.Thrust, range: 200, cooldown: 60, width: 40, height: 10, baseDamage: 10, duration: 12 } as IWeapon<WeaponAttackType.Thrust>,
   [WeaponType.EthernalGun]: { attackType: WeaponAttackType.Projectile, range: 500, cooldown: 10, baseDamage: 5, speed: 40 } as IWeapon<WeaponAttackType.Projectile>,
-  [WeaponType.Shotgun]: { attackType: WeaponAttackType.SpotProjectile, range: 500, cooldown: 90, baseDamage: 5, speed: 40, angle: 0.5, projectiles: 5 } as IWeapon<WeaponAttackType.SpotProjectile>,
+  [WeaponType.EthernalBlaster]: { attackType: WeaponAttackType.SpotProjectile, range: 700, cooldown: 90, baseDamage: 5, speed: 40, angle: MathOps.Deg2Rad * 20, projectiles: 7 } as IWeapon<WeaponAttackType.SpotProjectile>,
 }
 
