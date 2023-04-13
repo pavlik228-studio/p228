@@ -1,3 +1,4 @@
+import { EntityRef } from '@p228/ecs'
 import { Transform2d } from '@p228/engine'
 import { IVector2Like, MathOps, VECTOR2_BUFFER_1 } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
@@ -13,7 +14,7 @@ export function spawnProjectile(
   direction: IVector2Like,
   speed: number,
   damage: number,
-): void {
+): EntityRef {
   const deltaTime = world.config.deltaTime
   const rapierInstance = world.rapierInstance
   const physicsWorld = world.physicsWorld
@@ -49,4 +50,6 @@ export function spawnProjectile(
   PhysicsRefs.colliderRef[entityRef] = projectileCollider.handle
 
   projectileRigidBody.setLinvel(VECTOR2_BUFFER_1.from(direction).scale(speed), true)
+
+  return entityRef
 }

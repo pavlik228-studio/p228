@@ -1,5 +1,6 @@
 import { Transform2d } from '@p228/engine'
 import { Vector2 } from '@p228/math'
+import { performDamage } from '../../../attack/misc/perform-damage'
 import { EnemyAttackData, EnemyAttackType } from '../enemy-attack-type'
 import { AbstractEnemyAttack } from './abstract-enemy-attack'
 
@@ -19,6 +20,8 @@ export class EnemyAttackMelee extends AbstractEnemyAttack {
     ENEMY_POSITION_BUFFER.set(Transform2d.x[this._ownerRef], Transform2d.y[this._ownerRef])
 
     if (ENEMY_POSITION_BUFFER.sub(this._playerPosition).lengthSquared() >= this._attackValues.attackRange) return
+
+    performDamage(this._world, this._ownerRef, this._playerRef, -this._attackValues.baseDamage)
   }
 
 }

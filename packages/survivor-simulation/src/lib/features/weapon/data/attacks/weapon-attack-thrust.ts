@@ -90,7 +90,7 @@ export class WeaponAttackThrust extends AbstractWeaponAttack<WeaponAttackType.Th
     ).normalize()
     KnockBack.x[entityRef] = VECTOR2_BUFFER_1.x
     KnockBack.y[entityRef] = VECTOR2_BUFFER_1.y
-    KnockBack.duration[entityRef] = 4
+    KnockBack.duration[entityRef] = 10
 
     return true
   }

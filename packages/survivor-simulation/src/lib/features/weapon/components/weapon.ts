@@ -13,4 +13,5 @@ export const Weapon = defineComponent({
   targetX: DataType.f32,
   targetY: DataType.f32,
   startedAt: DataType.u32,
+  itemRef: DataType.u32,
 })

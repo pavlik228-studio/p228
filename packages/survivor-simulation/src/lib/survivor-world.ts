@@ -1,5 +1,5 @@
 import { Allocator, Filter, ISystemConstructor } from '@p228/ecs'
-import { InputProvider, PrevTransformSystem, Transform2d } from '@p228/engine'
+import { InputProvider, PrevTransformSystem, SimulationEvents, Transform2d } from '@p228/engine'
 import { Physics2dConfig, Physics2dWorld, PhysicsRefs, Rapier2D } from '@p228/physics2d'
 import { KnockBack } from './features/attack/components/effects/knock-back'
 import { Health } from './features/attack/components/health'
@@ -16,6 +16,8 @@ import { Projectile } from './features/projectile/components/projectile'
 import { ProjectileMovementSystem } from './features/projectile/systems/projectile-movement-system'
 import { ProjectileSystem } from './features/projectile/systems/projectile-system'
 import { Weapon } from './features/weapon/components/weapon'
+import { DamageEvent } from './features/weapon/events/damage'
+import { ExplosionEvent } from './features/weapon/events/explosion'
 import { WeaponAiSystem } from './features/weapon/systems/weapon-ai-system'
 import { WeaponSystem } from './features/weapon/systems/weapon-system'
 
@@ -27,6 +29,13 @@ export class SurvivorWorld extends Physics2dWorld {
 
   constructor(physicsConfig: Physics2dConfig, inputProvider: InputProvider, rapierInstance: Rapier2D) {
     super(physicsConfig, inputProvider, rapierInstance)
+  }
+
+  protected override registerEvents(simulationEvents: SimulationEvents) {
+    super.registerEvents(simulationEvents)
+
+    simulationEvents.register(ExplosionEvent)
+    simulationEvents.register(DamageEvent)
   }
 
   public get allocator(): Allocator {

@@ -20,6 +20,7 @@ specifiers:
   '@swc/core': ^1.2.173
   '@swc/helpers': ~0.4.11
   '@testing-library/react': 14.0.0
+  '@types/fontfaceobserver': ^2.1.0
   '@types/node': 18.14.2
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -38,6 +39,7 @@ specifiers:
   eslint-plugin-jsx-a11y: 6.7.1
   eslint-plugin-react: 7.32.2
   eslint-plugin-react-hooks: 4.6.0
+  fontfaceobserver: ^2.3.0
   i18next: ^22.4.14
   jsdom: ~20.0.3
   nx: 15.9.2
@@ -72,6 +74,7 @@ dependencies:
   '@stdlib/math-base-special-sin': 0.0.6
   '@swc/helpers': 0.4.14
   animate.css: 4.1.1
+  fontfaceobserver: 2.3.0
   i18next: 22.4.14
   pixi-viewport: 5.0.1
   pixi.js: 7.2.4_@pixi+utils@7.2.4
@@ -94,6 +97,7 @@ devDependencies:
   '@swc/cli': 0.1.62_@swc+core@1.3.42
   '@swc/core': 1.3.42
   '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
+  '@types/fontfaceobserver': 2.1.0
   '@types/node': 18.14.2
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -4363,6 +4367,10 @@ packages:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
+  /@types/fontfaceobserver/2.1.0:
+    resolution: {integrity: sha512-Vqf183RAiFdIjUi4asKqogf2HIfLDnxn+dQo9GCpnsU5QrrsLMA2bkJU1dHRudQlizLybWD61Csd1zAgUQ3JKQ==}
+    dev: true
+
   /@types/fs-extra/8.1.2:
     resolution: {integrity: sha512-SvSrYXfWSc7R4eqnOzbQF4TZmfpNSM9FrSWLU3EUnWBuyZqNBOrv1B1JA3byUDPUl9z4Ab3jeZG2eDdySlgNMg==}
     dependencies:
@@ -6518,6 +6526,10 @@ packages:
       debug:
         optional: true
     dev: true
+
+  /fontfaceobserver/2.3.0:
+    resolution: {integrity: sha512-6FPvD/IVyT4ZlNe7Wcn5Fb/4ChigpucKYSvD6a+0iMoLn2inpo711eyIcKjmDtE5XNcgAkSH9uN/nfAeZzHEfg==}
+    dev: false
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}

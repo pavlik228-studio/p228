@@ -3,6 +3,7 @@ import { Transform2d } from '@p228/engine'
 import { PhysicsRefs } from '@p228/physics2d'
 import { SurvivorWorld } from '@p228/survivor-simulation'
 import { Health } from '../../attack/components/health'
+import { performDamage } from '../../attack/misc/perform-damage'
 import { Projectile } from '../components/projectile'
 
 const REMOVE_LIST = new Array<number>()
@@ -30,7 +31,7 @@ export class ProjectileSystem extends AbstractSystem<SurvivorWorld> {
 
       Health.current[otherEntityRef] -= Projectile.damage[projectileEntityRef]
 
-      console.log(`Projectile hit entity ${otherEntityRef} for ${Projectile.damage[projectileEntityRef]} damage`)
+      performDamage(this.world, otherEntityRef, Projectile.ownerRef[projectileEntityRef], -Projectile.damage[projectileEntityRef])
 
       REMOVE_LIST.push(projectileEntityRef, projectileColliderHandle)
     }

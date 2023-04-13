@@ -8,3 +8,5 @@ export * from './lib/misc/snapshot-history'
 
 export * from './lib/components/transform-2d'
 export * from './lib/systems/prev-transform-system'
+export * from './lib/events/simulations-event'
+export * from './lib/events/simulation-events'

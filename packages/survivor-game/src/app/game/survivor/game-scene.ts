@@ -5,10 +5,12 @@ import { PlayerJoinedData, SurvivorInputSchema, SurvivorRpc, SurvivorWorld } fro
 import { Layer } from '@pixi/layers'
 import { GameRenderer } from '../game-renderer'
 import { getRapierInstance } from '../misc/rapier-store'
+import { DamageText } from './components/damage-text'
 import { InputListener } from './components/input-listener'
 import { Map1 } from './components/map-1'
 import { DebugRenderer } from './debug-renderer'
 import { SurvivorEntityViewUpdater } from './entity-view-updater'
+import { GameEvents } from './game-events'
 import { GameViewport } from './game-viewport'
 import { EnemyGroup, FxGroup, PlayerGroup, ShadowGroup } from './layer-groups'
 
@@ -19,6 +21,8 @@ export class GameScene extends AbstractGameScene {
   private _inputProvider!: InputProvider<typeof SurvivorInputSchema>
   private _inputListener!: InputListener
   private _debugRenderer: DebugRenderer | undefined
+  private _gameEvents!: GameEvents
+  private _damageText!: DamageText
 
   constructor(renderer: GameRenderer) {
     super(renderer)
@@ -55,6 +59,8 @@ export class GameScene extends AbstractGameScene {
       this._viewport.removeChild(this._entityViewUpdater)
       this._entityViewUpdater.destroy()
       this._entityViewUpdater = undefined as any
+      this._gameEvents.destroy()
+      this._damageText.destroy()
       if (this._debugRenderer) {
         this._viewport.removeChild(this._debugRenderer)
         this._debugRenderer.destroy()
@@ -74,15 +80,19 @@ export class GameScene extends AbstractGameScene {
     this._viewport.addChild(this._entityViewUpdater)
     this._playerSlot = this._inputProvider.playerSlot
     this._inputProvider.setRpc(SurvivorRpc.PlayerJoined, new PlayerJoinedData(this._playerSlot))
-    this._debugRenderer = new DebugRenderer(this._world, this._renderer)
-    this._debugRenderer.parentGroup = PlayerGroup
-    this._viewport.addChild(this._debugRenderer)
+    // this._debugRenderer = new DebugRenderer(this._world, this._renderer)
+    // this._debugRenderer.parentGroup = PlayerGroup
+    // this._viewport.addChild(this._debugRenderer)
+    this._gameEvents = new GameEvents(this._world, this._viewport)
+    this._damageText = new DamageText(this._world, this._playerSlot)
+    this._viewport.addChild(this._damageText)
   }
 
   public onUpdate(dt: number): void {
     if (this._world !== undefined) {
       this._world.update(dt)
       this._entityViewUpdater.update(dt)
+      this._damageText.update(dt)
     }
     if (this._debugRenderer !== undefined) this._debugRenderer.onUpdate()
   }

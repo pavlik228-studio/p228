@@ -1,7 +1,9 @@
+import { EntityRef } from '@p228/ecs'
 import { Transform2d } from '@p228/engine'
 import { Vector2 } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
 import { KnockBack } from '../../../attack/components/effects/knock-back'
+import { performDamage } from '../../../attack/misc/perform-damage'
 import { EnemyActiveAttack } from '../../components/enemy-active-attack'
 import { EnemyAttackData, EnemyAttackType } from '../enemy-attack-type'
 import { AbstractEnemyAttack } from './abstract-enemy-attack'
@@ -36,6 +38,7 @@ export class EnemyAttackRam extends AbstractEnemyAttack {
     for (const playerColliderHandle of this._playerColliderHandles) {
       if (this.checkCollidingWithPlayer(playerColliderHandle, PhysicsRefs.colliderRef[this._ownerRef])) {
         const playerEntityRef = this._world.colliderEntityRegistry.get(playerColliderHandle)!!
+        this.dealDamage(playerEntityRef)
         this._world.entityManager.addComponent(playerEntityRef, KnockBack)
         KnockBack.x[playerEntityRef] = EnemyActiveAttack.targetX[this._ownerRef]
         KnockBack.y[playerEntityRef] = EnemyActiveAttack.targetY[this._ownerRef]
@@ -51,7 +54,12 @@ export class EnemyAttackRam extends AbstractEnemyAttack {
   }
 
   protected performAttack(): void {
-    // TODO: if enemy is close to target, ram player and deal damage
+    PLAYER_POSITION_BUFFER.from(this._playerPosition)
+    ENEMY_POSITION_BUFFER.set(Transform2d.x[this._ownerRef], Transform2d.y[this._ownerRef])
+
+    if (Vector2.DistanceSquared(PLAYER_POSITION_BUFFER, ENEMY_POSITION_BUFFER) <= this._attackValues.attackRange) {
+      this.dealDamage(this._playerRef)
+    }
   }
 
   private moveToTarget() {
@@ -68,6 +76,10 @@ export class EnemyAttackRam extends AbstractEnemyAttack {
     this._world.physicsWorld.narrowPhase.contactPair(playerColliderHandle, enemyColliderHandle, () => colliding = true)
 
     return colliding
+  }
+
+  private dealDamage(entityRef: EntityRef) {
+    performDamage(this._world, entityRef, this._ownerRef, -this._attackValues.baseDamage)
   }
 
 }

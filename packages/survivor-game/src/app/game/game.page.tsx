@@ -1,4 +1,5 @@
 import { Assets } from 'pixi.js'
+import FontFaceObserver from 'fontfaceobserver'
 import React, { FC, Suspense, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { SplashScreen } from './components/splash-screen'
@@ -13,8 +14,12 @@ export const GamePage: FC = () => {
   const [ isLoaded, setIsLoaded ] = useState(false)
 
   useEffect(() => {
+    const sofiaSansFontPromise = new FontFaceObserver('Sofia Sans').load()
+
     Assets.init({ manifest: ResourcesManifest }).catch(console.error)
-    Assets.loadBundle('game-scene', console.log).then(() => setIsLoaded(true))
+    const gameSceneAssetsPromise = Assets.loadBundle('game-scene')
+    Promise.all([sofiaSansFontPromise, gameSceneAssetsPromise]).then(() => setIsLoaded(true))
+
     import('@dimforge/rapier2d').then((rapier) => {
       setRapierInstance(rapier)
       setRapierInitialized(true)
@@ -25,8 +30,8 @@ export const GamePage: FC = () => {
     <>
       <Suspense fallback={<SplashScreen />}>
         <GameCanvasLazy isShown={location.pathname === '/game'} />
+        <Outlet />
       </Suspense>
-      <Outlet />
     </>
   ) : <SplashScreen />
 }

@@ -57,10 +57,17 @@ export class SimulationEvents implements ISimulationEvents {
     this._actualEventIdHash.set(eventId, this.getEventHash(event, tick, data))
 
     this._predictedEvents.emit(event, tick, data)
-    this.enqueueEvent(eventId, event, tick, data)
+
+    if (this._maxInputLag === 0) {
+      this._verifiedEvents.emit(event, tick, data)
+    } else {
+      this.enqueueEvent(eventId, event, tick, data)
+    }
   }
 
   public verify(tick: number): void {
+    if (this._maxInputLag === 0) return
+
     const tickToVerify = Math.max(0, tick - this._maxInputLag)
 
     if (tickToVerify === 0) return

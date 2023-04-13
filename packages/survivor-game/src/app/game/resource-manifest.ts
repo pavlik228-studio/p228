@@ -11,6 +11,8 @@ export const GameSceneAssets = {
   RamSkull: '/game/enemies/ram-skull.json',
   RangeSkull: '/game/enemies/range-skull.json',
   ShieldSkull: '/game/enemies/shield-skull.json',
+
+  ExplosionFX: '/game/explosion.json',
 }
 
 export const ResourcesManifest = {
