@@ -19,7 +19,7 @@ export function defineComponent<T extends IComponentSchema>(schema: T, options =
     }
   }
 
-  component._BYTES_PER_ELEMENT = bytesPerElement
+  component._BYTES_PER_ELEMENT = Math.ceil(bytesPerElement / 8) * 8
   component._FIELDS_COUNT = Object.keys(schema).length
   component._SCHEMA = schema
   if (options.dangerouslySetLimit > 0) component._LIMIT = options.dangerouslySetLimit

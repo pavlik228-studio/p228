@@ -6,6 +6,8 @@ import { CollisionGroups } from '../../../collision-groups'
 import { PlayerJoinedData } from '../../../input/rpc-datas/player-joined'
 import { SurvivorWorld } from '../../../survivor-world'
 import { Health } from '../../attack/components/health'
+import { WeaponType } from '../../weapon/data/weapon-type'
+import { spawnWeapon } from '../../weapon/misc/spawn-weapon'
 import { Player } from '../components/player'
 
 export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>): EntityRef {
@@ -45,14 +47,9 @@ export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>): E
   PhysicsRefs.rigidBodyRef[playerEntityRef] = playerRigidBody.handle
   PhysicsRefs.colliderRef[playerEntityRef] = playerCollider.handle
 
-  Health.max[playerEntityRef] = Health.current[playerEntityRef] = 100
+  Health.max[playerEntityRef] = Health.current[playerEntityRef] = 5000
 
-  // spawnWeapon(entityManager, playerEntityRef, WeaponType.EthernalRpg, 1, playerPosition)
-  // spawnWeapon(entityManager, WeaponType.EthernalGun, 0, playerPosition, 50, -100)
-  // spawnWeapon(entityManager, WeaponType.EthernalBlaster, 0, playerPosition, 50, 100)
-  // spawnWeapon(entityManager, WeaponType.EthernalRpg, playerPosition, -100, 0)
-  // spawnWeapon(entityManager, WeaponType.EthernalGun, playerPosition, -50, 100)
-  // spawnWeapon(entityManager, playerEntityRef, WeaponType.Sword, 1, playerPosition)
+  spawnWeapon(entityManager, playerEntityRef, WeaponType.EthernalRpg, 1, playerPosition)
 
   return playerEntityRef
 }

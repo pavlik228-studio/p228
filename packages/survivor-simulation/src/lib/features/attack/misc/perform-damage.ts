@@ -16,7 +16,7 @@ export function performDamage(world: SurvivorWorld, entityRef: EntityRef, damage
   hp = Math.max(0, Health.current[entityRef] + damage)
   Health.current[entityRef] = hp
 
-  console.log(`[DAMAGE] ${entityRef} ${damageByRef} ${damage} ${hp}`)
+  // console.log(`[DAMAGE] ${entityRef} ${damageByRef} ${damage} ${hp}`)
 
   if (hp === 0) {
     if (world.entityManager.hasComponent(entityRef, Enemy)) {

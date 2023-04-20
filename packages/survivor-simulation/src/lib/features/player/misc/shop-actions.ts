@@ -31,10 +31,10 @@ export class ShopActions {
   }
 
   public static getShopState(playerEntityRef: EntityRef): Array<IShopStateItem> {
-    if (Gameplay.stage !== GameplayStage.Shop) throw new Error('Shop is not available')
+    if (Gameplay.data.stage !== GameplayStage.Shop) throw new Error('Shop is not available')
     const playerLuck = Player.luck[playerEntityRef]
     this._prng.resetState(Player.shopState[playerEntityRef] * 4294967296)
-    const itemsLevel = Gameplay.itemsLevel
+    const itemsLevel = Gameplay.data.itemsLevel
     let tmpShopItems = new Array<IShopItem>()
 
     for (const item of ShopItems) {

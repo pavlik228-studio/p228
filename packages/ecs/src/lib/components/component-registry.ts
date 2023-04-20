@@ -91,7 +91,7 @@ export class ComponentRegistry {
         }
       }
       component.raw = raw
-      Object.assign(component, component._ACCESSOR(raw))
+      component.data = component._ACCESSOR(raw)
     }
   }
 }

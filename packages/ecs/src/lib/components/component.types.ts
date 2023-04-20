@@ -36,7 +36,9 @@ export type IComponent<T extends IComponentSchema> = {
 } & IComponentInternal
 
 export type ISingletonComponent<TSchema extends IComponentSchema> = {
-  [K in keyof TSchema]: TSchema[K] extends DataType ? number : TSchema[K] extends IFixedList ? TypedArray : never
+  data: {
+    [K in keyof TSchema]: TSchema[K] extends DataType ? number : TSchema[K] extends IFixedList ? TypedArray : never
+  }
 } & ISingletonComponentInternal<TSchema>
 
 export type ISingletonComponentAccessor<TSchema extends IComponentSchema> = (raw: { [K in keyof TSchema]: TypedArray }) => {
