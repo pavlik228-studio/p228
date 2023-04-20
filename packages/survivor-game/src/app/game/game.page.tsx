@@ -1,7 +1,7 @@
 import { Assets } from 'pixi.js'
 import FontFaceObserver from 'fontfaceobserver'
 import React, { FC, Suspense, useEffect, useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { SplashScreen } from './components/splash-screen'
 import { setRapierInstance } from './misc/rapier-store'
 import { ResourcesManifest } from './resource-manifest'
@@ -30,7 +30,6 @@ export const GamePage: FC = () => {
     <>
       <Suspense fallback={<SplashScreen />}>
         <GameCanvasLazy isShown={location.pathname === '/game'} />
-        <Outlet />
       </Suspense>
     </>
   ) : <SplashScreen />

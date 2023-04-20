@@ -27,11 +27,14 @@ export class ProjectileSystem extends AbstractSystem<SurvivorWorld> {
       const otherHandle = contact.otherHandle
       const otherEntityRef = this.world.colliderEntityRegistry.get(otherHandle)!
 
-      if (!entityManager.hasComponent(otherEntityRef, Health)) throw new Error('Projectile hit an entity without health')
+      if (otherEntityRef === undefined) continue
 
-      Health.current[otherEntityRef] -= Projectile.damage[projectileEntityRef]
+      if (!entityManager.hasComponent(otherEntityRef, Health)) {
+        debugger
+        throw new Error('Projectile hit an entity without health')
+      }
 
-      performDamage(this.world, otherEntityRef, Projectile.ownerRef[projectileEntityRef], -Projectile.damage[projectileEntityRef])
+      performDamage(this.world, otherEntityRef, Projectile.ownerRef[projectileEntityRef], -Projectile.damage[projectileEntityRef], !!Projectile.hasCrit[projectileEntityRef])
 
       REMOVE_LIST.push(projectileEntityRef, projectileColliderHandle)
     }

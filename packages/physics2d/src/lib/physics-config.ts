@@ -4,6 +4,7 @@ export class Physics2dConfig extends SimulationConfig {
   constructor(
     entityPoolSize: number,
     public readonly gravity: { x: number, y: number },
+    seed = 0,
     public readonly pixelPerUnit = 1,
     deltaTime?: number,
     maxLagTicks?: number, // How many ticks allowed to lag behind
@@ -15,6 +16,18 @@ export class Physics2dConfig extends SimulationConfig {
     registrySize?: number,
     allocatorBuffer?: number,
   ) {
-    super(entityPoolSize, deltaTime, maxLagTicks, snapshotHistoryLength, snapshotHistoryRate, recycledPoolSize, filterPoolSize, memoryBlocks, registrySize, allocatorBuffer,)
+    super(
+      entityPoolSize,
+      seed,
+      deltaTime,
+      maxLagTicks,
+      snapshotHistoryLength,
+      snapshotHistoryRate,
+      recycledPoolSize,
+      filterPoolSize,
+      memoryBlocks,
+      registrySize,
+      allocatorBuffer
+    )
   }
 }

@@ -81,6 +81,15 @@ export class EnemyView extends EntityView<SurvivorWorld, GameScene> {
   }
 
   public onDestroy(world: SurvivorWorld): void {
+    const dieAnimation = new AnimatedSprite(this._enemySpritesheet.animations['Die'])
+    dieAnimation.parentGroup = EnemyGroup
+    dieAnimation.scale.set(this._scale)
+    dieAnimation.position.copyFrom(this.position)
+    dieAnimation.animationSpeed = this._enemySprite.animationSpeed
+    dieAnimation.loop = false
+    dieAnimation.play()
+    dieAnimation.onComplete = () => dieAnimation.destroy()
+    this.ctx.viewport.addChild(dieAnimation)
   }
 
   private onLoop = () => {

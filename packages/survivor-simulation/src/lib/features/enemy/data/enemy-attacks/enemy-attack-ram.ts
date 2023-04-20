@@ -37,8 +37,9 @@ export class EnemyAttackRam extends AbstractEnemyAttack {
 
     for (const playerColliderHandle of this._playerColliderHandles) {
       if (this.checkCollidingWithPlayer(playerColliderHandle, PhysicsRefs.colliderRef[this._ownerRef])) {
-        const playerEntityRef = this._world.colliderEntityRegistry.get(playerColliderHandle)!!
+        const playerEntityRef = this._world.colliderEntityRegistry.get(playerColliderHandle)!
         this.dealDamage(playerEntityRef)
+        if (!this._world.entityManager.hasEntity(playerEntityRef)) continue
         this._world.entityManager.addComponent(playerEntityRef, KnockBack)
         KnockBack.x[playerEntityRef] = EnemyActiveAttack.targetX[this._ownerRef]
         KnockBack.y[playerEntityRef] = EnemyActiveAttack.targetY[this._ownerRef]

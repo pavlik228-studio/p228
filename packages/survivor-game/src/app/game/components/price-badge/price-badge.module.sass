@@ -1,0 +1,33 @@
+@import "../../../mixins"
+
+.root
+  position: absolute
+  display: flex
+  align-items: center
+  justify-content: center
+  font-family: 'Russo One', sans-serif
+  font-style: normal
+  font-weight: 400
+  color: #fff
+  cursor: pointer
+  background: linear-gradient(0deg, rgba(38, 51, 70, 0.9) -16.67%, rgba(255, 255, 255, 0.9) 50%)
+  transition: transform 300ms ease
+
+  &:hover
+    transform: scale(1.1)
+
+@include desktop()
+  .root
+    bottom: dvh(-6px)
+    padding: dvh(1px) dvh(4px)
+    font-size: dvh(15px)
+    line-height: dvh(18px)
+    border: dvh(1px) solid #000
+    border-radius: dvh(5px)
+    -webkit-text-stroke: dvh(1px) black
+  .x
+    font-size: dvh(10px)
+    margin: 0 dvh(3px) 0 dvh(5px)
+  .gold
+    width: dvh(13px)
+    height: dvh(13px)

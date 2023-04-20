@@ -1,4 +1,5 @@
 import { Disposable, TypedEvent } from '@p228/engine'
+import { IViewItem } from '../../item.interface'
 
 export enum ItemPopupKind {
   Buy,
@@ -6,22 +7,16 @@ export enum ItemPopupKind {
   UnlockSlot
 }
 
-export enum ItemType {
-  Weapon,
-  Item,
-}
-
 export interface ItemPopupData {
   kind: ItemPopupKind
-  type: ItemType
-  itemId?: string
+  item: IViewItem | undefined
 }
 
 export class ItemPopupService {
   private static _event = new TypedEvent<ItemPopupData | undefined>()
-  public static show(kind: ItemPopupKind, type: ItemType, itemId?: string): void {
-    console.log(`ItemPopupService.show: kind=${kind}, type=${type}, itemId=${itemId}`)
-    this._event.emit({ kind, type, itemId })
+  public static show(kind: ItemPopupKind, item?: IViewItem): void {
+    console.log(`ItemPopupService.show: kind=${kind}`, item)
+    this._event.emit({ kind, item })
   }
 
   public static subscribe(callback: (data: ItemPopupData | undefined) => void): Disposable {

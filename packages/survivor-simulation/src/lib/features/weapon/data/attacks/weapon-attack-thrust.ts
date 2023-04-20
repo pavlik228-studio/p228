@@ -4,12 +4,15 @@ import { IVector2Like, Vector2, VECTOR2_BUFFER_1, VECTOR2_BUFFER_2 } from '@p228
 import { CollisionGroups } from '../../../../collision-groups'
 import { KnockBack } from '../../../attack/components/effects/knock-back'
 import { findClosestEnemyInRadiusOptimal } from '../../../attack/misc/find-enemy-in-radius'
+import { performDamage } from '../../../attack/misc/perform-damage'
 import { Weapon } from '../../components/weapon'
+import { calculatePlayerDamage } from '../calculate-player-damage'
 import { WeaponAttackType } from '../weapon-type'
 import { AbstractWeaponAttack } from './abstract-weapon-attack'
 
 const TARGET_POSITION_BUFFER = new Vector2()
 const SHAPES_MAP = new Map<WeaponAttackType, Shape>()
+const ENEMY_TO_ATTACK_BUFFER = new Array<number>()
 
 export class WeaponAttackThrust extends AbstractWeaponAttack<WeaponAttackType.Thrust> {
   public readonly attackType = WeaponAttackType.Thrust
@@ -48,6 +51,8 @@ export class WeaponAttackThrust extends AbstractWeaponAttack<WeaponAttackType.Th
     Transform2d.x[this._weaponEntityRef] = shapePosition.x
     Transform2d.y[this._weaponEntityRef] = shapePosition.y
 
+    ENEMY_TO_ATTACK_BUFFER.length = 0
+
     this._world.physicsWorld.intersectionsWithShape(
       shapePosition,
       Transform2d.rotation[this._weaponEntityRef],
@@ -56,6 +61,26 @@ export class WeaponAttackThrust extends AbstractWeaponAttack<WeaponAttackType.Th
       undefined,
       CollisionGroups.ShootableEnemy
     )
+
+    // Attack direction
+    VECTOR2_BUFFER_1.set(
+      Weapon.targetX[this._weaponEntityRef] - Weapon.originX[this._weaponEntityRef],
+      Weapon.targetY[this._weaponEntityRef] - Weapon.originY[this._weaponEntityRef]
+    ).normalize()
+
+    for (const enemyEntityRef of ENEMY_TO_ATTACK_BUFFER) {
+      const playerEntityRef = Weapon.ownerRef[this._weaponEntityRef]
+      const { damage, hasCrit } = calculatePlayerDamage(this._weaponEntityRef, this._world.random.nextFloat())
+
+      performDamage(this._world, enemyEntityRef, playerEntityRef, -damage, hasCrit)
+
+      if (!this._world.entityManager.hasEntity(enemyEntityRef)) continue
+
+      this._world.entityManager.addComponent(enemyEntityRef, KnockBack)
+      KnockBack.x[enemyEntityRef] = VECTOR2_BUFFER_1.x
+      KnockBack.y[enemyEntityRef] = VECTOR2_BUFFER_1.y
+      KnockBack.duration[enemyEntityRef] = 10
+    }
   }
 
   private getShape(): Shape {
@@ -80,17 +105,8 @@ export class WeaponAttackThrust extends AbstractWeaponAttack<WeaponAttackType.Th
 
     if (attackedEnemies.indexOf(entityRef) !== -1) return true
 
+    ENEMY_TO_ATTACK_BUFFER.push(entityRef)
     attackedEnemies.add(entityRef)
-
-    this._world.entityManager.addComponent(entityRef, KnockBack)
-
-    VECTOR2_BUFFER_1.set(
-      Weapon.targetX[this._weaponEntityRef] - Weapon.originX[this._weaponEntityRef],
-      Weapon.targetY[this._weaponEntityRef] - Weapon.originY[this._weaponEntityRef]
-    ).normalize()
-    KnockBack.x[entityRef] = VECTOR2_BUFFER_1.x
-    KnockBack.y[entityRef] = VECTOR2_BUFFER_1.y
-    KnockBack.duration[entityRef] = 10
 
     return true
   }

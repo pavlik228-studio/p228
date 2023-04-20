@@ -4,6 +4,7 @@ import { EntityView } from '@p228/renderer-2d'
 import { SurvivorWorld } from '@p228/survivor-simulation'
 import { AnimatedSprite, Assets, Point, Sprite, Spritesheet } from 'pixi.js'
 import { Player } from '../../../../../../../survivor-simulation/src/lib/features/player/components/player'
+import { PlayerCharacter } from '../../../../../../../survivor-simulation/src/lib/features/player/data/player-character'
 import { GameSceneAssets } from '../../../resource-manifest'
 import { GameScene } from '../../game-scene'
 import { PlayerGroup, ShadowGroup } from '../../layer-groups'
@@ -29,7 +30,8 @@ export class PlayerView extends EntityView<SurvivorWorld, GameScene> {
     this._heroShadow.position.copyFrom(COLLIDER_OFFSET)
     this.addChild(this._heroShadow)
 
-    this._heroSpritesheet = Assets.get(GameSceneAssets.Paladin)
+    const playerCharacter = Player.character[this.entityRef] as PlayerCharacter
+    this._heroSpritesheet = Assets.get(GameSceneAssets[PlayerCharacter[playerCharacter] as keyof typeof GameSceneAssets]) as Spritesheet
     this._heroSprite = new AnimatedSprite(this._heroSpritesheet.animations['Idle'])
     this._heroSprite.parentGroup = PlayerGroup
     this._scale = this._heroSpritesheet.resolution * 0.5
@@ -48,6 +50,18 @@ export class PlayerView extends EntityView<SurvivorWorld, GameScene> {
   }
 
   public onDestroy(world: SurvivorWorld): void {
+    if (this.ctx.playerSlot === Player.slot[this.entityRef]) {
+      this.ctx.viewport.plugins.remove('follow')
+    }
+
+    const playerDieAnimation = new AnimatedSprite(this._heroSpritesheet.animations['Dying'])
+    playerDieAnimation.parentGroup = PlayerGroup
+    playerDieAnimation.scale.set(this._scale)
+    playerDieAnimation.animationSpeed = this._heroSprite.animationSpeed
+    playerDieAnimation.loop = false
+    playerDieAnimation.play()
+    playerDieAnimation.position.copyFrom(this.position)
+    this.ctx.viewport.addChild(playerDieAnimation)
   }
 
   public onUpdate(world: SurvivorWorld, dt: number): void {

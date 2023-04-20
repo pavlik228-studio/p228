@@ -38,7 +38,7 @@ export const i18nResources = {
       Weapons: 'Weapons',
       Items: 'Items',
       Shop: 'Shop',
-      reroll: 'Reroll',
+      rerollShop: 'Reroll',
       backPrompt: 'Are you sure you want to leave the game?'
     },
   },
@@ -55,6 +55,7 @@ export const i18nResources = {
       next: 'Далее',
 
       stats: {
+        statsTitle: 'Характеристики',
         HP: 'Здоровье',
         Armor: 'Броня',
         Dodge: 'Уклонение',
@@ -67,6 +68,39 @@ export const i18nResources = {
         LifeSteal: 'Вампиризм',
         Crit_Chance: 'Шанс крита',
         Crit_Damage: 'Урон крита',
+        weapon: {
+          speed: 'Скорость пули',
+          range: 'Дальность',
+          attackType: 'Тип оружия',
+          critDamage: 'Урон крита',
+          critChance: 'Шанс крита',
+          baseDamage: 'Урон',
+          cooldown: 'Перезарядка',
+          explosionRadius: 'Радиус взрыва',
+          projectiles: 'Количество снарядов',
+        },
+      },
+
+      weaponAttackType: {
+        Thrust: 'Колющее',
+        Projectile: 'Стрелковое',
+        SpotProjectile: 'Дробовик',
+        RocketProjectile: 'Ракетное',
+      },
+
+      weapons: {
+        Sword: 'Меч',
+        EthernalGun: 'Пистолет',
+        EthernalBlaster: 'Дробовик',
+        EthernalRpg: 'RPG',
+      },
+
+      itemPopupTypes: {
+        slot: 'Слот',
+        newSlot: 'Новый слот',
+        Weapon: 'Оружие',
+        Item: 'Предмет',
+        unlockSlotInfo: 'Хотите разблокировать новый слот?',
       },
 
       heroes: {
@@ -81,7 +115,7 @@ export const i18nResources = {
       Weapons: 'Оружие',
       Items: 'Предметы',
       Shop: 'Магазин',
-      reroll: 'Сменить',
+      rerollShop: 'Сменить',
       backPrompt: 'Вы уверены, что хотите выйти из игры?'
     },
   },

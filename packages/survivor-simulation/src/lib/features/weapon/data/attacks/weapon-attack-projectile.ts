@@ -5,6 +5,7 @@ import { findClosestEnemyInRadiusOptimal } from '../../../attack/misc/find-enemy
 import { ProjectileType } from '../../../projectile/components/projectile'
 import { spawnProjectile } from '../../../projectile/misc/spawn-projectile'
 import { Weapon } from '../../components/weapon'
+import { calculatePlayerDamage } from '../calculate-player-damage'
 import { WeaponAttackType } from '../weapon-type'
 import { AbstractWeaponAttack } from './abstract-weapon-attack'
 
@@ -17,6 +18,10 @@ export class WeaponAttackProjectile extends AbstractWeaponAttack<WeaponAttackTyp
     VECTOR2_BUFFER_2.from(target).sub(VECTOR2_BUFFER_1).normalize()
 
     Transform2d.rotation[this._weaponEntityRef] = MathOps.atan2(VECTOR2_BUFFER_2.y, VECTOR2_BUFFER_2.x)
+    const { damage, hasCrit} = calculatePlayerDamage(
+      this._weaponEntityRef,
+      this._world.random.nextFloat()
+    )
 
     spawnProjectile(
       this._world,
@@ -26,7 +31,8 @@ export class WeaponAttackProjectile extends AbstractWeaponAttack<WeaponAttackTyp
       VECTOR2_BUFFER_1,
       VECTOR2_BUFFER_2,
       this._weaponValues.speed,
-      this._weaponValues.baseDamage,
+      damage,
+      hasCrit,
     )
   }
 

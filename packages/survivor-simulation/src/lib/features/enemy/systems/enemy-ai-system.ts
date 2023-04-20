@@ -1,4 +1,4 @@
-import { AbstractSystem, Filter } from '@p228/ecs'
+import { AbstractSystem, EntityRef, Filter } from '@p228/ecs'
 import { Transform2d } from '@p228/engine'
 import { Vector2, VECTOR2_BUFFER_2, VECTOR2_BUFFER_3 } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
@@ -18,15 +18,29 @@ const PLAYER_COLLIDERS_BUFFER = new Array<number>()
 
 export class EnemyAiSystem extends AbstractSystem<SurvivorWorld> {
   private _enemyAttacks!: Map<EnemyAttackType, AbstractEnemyAttack>
-  private readonly _enemyAttackFilter: Filter
+  public readonly enemyAttackFilter: Filter
   private readonly _playerFilter: Filter
   private readonly _enemyFilter: Filter
+  private readonly _entitiesToDestroy = new Array<EntityRef>()
+
   constructor(world: SurvivorWorld) {
     super(world)
 
     this._enemyFilter = world.registerFilter(new Filter([ Enemy ]))
-    this._enemyAttackFilter = world.registerFilter(new Filter([ EnemyAttack ]))
+    this.enemyAttackFilter = world.registerFilter(new Filter([ EnemyAttack ]))
     this._playerFilter = world.registerFilter(new Filter([ Player, Transform2d, PhysicsRefs ]))
+  }
+
+  public destroyEnemyWeapon(enemyRef: EntityRef) {
+    this._entitiesToDestroy.length = 0
+    for (const attackRef of this.enemyAttackFilter.entities) {
+      if (EnemyAttack.ownerRef[attackRef] !== enemyRef) continue
+      this._entitiesToDestroy.push(attackRef)
+    }
+
+    for (const attackRef of this._entitiesToDestroy) {
+      this.world.entityManager.destroyEntity(attackRef)
+    }
   }
 
   public override initialize() {
@@ -40,10 +54,10 @@ export class EnemyAiSystem extends AbstractSystem<SurvivorWorld> {
   public override update() {
     const physicsWorld = this.world.physicsWorld
     const entityManager = this.world.entityManager
-    const entities = this._enemyAttackFilter.entities
+    const entities = this.enemyAttackFilter.entities
     const playerEntities = this._playerFilter.entities
     const playerEntityRef = playerEntities.get(0)
-    if (playerEntityRef === undefined) throw new Error('Player entity not found')
+    if (playerEntityRef === undefined) return
     const playerPosition = PLAYER_POSITION_BUFFER.set(Transform2d.x[playerEntityRef], Transform2d.y[playerEntityRef])
     PLAYER_COLLIDERS_BUFFER.length = 0
 
@@ -56,7 +70,6 @@ export class EnemyAiSystem extends AbstractSystem<SurvivorWorld> {
       const attackType = EnemyAttack.type[attackEntityRef]
       const attack = this._enemyAttacks.get(attackType)
       if (attack === undefined) throw new Error(`Enemy attack type not found: ${attackType}`)
-
       attack.setContext(attackEntityRef, playerEntityRef, playerPosition, PLAYER_COLLIDERS_BUFFER)
       attack.update()
     }

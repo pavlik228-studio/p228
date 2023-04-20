@@ -1,4 +1,4 @@
-import type { Collider, Shape } from '@dimforge/rapier2d'
+import type { Collider, ColliderHandle, Shape } from '@dimforge/rapier2d'
 import { Transform2d } from '@p228/engine'
 import { IVector2Like, Vector2, VECTOR2_BUFFER_1, VECTOR2_BUFFER_2 } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
@@ -11,6 +11,7 @@ import { spawnProjectile } from '../../../projectile/misc/spawn-projectile'
 import { Weapon } from '../../components/weapon'
 import { ExplosionEvent } from '../../events/explosion'
 import { WeaponSystem } from '../../systems/weapon-system'
+import { calculatePlayerDamage } from '../calculate-player-damage'
 import { WeaponAttackType } from '../weapon-type'
 import { AbstractWeaponAttack } from './abstract-weapon-attack'
 
@@ -18,6 +19,7 @@ const SHAPES_MAP = new Map<number, Shape>()
 
 export class WeaponAttackRocketProjectile extends AbstractWeaponAttack<WeaponAttackType.RocketProjectile> {
   public readonly attackType = WeaponAttackType.RocketProjectile
+  private readonly _intersectedColliders = new Array<ColliderHandle>()
 
   protected findTarget(): IVector2Like | undefined {
     VECTOR2_BUFFER_1.set(Transform2d.x[this._weaponEntityRef], Transform2d.y[this._weaponEntityRef])
@@ -92,16 +94,21 @@ export class WeaponAttackRocketProjectile extends AbstractWeaponAttack<WeaponAtt
   }
 
   private dealDamageInRadius() {
+    this._intersectedColliders.length = 0
     const shape = this.getExplosionShape(this._weaponValues.explosionRadius)
     const explosionPosition = VECTOR2_BUFFER_1.set(Weapon.targetX[this._weaponEntityRef], Weapon.targetY[this._weaponEntityRef])
     this._world.physicsWorld.intersectionsWithShape(
       explosionPosition,
       0,
       shape,
-      this.performDamage,
+      this.intersectionsWithShapeCallback,
       undefined,
       CollisionGroups.ShootableEnemy,
-      )
+    )
+
+    for (const colliderHandle of this._intersectedColliders) {
+      this.performDamage(colliderHandle)
+    }
   }
 
   private getExplosionShape(radius: number): Shape {
@@ -115,11 +122,20 @@ export class WeaponAttackRocketProjectile extends AbstractWeaponAttack<WeaponAtt
     return shape
   }
 
-  private performDamage = (collider: Collider) => {
-    const damageEntityRef = this._world.colliderEntityRegistry.get(collider.handle)!
-    performDamage(this._world, damageEntityRef, Weapon.ownerRef[this._weaponEntityRef], -this._weaponValues.baseDamage)
-
+  private intersectionsWithShapeCallback = (collider: Collider) => {
+    this._intersectedColliders.push(collider.handle)
     return true
+  }
+
+  private performDamage = (colliderHandle: ColliderHandle) => {
+    const playerEntityRef = Weapon.ownerRef[this._weaponEntityRef]
+    const damageEntityRef = this._world.colliderEntityRegistry.get(colliderHandle)!
+    const { damage, hasCrit} = calculatePlayerDamage(
+      this._weaponEntityRef,
+      this._world.random.nextFloat()
+    )
+
+    performDamage(this._world, damageEntityRef, playerEntityRef, -damage, hasCrit)
   }
 
 }

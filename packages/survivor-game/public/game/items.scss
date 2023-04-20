@@ -1,0 +1,29 @@
+/*
+-------------------------------------------------------------------
+Created with TexturePacker https://www.codeandweb.com/texturepacker
+-------------------------------------------------------------------
+Inline:     <i class="item-yourspritesname"></i>
+Responsive: <div class="item-yourspritesname"></div>
+*/
+
+
+.item-Bomb {max-width:256px; max-height:256px; }
+.item-Bomb::after {content: '\00a0';display: inline-block; width:256px; height:256px; background-position: 0.2178649237472767% 0.390625%;background-size: 279.296875% 200%;background-image: url(/game/items.png);padding: 0; }
+div.item-Bomb::after {max-width:256px; width:100%;height:0;padding: 0 0 100% 0;}
+.item-Bracer {max-width:210px; max-height:212px; }
+.item-Bracer::after {content: '\00a0';display: inline-block; width:210px; height:212px; background-position: 99.8019801980198% 0.3333333333333333%;background-size: 340.4761904761905% 241.50943396226415%;background-image: url(/game/items.png);padding: 0; }
+div.item-Bracer::after {max-width:210px; width:100%;height:0;padding: 0 0 100.95238095238095% 0;}
+.item-ChainReaction {max-width:255px; max-height:253px; }
+.item-ChainReaction::after {content: '\00a0';display: inline-block; width:255px; height:253px; background-position: 0.21739130434782608% 99.61389961389962%;background-size: 280.3921568627451% 202.37154150197628%;background-image: url(/game/items.png);padding: 0; }
+div.item-ChainReaction::after {max-width:255px; width:100%;height:0;padding: 0 0 99.2156862745098% 0;}
+.item-GhoulElixir {max-width:256px; max-height:237px; }
+.item-GhoulElixir::after {content: '\00a0';display: inline-block; width:256px; height:237px; background-position: 92.5925925925926% 93.81818181818181%;background-size: 279.296875% 216.0337552742616%;background-image: url(/game/items.png);padding: 0; }
+div.item-GhoulElixir::after {max-width:256px; width:100%;height:0;padding: 0 0 92.578125% 0;}
+.item-Lamp {max-width:167px; max-height:253px; }
+.item-Lamp::after {content: '\00a0';display: inline-block; width:167px; height:253px; background-position: 46.8978102189781% 99.61389961389962%;background-size: 428.1437125748503% 202.37154150197628%;background-image: url(/game/items.png);padding: 0; }
+div.item-Lamp::after {max-width:167px; width:100%;height:0;padding: 0 0 151.49700598802394% 0;}
+.item-MoneyBag {max-width:245px; max-height:256px; }
+.item-MoneyBag::after {content: '\00a0';display: inline-block; width:245px; height:256px; background-position: 54.8936170212766% 0.390625%;background-size: 291.83673469387753% 200%;background-image: url(/game/items.png);padding: 0; }
+div.item-MoneyBag::after {max-width:245px; width:100%;height:0;padding: 0 0 104.48979591836735% 0;}
+
+/* $TexturePacker:SmartUpdate:665e324257cc1d5551a27d060b258f1c:ff2872f35e4cf75cc0fe3f66abd28be4:f408840f0c70feddc47912f49dd48741$ */

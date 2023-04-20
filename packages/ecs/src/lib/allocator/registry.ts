@@ -14,7 +14,7 @@ export class Registry {
     private _registrySize: number,
     private _offset = 0
   ) {
-    this._dataView = new DataView(this._heap, this._offset, this._registrySize * DataTypeSize[DataType.u32])
+    this._dataView = new DataView(this._heap, this._offset, Registry.calculateSize(this._registrySize))
   }
 
   public create(): IPtrAccessor {

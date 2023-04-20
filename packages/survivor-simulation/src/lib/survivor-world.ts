@@ -8,10 +8,13 @@ import { Enemy } from './features/enemy/components/enemy'
 import { EnemyActiveAttack } from './features/enemy/components/enemy-active-attack'
 import { EnemyAttack } from './features/enemy/components/enemy-attack'
 import { EnemyAiSystem } from './features/enemy/systems/enemy-ai-system'
+import { Gameplay } from './features/gameplay/gameplay.component'
+import { Item } from './features/item/components/item'
 import { Player } from './features/player/components/player'
 import { PlayerConnectionSystem } from './features/player/systems/player-connection-system'
 import { PlayerInputSystem } from './features/player/systems/player-input-system'
 import { PlayerMovementSystem } from './features/player/systems/player-movement-system'
+import { PlayerShopSystem } from './features/player/systems/player-shop-system'
 import { Projectile } from './features/projectile/components/projectile'
 import { ProjectileMovementSystem } from './features/projectile/systems/projectile-movement-system'
 import { ProjectileSystem } from './features/projectile/systems/projectile-system'
@@ -26,6 +29,7 @@ export class SurvivorWorld extends Physics2dWorld {
   public filterEnemy!: Filter
   public filterProjectile!: Filter
   public filterWeapon!: Filter
+  public filterItem!: Filter
 
   constructor(physicsConfig: Physics2dConfig, inputProvider: InputProvider, rapierInstance: Rapier2D) {
     super(physicsConfig, inputProvider, rapierInstance)
@@ -54,17 +58,21 @@ export class SurvivorWorld extends Physics2dWorld {
       KnockBack,
       Projectile,
       Weapon,
+      Item,
     ]
   }
 
   public registerSingletonComponents() {
-    return []
+    return [
+      Gameplay,
+    ]
   }
 
   public registerSystems(): Array<ISystemConstructor<any>> {
     return [
       PrevTransformSystem,
       PlayerConnectionSystem,
+      PlayerShopSystem,
       PlayerInputSystem,
       PlayerMovementSystem,
       EnemyAiSystem,
@@ -81,5 +89,6 @@ export class SurvivorWorld extends Physics2dWorld {
     this.filterEnemy = this.registerFilter(new Filter([ Enemy ]))
     this.filterProjectile = this.registerFilter(new Filter([ Projectile, Transform2d, PhysicsRefs ]))
     this.filterWeapon = this.registerFilter(new Filter([ Weapon, Transform2d ]))
+    this.filterItem = this.registerFilter(new Filter([ Item ]))
   }
 }

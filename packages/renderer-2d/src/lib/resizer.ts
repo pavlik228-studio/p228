@@ -59,7 +59,7 @@ export class Resizer {
     this._resizeListeners.off(listener)
   }
 
-  private readonly enqueueResize = (): void => {
+  public readonly enqueueResize = (): void => {
     if (this._resizeId) cancelAnimationFrame(this._resizeId)
     this._resizeId = requestAnimationFrame(this.resize)
   }

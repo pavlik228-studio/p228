@@ -2,7 +2,10 @@ import 'animate.css'
 import * as ReactDOM from 'react-dom/client'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-
+import { Provider } from 'react-redux'
+import App from './app/app'
+import { store } from './app/store'
+import { i18nResources } from './i18n-resources'
 
 i18n
   .use(initReactI18next)
@@ -12,7 +15,7 @@ i18n
     lng: import.meta.env.VITE_I18N_LOCALE,
     interpolation: {
       escapeValue: false,
-    }
+    },
   }).catch(console.error)
 
 //check webp support
@@ -29,12 +32,11 @@ if (webpSupport()) {
   document.documentElement.classList.add('webp-supported')
 }
 
-import App from './app/app'
-import { i18nResources } from './i18n-resources'
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 )
 root.render(
-  <App/>
+  <Provider store={store}>
+    <App/>
+  </Provider>,
 )

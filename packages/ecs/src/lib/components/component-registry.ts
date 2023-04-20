@@ -1,3 +1,4 @@
+import { Logger } from '@p228/ecs'
 import { DataTypeSize, DataTypeViewConstructor } from '../allocator/data-type'
 import { Allocator } from '../allocator/allocator'
 import { ECSConfig } from '../ecs-config'
@@ -41,12 +42,14 @@ export class ComponentRegistry {
       const byteLength = component._BYTES_PER_ELEMENT * (component._LIMIT ?? this._config.entityPoolSize)
       component._PTR = allocator.allocate(byteLength)
       component._BYTE_LENGTH = byteLength
+      Logger.log(`Allocated component at ${component._PTR} (${byteLength} bytes)`)
     }
 
     for (const component of (this._singletonComponents as Array<ISingletonComponent<IComponentSchema>>)) {
       const byteLength = component._BYTES_PER_ELEMENT
       component._PTR = allocator.allocate(byteLength)
       component._BYTE_LENGTH = byteLength
+      Logger.log(`Allocated SingletonComponent at ${component._PTR} (${byteLength} bytes)`)
     }
 
     this.allocateComponentsInternal(allocator.heap)

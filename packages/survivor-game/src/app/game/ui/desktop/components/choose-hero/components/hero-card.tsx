@@ -1,17 +1,20 @@
 import { FC, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import {
+  PlayerCharacter
+} from '../../../../../../../../../survivor-simulation/src/lib/features/player/data/player-character'
 import { Button } from '../../../../../../components/button/button'
 import { Diamond } from '../../../../../../components/diamond/diamond'
 import { GameText } from '../../../../../../components/game-text/game-text'
 import classes from './hero-card.module.sass'
 
 interface HeroCardProps {
-  id: string
+  id: PlayerCharacter
   img: string
   locked: boolean
   selected: boolean
   stats: [string, number][]
-  onSelected: (heroId: string) => void
+  onSelected: (heroId: PlayerCharacter) => void
 }
 export const HeroCard: FC<HeroCardProps> = ({
   id,
@@ -35,7 +38,7 @@ export const HeroCard: FC<HeroCardProps> = ({
   return (
     <div className={cardClassName} ref={cardRef} onClick={onSelect}>
       <div className={classes['img']} style={{ backgroundImage: `url(${img})` }} />
-      <GameText text={t(`heroes.${id}`)} className={classes['title']} />
+      <GameText text={t(`heroes.${PlayerCharacter[id]}`)} className={classes['title']} />
       <div className={classes['stats']}>
         {stats.map(([name, value]) => (
           <div className={classes['stat']} key={name}>

@@ -14,6 +14,7 @@ export function spawnProjectile(
   direction: IVector2Like,
   speed: number,
   damage: number,
+  hasCrit = false,
 ): EntityRef {
   const deltaTime = world.config.deltaTime
   const rapierInstance = world.rapierInstance
@@ -29,6 +30,7 @@ export function spawnProjectile(
   Projectile.directionY[entityRef] = direction.y
   Projectile.speed[entityRef] = speed
   Projectile.damage[entityRef] = damage
+  Projectile.hasCrit[entityRef] = Number(hasCrit)
 
   const positionX = Transform2d.prevX[entityRef] = Transform2d.x[entityRef] = position.x
   const positionY = Transform2d.prevY[entityRef] = Transform2d.y[entityRef] = position.y

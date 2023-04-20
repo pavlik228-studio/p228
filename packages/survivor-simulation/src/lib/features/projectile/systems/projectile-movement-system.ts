@@ -4,10 +4,8 @@ import { Transform2d } from '@p228/engine'
 import { MathOps, VECTOR2_BUFFER_1 } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
 import { SurvivorWorld } from '@p228/survivor-simulation'
+import { WORLD_BOUNDS_X, WORLD_BOUNDS_Y } from '../../../constants'
 import { Projectile } from '../components/projectile'
-
-const WORLD_BOUNDS_X = 3000
-const WORLD_BOUNDS_Y = 3000
 
 export class ProjectileMovementSystem extends AbstractSystem<SurvivorWorld> {
   private readonly _projectileFilter: Filter

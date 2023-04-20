@@ -1,0 +1,8 @@
+@import "../../../../../../../mixins"
+
+.root
+  background: linear-gradient(0deg, rgba(38, 51, 70, 0.9) -16.67%, rgba(255, 255, 255, 0.9) 50%)
+@include desktop()
+  .root
+    border: dvh(1px) solid #000
+    border-radius: dvh(5px)

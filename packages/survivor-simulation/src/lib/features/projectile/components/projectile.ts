@@ -15,4 +15,5 @@ export const Projectile = defineComponent({
   directionY: DataType.f32,
   speed: DataType.f32,
   damage: DataType.f32,
+  hasCrit: DataType.u8,
 })

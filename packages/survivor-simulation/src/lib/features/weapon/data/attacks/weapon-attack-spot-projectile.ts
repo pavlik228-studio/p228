@@ -11,6 +11,7 @@ import { findClosestEnemyInRadiusOptimal } from '../../../attack/misc/find-enemy
 import { ProjectileType } from '../../../projectile/components/projectile'
 import { spawnProjectile } from '../../../projectile/misc/spawn-projectile'
 import { Weapon } from '../../components/weapon'
+import { calculatePlayerDamage } from '../calculate-player-damage'
 import { WeaponAttackType } from '../weapon-type'
 import { AbstractWeaponAttack } from './abstract-weapon-attack'
 
@@ -72,6 +73,7 @@ export class WeaponAttackSpotProjectile extends AbstractWeaponAttack<WeaponAttac
   }
 
   private spawnProjectile(shootPoint: IVector2Like, direction: IVector2Like) {
+    const { damage, hasCrit } = calculatePlayerDamage(this._weaponEntityRef, this._world.random.nextFloat())
     spawnProjectile(
       this._world,
       Weapon.ownerRef[this._weaponEntityRef],
@@ -80,7 +82,8 @@ export class WeaponAttackSpotProjectile extends AbstractWeaponAttack<WeaponAttac
       shootPoint,
       direction,
       this._weaponValues.speed,
-      this._weaponValues.baseDamage,
+      damage,
+      hasCrit
     )
   }
 

@@ -21,7 +21,7 @@ export class EnemyAttackMelee extends AbstractEnemyAttack {
 
     if (ENEMY_POSITION_BUFFER.sub(this._playerPosition).lengthSquared() >= this._attackValues.attackRange) return
 
-    performDamage(this._world, this._ownerRef, this._playerRef, -this._attackValues.baseDamage)
+    performDamage(this._world, this._playerRef, this._ownerRef, -this._attackValues.baseDamage)
   }
 
 }

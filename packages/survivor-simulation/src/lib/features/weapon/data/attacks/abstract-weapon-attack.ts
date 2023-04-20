@@ -4,6 +4,7 @@ import { IVector2Like } from '@p228/math'
 import { SurvivorWorld } from '@p228/survivor-simulation'
 import { Weapon } from '../../components/weapon'
 import { WeaponTargetsAttackedPool } from '../../misc/weapon-targets-attacked-pool'
+import { calculatePlayerCooldown } from '../calculate-player-cooldown'
 import { IWeapon, WeaponAttackType, WeaponData, WeaponType } from '../weapon-type'
 
 export abstract class AbstractWeaponAttack<TWeaponAttackType extends WeaponAttackType> {
@@ -58,7 +59,7 @@ export abstract class AbstractWeaponAttack<TWeaponAttackType extends WeaponAttac
   }
 
   protected onAttackEnd(): void {
-    Weapon.cooldown[this._weaponEntityRef] = this._weaponValues.cooldown
+    Weapon.cooldown[this._weaponEntityRef] = calculatePlayerCooldown(this._weaponEntityRef, this._world.config.deltaTime)
     Weapon.startedAt[this._weaponEntityRef] = 0
   }
 

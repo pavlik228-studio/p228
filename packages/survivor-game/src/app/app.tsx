@@ -1,6 +1,7 @@
 import { Route, Link, createBrowserRouter, Outlet, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import classes from './app.module.sass'
 import { GamePage } from './game/game.page'
+import { GameRouteGuard } from './game/misc/game-route-guard'
 import { StartScreen } from './game/ui/desktop/start-screen/start-screen'
 import { DesktopTitleScreen } from './game/ui/desktop/title-screen/title-screen'
 
@@ -10,7 +11,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<GamePage/>}>
         <Route index element={<DesktopTitleScreen/>}/>
         <Route path="start" element={<StartScreen/>}/>
-        <Route path="game" element={null}/>
+        <Route path="game" element={<GameRouteGuard />}/>
       </Route>
       <Route
         path="/page-2"

@@ -2,6 +2,7 @@ import { DataType, ECSWorld, Primitive } from '@p228/ecs'
 import { MathOps } from '@p228/math'
 import { ISimulationEvents, SimulationEvents } from './events/simulation-events'
 import { InputProvider } from './input/input-provider'
+import { DeterministicRandom } from './misc/deterministic-random'
 import { SnapshotHistory } from './misc/snapshot-history'
 import { SimulationConfig } from './simulation-config'
 
@@ -9,13 +10,9 @@ export abstract class SimulationWorld extends ECSWorld {
   private _initialSnapshot: ArrayBuffer
   private _accumulatedTime = 0
   private readonly _frameRate: number
-  private _interpolationFactor = 0
   private readonly _snapshotHistory: SnapshotHistory
   private readonly _simulationEvents: SimulationEvents
-
-  public get interpolationFactor(): number {
-    return this._interpolationFactor
-  }
+  private readonly _deterministicRandom: DeterministicRandom
 
   constructor(
     public readonly simulationConfig: SimulationConfig,
@@ -23,11 +20,22 @@ export abstract class SimulationWorld extends ECSWorld {
   ) {
     super(simulationConfig)
     this._tick = this._allocator.allocateStruct(Primitive, DataType.u32)
+    this._deterministicRandom = new DeterministicRandom(this._allocator, simulationConfig.seed)
     this._simulationEvents = new SimulationEvents(this._allocator, simulationConfig)
     this.registerEvents(this._simulationEvents)
     this._initialSnapshot = this._allocator.createSnapshot()
     this._frameRate = simulationConfig.deltaTime
     this._snapshotHistory = new SnapshotHistory(simulationConfig.snapshotHistoryLength)
+  }
+
+  private _interpolationFactor = 0
+
+  public get interpolationFactor(): number {
+    return this._interpolationFactor
+  }
+
+  public get random(): DeterministicRandom {
+    return this._deterministicRandom
   }
 
   public get simulationEvents(): ISimulationEvents {

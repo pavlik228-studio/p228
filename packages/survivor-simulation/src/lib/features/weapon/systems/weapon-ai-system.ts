@@ -17,6 +17,7 @@ export class WeaponAiSystem extends AbstractSystem<SurvivorWorld> {
   private readonly _weaponFilter: Filter
   private readonly _weaponAttacks = new Map<WeaponAttackType, AbstractWeaponAttack<any>>()
   private _weaponTargetsAttackedPool!: WeaponTargetsAttackedPool
+  private _entitiesToDestroy: Array<EntityRef> = []
 
   constructor(world: SurvivorWorld) {
     super(world)
@@ -30,6 +31,18 @@ export class WeaponAiSystem extends AbstractSystem<SurvivorWorld> {
     this._weaponAttacks.set(WeaponAttackType.Projectile, new WeaponAttackProjectile(this.world, this._weaponTargetsAttackedPool))
     this._weaponAttacks.set(WeaponAttackType.SpotProjectile, new WeaponAttackSpotProjectile(this.world, this._weaponTargetsAttackedPool))
     this._weaponAttacks.set(WeaponAttackType.RocketProjectile, new WeaponAttackRocketProjectile(this.world, this._weaponTargetsAttackedPool))
+  }
+
+  public destroyPlayerWeapon(playerRef: EntityRef) {
+    this._entitiesToDestroy.length = 0
+    for (const weaponRef of this._weaponFilter) {
+      if (Weapon.ownerRef[weaponRef] !== playerRef) continue
+      this._entitiesToDestroy.push(weaponRef)
+    }
+
+    for (const weaponRef of this._entitiesToDestroy) {
+      this.world.entityManager.destroyEntity(weaponRef)
+    }
   }
 
   public override update(): void {

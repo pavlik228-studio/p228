@@ -46,11 +46,9 @@ export abstract class Physics2dWorld extends SimulationWorld {
   }
 
   public destroyCollider(colliderHandle: number) {
-    const collider = this._physicsWorld.getCollider(colliderHandle)
-
     this.colliderEntityRegistry.delete(colliderHandle)
 
-    this._physicsWorld.removeCollider(collider, true)
+    this._physicsWorld.colliders.remove(colliderHandle, this._physicsWorld.islands, this._physicsWorld.bodies, true)
   }
 
   protected override onBeforeInitialize() {

@@ -2,10 +2,14 @@ export const GameSceneAssets = {
   Warrior: '/game/heroes/Warrior.json',
   Sergeant: '/game/heroes/Sergeant.json',
   Paladin: '/game/heroes/Paladin.json',
+
   Misc: '/game/Misc.json',
   Weapons: '/game/weapons-items.json',
 
   grassWorld: '/game/worlds/grass.jpg',
+  deadGroundWorld: '/game/worlds/dead-ground.jpg',
+  undergroundWorld: '/game/worlds/underground.jpg',
+  lavaWorld: '/game/worlds/lava.jpg',
 
   MeleeSkull: '/game/enemies/melee-skull.json',
   RamSkull: '/game/enemies/ram-skull.json',

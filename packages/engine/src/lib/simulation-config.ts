@@ -3,6 +3,7 @@ import { ECSConfig } from '@p228/ecs'
 export class SimulationConfig extends ECSConfig {
   constructor(
     entityPoolSize: number,
+    public readonly seed = 0,
     deltaTime = 1000 / 60,
     public readonly maxLagTicks = 14, // How many ticks allowed to lag behind
     public readonly snapshotHistoryLength = 32, // How many snapshots to keep in history
@@ -13,6 +14,14 @@ export class SimulationConfig extends ECSConfig {
     registrySize = 16,
     allocatorBuffer = 1024,
   ) {
-    super(entityPoolSize, deltaTime, recycledPoolSize, filterPoolSize, memoryBlocks, registrySize, allocatorBuffer)
+    super(
+      entityPoolSize,
+      deltaTime,
+      recycledPoolSize,
+      filterPoolSize,
+      memoryBlocks,
+      registrySize,
+      allocatorBuffer
+    )
   }
 }

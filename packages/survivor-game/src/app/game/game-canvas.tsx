@@ -1,4 +1,7 @@
-import { FC, useEffect, useRef } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
+import { Outlet } from 'react-router-dom'
+import { setGameScene } from '../store/features/game/game-slice'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 import classes from './game-canvas.module.sass'
 import { GameRenderer } from './game-renderer'
 import { GameScene } from './survivor/game-scene'
@@ -8,22 +11,24 @@ interface GameCanvasProps {
 }
 const GameCanvas: FC<GameCanvasProps> = ({ isShown }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const gameRendererRef = useRef<GameRenderer>()
+  const dispatch = useAppDispatch()
+  const { gameScene } = useAppSelector((state) => state.game)
 
   useEffect(() => {
     const gameRenderer = new GameRenderer(canvasRef.current!)
-    gameRendererRef.current = gameRenderer
     const gameScene = gameRenderer.sceneManager.activeScene as GameScene
-    gameScene.startGame().catch(console.error)
+    dispatch(setGameScene(gameScene))
 
     return () => {
       gameRenderer.destroy()
-      gameRendererRef.current = undefined
     }
   }, [])
 
   return (
-    <canvas className={classes['canvas']} ref={canvasRef} style={{ display: isShown ? 'block' : 'none' }} />
+    <>
+      <canvas className={classes['canvas']} ref={canvasRef} style={{ display: isShown ? 'block' : 'none' }} />
+      {!gameScene ? null : <Outlet />}
+    </>
   )
 }
 

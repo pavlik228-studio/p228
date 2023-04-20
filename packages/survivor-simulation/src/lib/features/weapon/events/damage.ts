@@ -5,6 +5,7 @@ export interface DamageEventData {
   damage: number
   entityRef: EntityRef
   damageByRef: EntityRef
+  hasCrit: boolean
 }
 
 export class DamageEvent extends SimulationEvent<DamageEventData> {

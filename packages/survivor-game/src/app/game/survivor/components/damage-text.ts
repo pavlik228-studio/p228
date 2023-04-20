@@ -22,22 +22,22 @@ BitmapFont.from('SofiaSansHeroDamage', {
   fontWeight: '600',
   fontSize: FONT_SIZE,
   fill: 0xFF0000,
-  stroke: 0x000000,
-  strokeThickness: 1,
+  strokeThickness: 4,
 }, FontOptions)
 BitmapFont.from('SofiaSansEnemyDamage', {
   fontFamily: 'Sofia Sans',
   fontWeight: '600',
   fontSize: FONT_SIZE,
-  fill: 0x000000,
+  fill: 0xFFFFFF,
+  strokeThickness: 4,
 }, FontOptions)
 BitmapFont.from('SofiaSansHeal', {
   fontFamily: 'Sofia Sans',
   fontWeight: '600',
   fontSize: FONT_SIZE,
   fill: 0x00FF00,
-  stroke: 0x000000,
-  strokeThickness: 1,
+  stroke: 0xFFFFFF,
+  strokeThickness: 4,
 }, FontOptions)
 
 const ANIMATION_TIME = 800
@@ -93,6 +93,10 @@ export class DamageText extends Container {
     damageText.x = Transform2d.x[event.entityRef]
     damageText.y = -Transform2d.y[event.entityRef] - OFFSET_Y
     damageText.anchor.set(0.5, 0.5)
+    if (event.hasCrit) {
+      damageText.scale.set(1.2)
+      damageText.tint = 0xff9900
+    }
     this.addChild(damageText)
     this._damageTexts.set(damageText, this._time)
   }

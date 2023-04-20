@@ -1,3 +1,4 @@
+import { EntityRef } from '@p228/ecs'
 import { Rpc, Transform2d } from '@p228/engine'
 import { VECTOR2_BUFFER_1 } from '@p228/math'
 import { PhysicsRefs } from '@p228/physics2d'
@@ -5,11 +6,9 @@ import { CollisionGroups } from '../../../collision-groups'
 import { PlayerJoinedData } from '../../../input/rpc-datas/player-joined'
 import { SurvivorWorld } from '../../../survivor-world'
 import { Health } from '../../attack/components/health'
-import { WeaponType } from '../../weapon/data/weapon-type'
-import { spawnWeapon } from '../../weapon/misc/spawn-weapon'
 import { Player } from '../components/player'
 
-export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>) {
+export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>): EntityRef {
   const rapierInstance = world.rapierInstance
   const physicsWorld = world.physicsWorld
   const entityManager = world.entityManager
@@ -19,8 +18,16 @@ export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>) {
   entityManager.addManyComponents(playerEntityRef, [ Player, Transform2d, PhysicsRefs, Health ])
 
   Player.slot[playerEntityRef] = rpc.data.slot
+  Player.character[playerEntityRef] = rpc.data.character
+  Player.luck[playerEntityRef] = 0
   Player.speed[playerEntityRef] = 0
+  Player.attackSpeed[playerEntityRef] = 0
   Player.direction[playerEntityRef] = 0
+  Player.shopState[playerEntityRef] = world.random.nextFloat()
+
+  Player.goldBalance[playerEntityRef] = 2000
+  Player.shopSlots[playerEntityRef] = 3
+
   Transform2d.prevX[playerEntityRef] = Transform2d.x[playerEntityRef] = playerPosition.x
   Transform2d.prevY[playerEntityRef] = Transform2d.y[playerEntityRef] = playerPosition.y
   Transform2d.prevRotation[playerEntityRef] = Transform2d.rotation[playerEntityRef] = 0
@@ -40,10 +47,12 @@ export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>) {
 
   Health.max[playerEntityRef] = Health.current[playerEntityRef] = 100
 
-  spawnWeapon(entityManager, WeaponType.EthernalRpg, playerPosition, 100, 0)
-  spawnWeapon(entityManager, WeaponType.EthernalGun, playerPosition, 50, -100)
-  spawnWeapon(entityManager, WeaponType.EthernalBlaster, playerPosition, 50, 100)
-  spawnWeapon(entityManager, WeaponType.EthernalRpg, playerPosition, -100, 0)
-  spawnWeapon(entityManager, WeaponType.EthernalGun, playerPosition, -50, 100)
-  spawnWeapon(entityManager, WeaponType.Sword, playerPosition, -50, -100)
+  // spawnWeapon(entityManager, playerEntityRef, WeaponType.EthernalRpg, 1, playerPosition)
+  // spawnWeapon(entityManager, WeaponType.EthernalGun, 0, playerPosition, 50, -100)
+  // spawnWeapon(entityManager, WeaponType.EthernalBlaster, 0, playerPosition, 50, 100)
+  // spawnWeapon(entityManager, WeaponType.EthernalRpg, playerPosition, -100, 0)
+  // spawnWeapon(entityManager, WeaponType.EthernalGun, playerPosition, -50, 100)
+  // spawnWeapon(entityManager, playerEntityRef, WeaponType.Sword, 1, playerPosition)
+
+  return playerEntityRef
 }

@@ -17,6 +17,9 @@
   .root
     border: dvh(1px) solid #000
     border-radius: dvh(10px)
+    display: flex
+    align-items: center
+    justify-content: center
   .locked
     &:after
       content: ''
@@ -34,30 +37,40 @@
     &.lg:after
       width: dvh(42.31px)
       height: dvh(55px)
+    &.huge:after
+      width: dvh(178px)
+      height: dvh(164px)
+      background: url(../../../../assets/icons/lock.svg) no-repeat center/40%, linear-gradient(180deg, #283548 0%, #0C1927 100%)
+      border: dvh(1px) solid #000
+      border-radius: dvh(16.1643px)
   .item
+    width: 100%
     pointer-events: none
     transform: rotate(-30deg)
     transform-origin: center
     .locked &
       filter: blur(dvh(4px))
+    &:global(.item)
+      max-width: 50%
+      transform: rotate(0deg)
   .sm
     width: dvh(70px)
     height: dvh(78px)
     .item
       position: relative
-      top: dvh(4px)
+      //top: dvh(4px)
   .md
     width: dvh(110px)
     height: dvh(106px)
     .item
       position: relative
-      top: dvh(-4px)
+      //top: dvh(-4px)
   .lg
     width: dvh(115px)
     height: dvh(95px)
     .item
       position: relative
-      top: dvh(-12px)
+      //top: dvh(-12px)
   .huge
     width: dvh(317px)
     height: dvh(303px)
