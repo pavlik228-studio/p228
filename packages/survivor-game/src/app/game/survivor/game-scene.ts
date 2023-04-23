@@ -16,16 +16,18 @@ import { RerollShopData } from '../../../../../survivor-simulation/src/lib/input
 import { GameRenderer } from '../game-renderer'
 import { getRapierInstance } from '../misc/rapier-store'
 import { DamageText } from './components/damage-text'
+import { Hud } from './components/hud/hud'
 import { InputListener } from './components/input-listener'
 import { DebugRenderer } from './debug-renderer'
 import { SurvivorEntityViewUpdater } from './entity-view-updater'
 import { GameEvents } from './game-events'
 import { GameViewport } from './game-viewport'
-import { EnemyGroup, FxGroup, PlayerGroup, ShadowGroup } from './layer-groups'
+import { EnemyGroup, FxGroup, GoldGroup, PlayerGroup, ShadowGroup } from './layer-groups'
 import { MapGrass } from './maps/map-grass'
 
 export class GameScene extends AbstractGameScene {
   private readonly _viewport: GameViewport
+  private readonly _hud: Hud
   private _world: SurvivorWorld | undefined
   private _entityViewUpdater!: SurvivorEntityViewUpdater
   private _inputProvider!: InputProvider<typeof SurvivorInputSchema>
@@ -39,6 +41,17 @@ export class GameScene extends AbstractGameScene {
     super(renderer)
     this._viewport = new GameViewport(renderer)
     this.addChild(this._viewport)
+
+    this.addChild(
+      new Layer(ShadowGroup),
+      new Layer(GoldGroup),
+      new Layer(EnemyGroup),
+      new Layer(PlayerGroup),
+      new Layer(FxGroup),
+    )
+
+    this._hud = new Hud(renderer)
+    this.addChild(this._hud)
   }
 
   private _playerSlot: number | undefined
@@ -56,12 +69,6 @@ export class GameScene extends AbstractGameScene {
   }
 
   public async onAwake(): Promise<void> {
-    this.addChild(
-      new Layer(ShadowGroup),
-      new Layer(EnemyGroup),
-      new Layer(PlayerGroup),
-      new Layer(FxGroup),
-    )
   }
 
   public async onDestroy(): Promise<void> {
@@ -101,6 +108,7 @@ export class GameScene extends AbstractGameScene {
     // this._viewport.addChild(this._debugRenderer)
     this._gameEvents = new GameEvents(this._world, this._viewport)
     this._damageText = new DamageText(this._world, this._playerSlot)
+    this._hud.reset(80)
     this._viewport.addChild(this._damageText)
     this._world.update(this._world.config.deltaTime)
   }
@@ -116,6 +124,7 @@ export class GameScene extends AbstractGameScene {
       this._world.update(dt)
       this._entityViewUpdater.update(dt)
       this._damageText.update(dt)
+      this._hud.onUpdate(this._playerSlot!, this._world)
     }
     if (this._debugRenderer !== undefined) this._debugRenderer.onUpdate()
   }

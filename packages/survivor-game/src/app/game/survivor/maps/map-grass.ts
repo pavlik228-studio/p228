@@ -5,8 +5,9 @@ import { GameSceneAssets } from '../../resource-manifest'
 export class MapGrass extends Container {
   constructor() {
     super()
-    // const tiledSprite = new TilingSprite(Assets.get(GameSceneAssets.grassWorld))
+    // const tiledSprite = new TilingSprite(Assets.get(GameSceneAssets.undergroundWorld))
     const tiledSprite = new TilingSprite(Assets.get(GameSceneAssets.grassWorld))
+    tiledSprite.tint = '#ababab'
     tiledSprite.width = WORLD_BOUNDS_X * 2
     tiledSprite.height = WORLD_BOUNDS_Y * 2
     tiledSprite.tileScale.set(0.5)

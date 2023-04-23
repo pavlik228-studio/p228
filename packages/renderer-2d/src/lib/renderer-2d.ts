@@ -12,7 +12,7 @@ export class Renderer2D {
   private readonly _ticker: Ticker
   private readonly _disposables = new Set<() => void>()
   private readonly _sceneManager: SceneManager
-  private readonly _renderingStats = new RenderingStats()
+  private readonly _renderingStats: RenderingStats | undefined
 
   get sceneManager(): SceneManager {
     return this._sceneManager
@@ -21,8 +21,11 @@ export class Renderer2D {
   constructor(
     private readonly _renderCanvas: HTMLCanvasElement,
     private readonly _startSceneConstructor: IGameSceneConstructor,
+    private readonly _enableStats = false,
   ) {
     const viewport = Resizer.getViewport(this._renderCanvas)
+
+    if (this._enableStats) this._renderingStats = new RenderingStats()
 
     this.renderer = new Renderer({
       eventMode: 'static',
@@ -72,8 +75,8 @@ export class Renderer2D {
   }
 
   private readonly update = (dt: number): void => {
-    this._renderingStats.begin()
+    if (this._enableStats) this._renderingStats!.begin()
     this.renderer.render(this.stage)
-    this._renderingStats.end()
+    if (this._enableStats) this._renderingStats!.end()
   }
 }

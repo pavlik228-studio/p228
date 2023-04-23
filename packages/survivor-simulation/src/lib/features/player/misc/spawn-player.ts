@@ -49,7 +49,7 @@ export function spawnPlayer(world: SurvivorWorld, rpc: Rpc<PlayerJoinedData>): E
 
   Health.max[playerEntityRef] = Health.current[playerEntityRef] = 5000
 
-  spawnWeapon(entityManager, playerEntityRef, WeaponType.EthernalRpg, 1, playerPosition)
+  // spawnWeapon(entityManager, playerEntityRef, WeaponType.EthernalRpg, 1, playerPosition)
 
   return playerEntityRef
 }

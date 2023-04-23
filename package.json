@@ -22,6 +22,8 @@
   "dependencies": {
     "@dimforge/rapier2d": "^0.11.2",
     "@dimforge/rapier2d-compat": "^0.11.2",
+    "@pixi/filter-advanced-bloom": "^5.1.1",
+    "@pixi/filter-bloom": "^5.1.1",
     "@pixi/layers": "^2.0.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@stdlib/math-base-special-acos": "^0.0.7",

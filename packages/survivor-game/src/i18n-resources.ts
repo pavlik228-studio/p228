@@ -11,6 +11,10 @@ export const i18nResources = {
       back: 'Back',
       next: 'Next',
 
+      hp: 'HP',
+      xp: 'XP',
+      wave: 'Wave',
+
       stats: {
         HP: 'HP',
         Armor: 'Armor',
@@ -53,6 +57,10 @@ export const i18nResources = {
 
       back: 'Назад',
       next: 'Далее',
+
+      hp: 'Здоровье',
+      xp: 'Опыт',
+      wave: 'Волна',
 
       stats: {
         statsTitle: 'Характеристики',

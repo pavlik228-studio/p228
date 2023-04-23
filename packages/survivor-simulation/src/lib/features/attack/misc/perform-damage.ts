@@ -3,6 +3,7 @@ import { PhysicsRefs } from '@p228/physics2d'
 import { SurvivorWorld } from '@p228/survivor-simulation'
 import { Enemy } from '../../enemy/components/enemy'
 import { EnemyAiSystem } from '../../enemy/systems/enemy-ai-system'
+import { spawnGold } from '../../gold/misc/spawn-gold'
 import { Player } from '../../player/components/player'
 import { DamageEvent } from '../../weapon/events/damage'
 import { WeaponAiSystem } from '../../weapon/systems/weapon-ai-system'
@@ -21,6 +22,7 @@ export function performDamage(world: SurvivorWorld, entityRef: EntityRef, damage
   if (hp === 0) {
     if (world.entityManager.hasComponent(entityRef, Enemy)) {
       world.getSystem(EnemyAiSystem).destroyEnemyWeapon(entityRef)
+      spawnGold(world, entityRef, 1, 1)
     } else if (world.entityManager.hasComponent(entityRef, Player)) {
       world.getSystem(WeaponAiSystem).destroyPlayerWeapon(entityRef)
     }

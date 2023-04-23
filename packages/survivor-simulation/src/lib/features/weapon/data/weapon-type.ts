@@ -72,7 +72,7 @@ export const WeaponData = {
 
   [WeaponType.EthernalGun]: {
     price: [ 200, 400, 800, 1200 ],
-    cooldown: [ 1.01, 1.01, 1.01, 1.01, ],
+    cooldown: [ 0.1, 1.01, 1.01, 1.01, ],
     baseDamage: [ 12, 16, 21, 35 ],
     critChance: [ 0.03, 0.03, 0.03, 0.03, ],
     critDamage: [ 2, 2, 2, 2 ],

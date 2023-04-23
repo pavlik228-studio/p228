@@ -9,6 +9,8 @@ import { EnemyActiveAttack } from './features/enemy/components/enemy-active-atta
 import { EnemyAttack } from './features/enemy/components/enemy-attack'
 import { EnemyAiSystem } from './features/enemy/systems/enemy-ai-system'
 import { Gameplay } from './features/gameplay/gameplay.component'
+import { Gold } from './features/gold/components/gold'
+import { GoldSystem } from './features/gold/systems/gold-system'
 import { Item } from './features/item/components/item'
 import { Player } from './features/player/components/player'
 import { PlayerConnectionSystem } from './features/player/systems/player-connection-system'
@@ -30,6 +32,7 @@ export class SurvivorWorld extends Physics2dWorld {
   public filterProjectile!: Filter
   public filterWeapon!: Filter
   public filterItem!: Filter
+  public filterGold!: Filter
 
   constructor(physicsConfig: Physics2dConfig, inputProvider: InputProvider, rapierInstance: Rapier2D) {
     super(physicsConfig, inputProvider, rapierInstance)
@@ -59,6 +62,7 @@ export class SurvivorWorld extends Physics2dWorld {
       Projectile,
       Weapon,
       Item,
+      Gold,
     ]
   }
 
@@ -81,6 +85,7 @@ export class SurvivorWorld extends Physics2dWorld {
       ProjectileMovementSystem,
       WeaponSystem,
       WeaponAiSystem,
+      GoldSystem,
     ]
   }
 
@@ -90,5 +95,6 @@ export class SurvivorWorld extends Physics2dWorld {
     this.filterProjectile = this.registerFilter(new Filter([ Projectile, Transform2d, PhysicsRefs ]))
     this.filterWeapon = this.registerFilter(new Filter([ Weapon, Transform2d ]))
     this.filterItem = this.registerFilter(new Filter([ Item ]))
+    this.filterGold = this.registerFilter(new Filter([ Gold, Transform2d, PhysicsRefs ]))
   }
 }

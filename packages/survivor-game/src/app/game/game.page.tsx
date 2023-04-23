@@ -15,10 +15,11 @@ export const GamePage: FC = () => {
 
   useEffect(() => {
     const sofiaSansFontPromise = new FontFaceObserver('Sofia Sans').load()
+    const russoOneFontPromise = new FontFaceObserver('Russo One').load()
 
     Assets.init({ manifest: ResourcesManifest }).catch(console.error)
     const gameSceneAssetsPromise = Assets.loadBundle('game-scene')
-    Promise.all([sofiaSansFontPromise, gameSceneAssetsPromise]).then(() => setIsLoaded(true))
+    Promise.all([sofiaSansFontPromise, russoOneFontPromise, gameSceneAssetsPromise]).then(() => setIsLoaded(true))
 
     import('@dimforge/rapier2d').then((rapier) => {
       setRapierInstance(rapier)

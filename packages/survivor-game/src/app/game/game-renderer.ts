@@ -3,6 +3,6 @@ import { GameScene } from './survivor/game-scene'
 
 export class GameRenderer extends Renderer2D {
   constructor(renderCanvas: HTMLCanvasElement) {
-    super(renderCanvas, GameScene)
+    super(renderCanvas, GameScene, false)
   }
 }

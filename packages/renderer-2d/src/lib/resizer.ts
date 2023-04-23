@@ -39,6 +39,14 @@ export class Resizer {
     }
   }
 
+  public dvh(px: number): number {
+    return px * this._height / 600
+  }
+
+  public mvw(px: number): number {
+    return px * this._width / 320
+  }
+
   public projectX(value: number): number {
     return this._width / 2 + value
   }

@@ -11,6 +11,8 @@ specifiers:
   '@nrwl/rollup': 15.9.2
   '@nrwl/vite': 15.9.2
   '@nrwl/workspace': 15.9.2
+  '@pixi/filter-advanced-bloom': ^5.1.1
+  '@pixi/filter-bloom': ^5.1.1
   '@pixi/layers': ^2.0.1
   '@reduxjs/toolkit': ^1.9.5
   '@stdlib/math-base-special-acos': ^0.0.7
@@ -69,6 +71,8 @@ specifiers:
 dependencies:
   '@dimforge/rapier2d': 0.11.2
   '@dimforge/rapier2d-compat': 0.11.2
+  '@pixi/filter-advanced-bloom': 5.1.1_@pixi+core@7.2.4
+  '@pixi/filter-bloom': 5.1.1_4h3nvvu2v4iznk62rzho45akn4
   '@pixi/layers': 2.0.1_q66nhvpvg435znctzigmnt3sa4
   '@reduxjs/toolkit': 1.9.5_k4ae6lp43ej6mezo3ztvx6pykq
   '@stdlib/math-base-special-acos': 0.0.7
@@ -2301,12 +2305,33 @@ packages:
       '@pixi/core': 7.2.4
     dev: false
 
+  /@pixi/filter-advanced-bloom/5.1.1_@pixi+core@7.2.4:
+    resolution: {integrity: sha512-C5AWmkWKvoYvJ+600qS7rC81E1X1clvrQLw4QE4IiFec5j1b07KhKE78w/BSRYMrBVa0cQ/ju0J1f7XoQYJfdQ==}
+    peerDependencies:
+      '@pixi/core': ^7.0.0-X
+    dependencies:
+      '@pixi/core': 7.2.4
+      '@pixi/filter-kawase-blur': 5.1.1_@pixi+core@7.2.4
+    dev: false
+
   /@pixi/filter-alpha/7.2.4_@pixi+core@7.2.4:
     resolution: {integrity: sha512-UTUMSGyktUr+I9vmigqJo9iUhb0nwGyqTTME2xBWZvVGCnl5z+/wHxvIBBCe5pNZ66IM15pGXQ4cDcfqCuP2kA==}
     peerDependencies:
       '@pixi/core': 7.2.4
     dependencies:
       '@pixi/core': 7.2.4
+    dev: false
+
+  /@pixi/filter-bloom/5.1.1_4h3nvvu2v4iznk62rzho45akn4:
+    resolution: {integrity: sha512-4/i+tMxAQdgezahxsVCqzkAyBAH4TxtuY/zo1wuCJybEqkKFIzOJ76Y4R/lJevEHS9CGpCTrvjRpup0Hze8k0Q==}
+    peerDependencies:
+      '@pixi/core': ^7.0.0-X
+      '@pixi/filter-alpha': ^7.0.0-X
+      '@pixi/filter-blur': ^7.0.0-X
+    dependencies:
+      '@pixi/core': 7.2.4
+      '@pixi/filter-alpha': 7.2.4_@pixi+core@7.2.4
+      '@pixi/filter-blur': 7.2.4_@pixi+core@7.2.4
     dev: false
 
   /@pixi/filter-blur/7.2.4_@pixi+core@7.2.4:
@@ -2337,6 +2362,14 @@ packages:
     resolution: {integrity: sha512-qzKjdL+Ih18uGTJLg8tT/H+YCsTeGkw2uF7lyKnw/lxGLJQhLWIhM95M9qSNgxbXyW1vp7SbG81a9aAEz2HAhA==}
     peerDependencies:
       '@pixi/core': 7.2.4
+    dependencies:
+      '@pixi/core': 7.2.4
+    dev: false
+
+  /@pixi/filter-kawase-blur/5.1.1_@pixi+core@7.2.4:
+    resolution: {integrity: sha512-nPnJ1ChBFP+4pgFCwC0RJgHAJCetiHcQU3INH7zCdq88cFABmVmhN+wCKRNg4H7lF1EJjaXgFDkTrTreOD/bnw==}
+    peerDependencies:
+      '@pixi/core': ^7.0.0-X
     dependencies:
       '@pixi/core': 7.2.4
     dev: false
