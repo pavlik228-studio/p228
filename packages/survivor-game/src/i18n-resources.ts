@@ -43,7 +43,12 @@ export const i18nResources = {
       Items: 'Items',
       Shop: 'Shop',
       rerollShop: 'Reroll',
-      backPrompt: 'Are you sure you want to leave the game?'
+      backPrompt: 'Are you sure you want to leave the game?',
+      levelUp: 'Level up',
+
+      levelUpScreen: {
+        title: 'Character Stats',
+      },
     },
   },
   ru: {
@@ -124,7 +129,12 @@ export const i18nResources = {
       Items: 'Предметы',
       Shop: 'Магазин',
       rerollShop: 'Сменить',
-      backPrompt: 'Вы уверены, что хотите выйти из игры?'
+      backPrompt: 'Вы уверены, что хотите выйти из игры?',
+      levelUp: 'Повышение уровня',
+
+      levelUpScreen: {
+        title: 'Характеристики Персонажа',
+      },
     },
   },
 }

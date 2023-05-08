@@ -1,0 +1,27 @@
+@import "../../../../mixins"
+
+.header
+  display: flex
+.title-button
+  margin: 0 auto
+@include desktop()
+  .header
+    width: dvh(960px)
+    margin: dvh(30px) auto dvh(30px)
+
+.stats
+  background: radial-gradient(50% 50% at 50% 50%, #0C426C 0%, #04121E 100%), #D9D9D9
+
+@include desktop()
+  .stats
+    margin: 0 auto
+    width: dvh(680px)
+    height: dvh(380px)
+    border: dvh(1px) solid #000000
+    box-shadow: 0 dvh(5px) dvh(2px) rgba(0, 0, 0, 0.5)
+    border-radius: dvh(10px)
+    padding: dvh(15px) dvh(20px) dvh(20px) dvh(20px)
+    &__title
+      text-align: center
+      font-size: dvh(30px)
+      margin-top: dvh(15px)

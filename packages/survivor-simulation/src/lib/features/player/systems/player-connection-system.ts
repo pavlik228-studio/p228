@@ -22,8 +22,8 @@ export class PlayerConnectionSystem extends AbstractSystem<SurvivorWorld> {
       Gameplay.data.stage = GameplayStage.Shop
 
       for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
-          spawnEnemy(this.world, EnemyType.MeleeSkull, { x: 200 + i * 100, y: 200 + j * 100 })
+        for (let j = 0; j < 2; j++) {
+          spawnEnemy(this.world, EnemyType.MeleeSkull, { x: 200 + i * 100, y: 600 + j * 100 })
           // spawnEnemy(this.world, EnemyType.RangeSkull, { x: -700 - i * 100, y: j * 100 })
           // spawnEnemy(this.world, EnemyType.ShieldSkull, { x: 700 + i * 100, y: -300 - j * 100 })
         }

@@ -59,6 +59,13 @@ export abstract class SimulationWorld extends ECSWorld {
     this._interpolationFactor = MathOps.clamp01((this._accumulatedTime % this._frameRate) / this._frameRate)
   }
 
+  public nextTick(): void {
+    const currentTick = this._tick.value
+    const toTick = currentTick + 1
+    this._accumulatedTime = toTick * this._frameRate
+    this.simulationTicks(currentTick, toTick)
+  }
+
   protected registerEvents(simulationEvents: SimulationEvents): void {
     // Register events here
   }

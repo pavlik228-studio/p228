@@ -19,7 +19,13 @@ export const GamePage: FC = () => {
 
     Assets.init({ manifest: ResourcesManifest }).catch(console.error)
     const gameSceneAssetsPromise = Assets.loadBundle('game-scene')
-    Promise.all([sofiaSansFontPromise, russoOneFontPromise, gameSceneAssetsPromise]).then(() => setIsLoaded(true))
+
+    Promise.all([
+      sofiaSansFontPromise,
+      russoOneFontPromise,
+      gameSceneAssetsPromise,
+      // loadWeaponsConfig(),
+    ]).then(() => setIsLoaded(true))
 
     import('@dimforge/rapier2d').then((rapier) => {
       setRapierInstance(rapier)

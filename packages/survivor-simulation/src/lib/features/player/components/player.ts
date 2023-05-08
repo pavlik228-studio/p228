@@ -12,7 +12,7 @@ const playerSchema = {
   shopBoughtSlots: [ DataType.u8, 6 ] as IFixedList,
   weaponCount: DataType.u8,
 }
-const playerStatsSchema = {
+export const playerStatsSchema = {
   hp: DataType.f32,
   armor: DataType.f32,
   dodge: DataType.f32,

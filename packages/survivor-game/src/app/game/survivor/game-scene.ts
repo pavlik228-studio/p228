@@ -190,12 +190,12 @@ export class GameScene extends AbstractGameScene {
 
   public buyShopItem(shopSlot: number): void {
     this._inputProvider.setRpc(SurvivorRpc.BuyShopItem, new BuyShopItemData(shopSlot))
-    this._world!.update(this._world!.config.deltaTime)
+    this._world!.nextTick()
   }
 
   public rerollShop(): void {
     this._inputProvider.setRpc(SurvivorRpc.RerollShop, new RerollShopData())
-    this._world!.update(this._world!.config.deltaTime)
+    this._world!.nextTick()
   }
 
   private getPlayerEntityRefBySlot(slot: number) {

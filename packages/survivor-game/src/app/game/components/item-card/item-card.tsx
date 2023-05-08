@@ -29,6 +29,7 @@ export const ItemCard: FC<ItemCardProps> = ({
   const dispatch = useDispatch()
   const sizeClass = size ? classes[size] : classes['md']
   const rarityClass = classes[lvlToRarity(item?.level)]
+
   const lockedClass = item?.locked || forceLocked ? classes['locked'] : ''
   const cardClass = `${classes['root']} ${sizeClass} ${rarityClass} ${lockedClass}`
 
@@ -36,7 +37,7 @@ export const ItemCard: FC<ItemCardProps> = ({
     if (inactive) return
 
     if (owned) {
-      ItemPopupService.show(ItemPopupKind.Sell, item)
+      ItemPopupService.show(item === undefined ? ItemPopupKind.UnlockSlot : ItemPopupKind.Sell, item)
     } else if (item?.locked) {
       ItemPopupService.show(ItemPopupKind.UnlockSlot, undefined)
     } else if (item) {
