@@ -74,7 +74,7 @@ export let WeaponData: { [key in WeaponType]: WeaponUnion } = {
 
   [WeaponType.EthernalGun]: {
     price: [ 200, 400, 800, 1200 ],
-    cooldown: [ 0.1, 1.01, 1.01, 1.01, ],
+    cooldown: [ 1.2, 1.12, 0.93, 0.87, ],
     baseDamage: [ 12, 16, 21, 35 ],
     critChance: [ 0.03, 0.03, 0.03, 0.03, ],
     critDamage: [ 2, 2, 2, 2 ],

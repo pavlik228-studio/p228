@@ -23,14 +23,19 @@ export class PlayerConnectionSystem extends AbstractSystem<SurvivorWorld> {
 
       for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 2; j++) {
-          spawnEnemy(this.world, EnemyType.MeleeSkull, { x: 200 + i * 100, y: 600 + j * 100 })
-          // spawnEnemy(this.world, EnemyType.RangeSkull, { x: -700 - i * 100, y: j * 100 })
-          // spawnEnemy(this.world, EnemyType.ShieldSkull, { x: 700 + i * 100, y: -300 - j * 100 })
+          if (i % 2 === 0) {
+            spawnEnemy(this.world, EnemyType.MeleeSkull, { x: 200 + i * 100, y: 600 + j * 100 })
+          } else {
+            spawnEnemy(this.world, EnemyType.ShieldSkull, { x: 700 + i * 100, y: -300 - j * 100 })
+          }
         }
       }
-      // spawnEnemy(this.world, EnemyType.MeleeSkull, { x: 200, y: 0 })
-      // spawnEnemy(this.world, EnemyType.RangeSkull, { x: -700, y: 0 })
-      // spawnEnemy(this.world, EnemyType.ShieldSkull, { x: 700, y: -300 })
+
+      for (let i = 0; i < 4; i++) {
+        spawnEnemy(this.world, EnemyType.RangeSkull, { x: 200 + i * 100, y: -600 - i * 100 })
+      }
+
+      spawnEnemy(this.world, EnemyType.RamSkull, { x: 500, y: 500 })
     }
 
     this._playerJoinedRPCs.length = 0
