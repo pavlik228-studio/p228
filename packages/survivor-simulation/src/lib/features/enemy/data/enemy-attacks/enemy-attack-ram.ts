@@ -5,6 +5,7 @@ import { PhysicsRefs } from '@p228/physics2d'
 import { KnockBack } from '../../../attack/components/effects/knock-back'
 import { performDamage } from '../../../attack/misc/perform-damage'
 import { EnemyActiveAttack } from '../../components/enemy-active-attack'
+import { EnemyAttack } from '../../components/enemy-attack'
 import { EnemyAttackData, EnemyAttackType } from '../enemy-attack-type'
 import { AbstractEnemyAttack } from './abstract-enemy-attack'
 
@@ -12,6 +13,7 @@ const ENEMY_POSITION_BUFFER = new Vector2()
 const PLAYER_POSITION_BUFFER = new Vector2()
 
 const RAM_SPEED = 1
+const RAM_DELAY = 0.5
 
 export class EnemyAttackRam extends AbstractEnemyAttack {
   protected _attackType: EnemyAttackType = EnemyAttackType.Ram
@@ -51,7 +53,14 @@ export class EnemyAttackRam extends AbstractEnemyAttack {
       }
     }
 
-    this.moveToTarget()
+    if (this._attackValues.chargeTime - EnemyAttack.chargeIn[this._ownerRef] > this._world.config.sec2Tick * RAM_DELAY) {
+      this.moveToTarget()
+    } else {
+      const enemyBody = this._world.physicsWorld.bodies.get(PhysicsRefs.rigidBodyRef[this._ownerRef])!
+      ENEMY_POSITION_BUFFER.set(Transform2d.x[this._ownerRef], Transform2d.y[this._ownerRef])
+      enemyBody.setTranslation(ENEMY_POSITION_BUFFER, true)
+      enemyBody.setLinvel(Vector2.Zero, true)
+    }
   }
 
   protected performAttack(): void {

@@ -21,7 +21,7 @@ export class PlayerConnectionSystem extends AbstractSystem<SurvivorWorld> {
       spawnPlayer(this.world, rpc)
       Gameplay.data.stage = GameplayStage.Shop
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 2; i++) {
         for (let j = 0; j < 2; j++) {
           if (i % 2 === 0) {
             spawnEnemy(this.world, EnemyType.MeleeSkull, { x: 200 + i * 100, y: 600 + j * 100 })
@@ -35,7 +35,7 @@ export class PlayerConnectionSystem extends AbstractSystem<SurvivorWorld> {
         spawnEnemy(this.world, EnemyType.RangeSkull, { x: 200 + i * 100, y: -600 - i * 100 })
       }
 
-      spawnEnemy(this.world, EnemyType.RamSkull, { x: 500, y: 500 })
+      spawnEnemy(this.world, EnemyType.RamSkull, { x: 1000, y: 1000 })
     }
 
     this._playerJoinedRPCs.length = 0
