@@ -1,5 +1,5 @@
+import { WORLD_BOUNDS_X, WORLD_BOUNDS_Y } from '@p228/survivor-simulation'
 import { Assets, Container, TilingSprite } from 'pixi.js'
-import { WORLD_BOUNDS_X, WORLD_BOUNDS_Y } from '../../../../../../survivor-simulation/src/lib/constants'
 import { GameSceneAssets } from '../../resource-manifest'
 
 export class MapGrass extends Container {

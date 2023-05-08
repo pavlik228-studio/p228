@@ -1,18 +1,17 @@
 import { InputProvider } from '@p228/engine'
 import { Physics2dConfig } from '@p228/physics2d'
 import { AbstractGameScene } from '@p228/renderer-2d'
-import { PlayerJoinedData, SurvivorInputSchema, SurvivorRpc, SurvivorWorld } from '@p228/survivor-simulation'
+import {
+  BuyShopItemData,
+  IShopItem, Item, ItemId, ItemsData,
+  Player,
+  PlayerCharacter,
+  PlayerJoinedData, RerollShopData, ShopActions, ShopItemType,
+  SurvivorInputSchema,
+  SurvivorRpc,
+  SurvivorWorld, Weapon, WeaponData, WeaponType,
+} from '@p228/survivor-simulation'
 import { Layer } from '@pixi/layers'
-import { Item } from '../../../../../survivor-simulation/src/lib/features/item/components/item'
-import { ItemId, ItemsData } from '../../../../../survivor-simulation/src/lib/features/item/data/items-data'
-import { Player } from '../../../../../survivor-simulation/src/lib/features/player/components/player'
-import { PlayerCharacter } from '../../../../../survivor-simulation/src/lib/features/player/data/player-character'
-import { ShopActions } from '../../../../../survivor-simulation/src/lib/features/player/misc/shop-actions'
-import { IShopItem, ShopItemType } from '../../../../../survivor-simulation/src/lib/features/player/misc/shop-items'
-import { Weapon } from '../../../../../survivor-simulation/src/lib/features/weapon/components/weapon'
-import { WeaponData, WeaponType } from '../../../../../survivor-simulation/src/lib/features/weapon/data/weapon-type'
-import { BuyShopItemData } from '../../../../../survivor-simulation/src/lib/input/rpc-datas/buy-shop-item'
-import { RerollShopData } from '../../../../../survivor-simulation/src/lib/input/rpc-datas/reroll-shop'
 import { GameRenderer } from '../game-renderer'
 import { getRapierInstance } from '../misc/rapier-store'
 import { DamageText } from './components/damage-text'
@@ -28,7 +27,6 @@ import { MapGrass } from './maps/map-grass'
 export class GameScene extends AbstractGameScene {
   private readonly _viewport: GameViewport
   private readonly _hud: Hud
-  private _world: SurvivorWorld | undefined
   private _entityViewUpdater!: SurvivorEntityViewUpdater
   private _inputProvider!: InputProvider<typeof SurvivorInputSchema>
   private _inputListener!: InputListener
@@ -54,11 +52,13 @@ export class GameScene extends AbstractGameScene {
     this.addChild(this._hud)
   }
 
-  private _playerSlot: number | undefined
+  private _world: SurvivorWorld | undefined
 
   public get world(): SurvivorWorld {
     return this._world!
   }
+
+  private _playerSlot: number | undefined
 
   public get playerSlot(): number | undefined {
     return this._playerSlot
@@ -94,7 +94,10 @@ export class GameScene extends AbstractGameScene {
   public async initializeGame(character: PlayerCharacter): Promise<void> {
     this._turnBasedMode = true
     this._viewport.addChild(new MapGrass())
-    const config = new Physics2dConfig(1000, {x: 0, y: 0}, 0, void 0, void 0, 0, void 0, void 0, void 0, void 0, void 0, 16)
+    const config = new Physics2dConfig(1000, {
+      x: 0,
+      y: 0,
+    }, 0, void 0, void 0, 0, void 0, void 0, void 0, void 0, void 0, 16)
     this._inputProvider = new InputProvider(SurvivorInputSchema)
     this._inputListener = new InputListener(this._inputProvider)
     this._world = new SurvivorWorld(config, this._inputProvider, getRapierInstance())
@@ -139,7 +142,7 @@ export class GameScene extends AbstractGameScene {
     return Player.shopSlots[playerEntityRef]
   }
 
-  public getWeapons(){
+  public getWeapons() {
     const playerEntityRef = this.getPlayerEntityRefBySlot(this._playerSlot!)
     const weapons = new Array<IShopItem>()
 
@@ -160,7 +163,7 @@ export class GameScene extends AbstractGameScene {
     return weapons
   }
 
-  public getItems(){
+  public getItems() {
     const playerEntityRef = this.getPlayerEntityRefBySlot(this._playerSlot!)
     const items = new Array<IShopItem>()
 

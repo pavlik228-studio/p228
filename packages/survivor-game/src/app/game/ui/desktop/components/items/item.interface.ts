@@ -1,6 +1,4 @@
-import {
-  IShopStateItem,
-} from '../../../../../../../../survivor-simulation/src/lib/features/player/misc/shop-items'
+import { IShopStateItem } from '@p228/survivor-simulation'
 
 export interface IViewItem extends IShopStateItem {
   locked?: boolean

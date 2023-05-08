@@ -1,8 +1,6 @@
+import { PlayerCharacter } from '@p228/survivor-simulation'
 import { FC, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  PlayerCharacter
-} from '../../../../../../../../../survivor-simulation/src/lib/features/player/data/player-character'
 import { Button } from '../../../../../../components/button/button'
 import { Diamond } from '../../../../../../components/diamond/diamond'
 import { GameText } from '../../../../../../components/game-text/game-text'

@@ -1,6 +1,4 @@
-import {
-  ProjectileType
-} from '../../../../../../../survivor-simulation/src/lib/features/projectile/components/projectile'
+import { ProjectileType } from '@p228/survivor-simulation'
 
 export const ProjectileColors: { [key in ProjectileType]: number } = {
   [ProjectileType.Standard]: 0x7338FB,

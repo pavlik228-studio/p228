@@ -1,9 +1,5 @@
-import { SurvivorWorld } from '@p228/survivor-simulation'
+import { ExplosionEvent, ExplosionEventData, SurvivorWorld } from '@p228/survivor-simulation'
 import { AnimatedSprite, Assets, Spritesheet } from 'pixi.js'
-import {
-  ExplosionEvent,
-  ExplosionEventData,
-} from '../../../../../survivor-simulation/src/lib/features/weapon/events/explosion'
 import { GameSceneAssets } from '../resource-manifest'
 import { GameViewport } from './game-viewport'
 

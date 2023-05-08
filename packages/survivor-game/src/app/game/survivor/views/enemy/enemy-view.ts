@@ -1,17 +1,8 @@
 import { Interpolation, Transform2d } from '@p228/engine'
 import { MathOps } from '@p228/math'
 import { EntityView } from '@p228/renderer-2d'
-import { SurvivorWorld } from '@p228/survivor-simulation'
+import { Enemy, EnemyActiveAttack, EnemyData, EnemyType, IEnemyValues, SurvivorWorld } from '@p228/survivor-simulation'
 import { AnimatedSprite, Assets, Sprite, Spritesheet } from 'pixi.js'
-import { Enemy } from '../../../../../../../survivor-simulation/src/lib/features/enemy/components/enemy'
-import {
-  EnemyActiveAttack,
-} from '../../../../../../../survivor-simulation/src/lib/features/enemy/components/enemy-active-attack'
-import {
-  EnemyData,
-  EnemyType,
-  IEnemyValues,
-} from '../../../../../../../survivor-simulation/src/lib/features/enemy/data/enemy-type'
 import { GameSceneAssets } from '../../../resource-manifest'
 import { GameScene } from '../../game-scene'
 import { EnemyGroup, ShadowGroup } from '../../layer-groups'

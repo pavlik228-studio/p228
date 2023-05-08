@@ -1,13 +1,8 @@
 import { EntityRef } from '@p228/ecs'
 import { Transform2d } from '@p228/engine'
 import { Resizer } from '@p228/renderer-2d'
-import { SurvivorWorld } from '@p228/survivor-simulation'
+import { SurvivorWorld, Player, DamageEvent, DamageEventData } from '@p228/survivor-simulation'
 import { BitmapFont, BitmapText, Container, IBitmapFontOptions } from 'pixi.js'
-import { Player } from '../../../../../../survivor-simulation/src/lib/features/player/components/player'
-import {
-  DamageEvent,
-  DamageEventData,
-} from '../../../../../../survivor-simulation/src/lib/features/weapon/events/damage'
 import { FxGroup } from '../layer-groups'
 
 const FontOptions: IBitmapFontOptions = {

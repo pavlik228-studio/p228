@@ -1,7 +1,6 @@
 import { Interpolation, Transform2d } from '@p228/engine'
 import { EntityView } from '@p228/renderer-2d'
-import { SurvivorWorld } from '@p228/survivor-simulation'
-import { Gold } from 'packages/survivor-simulation/src/lib/features/gold/components/gold'
+import { Gold, SurvivorWorld } from '@p228/survivor-simulation'
 import { AnimatedSprite, Assets, Sprite, Spritesheet } from 'pixi.js'
 import { GameSceneAssets } from '../../../resource-manifest'
 import { GameScene } from '../../game-scene'

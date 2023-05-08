@@ -1,12 +1,7 @@
+import { ItemId, ShopActions, ShopItemType, WeaponType } from '@p228/survivor-simulation'
 import { TFunction } from 'i18next'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ItemId } from '../../../../../../../../../../survivor-simulation/src/lib/features/item/data/items-data'
-import {
-  ShopActions
-} from '../../../../../../../../../../survivor-simulation/src/lib/features/player/misc/shop-actions'
-import { ShopItemType } from '../../../../../../../../../../survivor-simulation/src/lib/features/player/misc/shop-items'
-import { WeaponType } from '../../../../../../../../../../survivor-simulation/src/lib/features/weapon/data/weapon-type'
 import { Button } from '../../../../../../../components/button/button'
 import { Diamond } from '../../../../../../../components/diamond/diamond'
 import { GameText } from '../../../../../../../components/game-text/game-text'

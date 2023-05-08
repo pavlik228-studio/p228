@@ -1,8 +1,5 @@
+import { IShopItem, IShopStateItem } from '@p228/survivor-simulation'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  IShopItem,
-  IShopStateItem,
-} from '../../../../../../survivor-simulation/src/lib/features/player/misc/shop-items'
 import { GameScene } from '../../../game/survivor/game-scene'
 import { initGameThunk } from './thunks/init-game.thunk'
 

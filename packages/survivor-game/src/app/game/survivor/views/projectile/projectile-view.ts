@@ -1,12 +1,8 @@
 import { Interpolation, Transform2d } from '@p228/engine'
 import { VECTOR2_BUFFER_1 } from '@p228/math'
 import { EntityView } from '@p228/renderer-2d'
-import { SurvivorWorld } from '@p228/survivor-simulation'
+import { Projectile, ProjectileType, SurvivorWorld } from '@p228/survivor-simulation'
 import { AnimatedSprite, Assets, Sprite, Spritesheet } from 'pixi.js'
-import {
-  Projectile,
-  ProjectileType,
-} from '../../../../../../../survivor-simulation/src/lib/features/projectile/components/projectile'
 import { GameSceneAssets } from '../../../resource-manifest'
 import { GameScene } from '../../game-scene'
 import { FxGroup } from '../../layer-groups'

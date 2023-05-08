@@ -1,9 +1,5 @@
+import { WeaponAttackType, WeaponData, WeaponType } from '@p228/survivor-simulation'
 import type { TFunction } from 'i18next'
-import {
-  WeaponAttackType,
-  WeaponData,
-  WeaponType,
-} from '../../../../../survivor-simulation/src/lib/features/weapon/data/weapon-type'
 
 const excludedWeaponStats = {
   price: void 0,

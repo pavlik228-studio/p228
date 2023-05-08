@@ -1,11 +1,7 @@
+import { ItemId, ShopItemType, WeaponType } from '@p228/survivor-simulation'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { ItemId } from '../../../../../../../../survivor-simulation/src/lib/features/item/data/items-data'
-import {
-  ShopItemType,
-} from '../../../../../../../../survivor-simulation/src/lib/features/player/misc/shop-items'
-import { WeaponType } from '../../../../../../../../survivor-simulation/src/lib/features/weapon/data/weapon-type'
 import { Button } from '../../../../../components/button/button'
 import { GoldBalance } from '../../../../../components/gold-balance/gold-balance'
 import { Gold } from '../../../../../components/gold/gold'

@@ -1,5 +1,5 @@
+import { PlayerCharacter } from '@p228/survivor-simulation'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { PlayerCharacter } from '../../../../../../../survivor-simulation/src/lib/features/player/data/player-character'
 import type { RootState } from '../../../index'
 
 export const initGameThunk = createAsyncThunk(

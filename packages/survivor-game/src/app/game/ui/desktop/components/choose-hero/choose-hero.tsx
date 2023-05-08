@@ -1,8 +1,6 @@
+import { PlayerCharacter } from '@p228/survivor-simulation'
 import { FC, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  PlayerCharacter
-} from '../../../../../../../../survivor-simulation/src/lib/features/player/data/player-character'
 import { Button } from '../../../../../components/button/button'
 import { initGameThunk } from '../../../../../store/features/game/thunks/init-game.thunk'
 import { useAppDispatch } from '../../../../../store/hooks'
