@@ -1,5 +1,5 @@
 import { MathOps } from '@p228/math'
-import { SheetsAPI } from '../../../../../../survivor-game/src/app/misc/sheets-api'
+import { SheetsAPI } from '../../../sheets-api'
 
 export enum WeaponType {
   Sword,
