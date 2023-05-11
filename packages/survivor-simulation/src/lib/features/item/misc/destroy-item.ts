@@ -1,14 +1,14 @@
 import { EntityRef } from '@p228/ecs'
-import { SurvivorWorld } from '@p228/survivor-simulation'
+import { SimulationData, SurvivorWorld } from '@p228/survivor-simulation'
 import { Player } from '../../player/components/player'
 import { Item } from '../components/item'
-import { ItemId, ItemsData } from '../data/items-data'
+import { ItemId } from '../data/items-type'
 
 export function destroyItem(world: SurvivorWorld, itemRef: EntityRef) {
   if (!world.entityManager.hasComponent(itemRef, Item)) throw new Error('Item is not found')
 
   const itemId = Item.id[itemRef] as ItemId
-  const itemData = ItemsData[itemId]
+  const itemData = SimulationData.items[itemId]!
   const ownerRef = Item.ownerRef[itemRef]
 
   for (const [ stat, value ] of itemData.stats) {

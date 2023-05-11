@@ -3,13 +3,13 @@ import { Physics2dConfig } from '@p228/physics2d'
 import { AbstractGameScene } from '@p228/renderer-2d'
 import {
   BuyShopItemData,
-  IShopItem, Item, ItemId, ItemsData,
+  IShopItem, Item, ItemId,
   Player,
   PlayerCharacter,
-  PlayerJoinedData, RerollShopData, ShopActions, ShopItemType,
+  PlayerJoinedData, RerollShopData, ShopActions, ShopItemType, SimulationData,
   SurvivorInputSchema,
   SurvivorRpc,
-  SurvivorWorld, Weapon, WeaponData, WeaponType,
+  SurvivorWorld, Weapon, WeaponId,
 } from '@p228/survivor-simulation'
 import { Layer } from '@pixi/layers'
 import { GameRenderer } from '../game-renderer'
@@ -97,7 +97,7 @@ export class GameScene extends AbstractGameScene {
     const config = new Physics2dConfig(1000, {
       x: 0,
       y: 0,
-    }, 0, void 0, void 0, 0, void 0, void 0, void 0, void 0, void 0, 16)
+    }, Math.round(Math.random() * 4294967296), void 0, void 0, 0, void 0, void 0, void 0, void 0, void 0, 16)
     this._inputProvider = new InputProvider(SurvivorInputSchema)
     this._inputListener = new InputListener(this._inputProvider)
     this._world = new SurvivorWorld(config, this._inputProvider, getRapierInstance())
@@ -149,8 +149,8 @@ export class GameScene extends AbstractGameScene {
     for (const weaponEntityRef of this._world!.filterWeapon) {
       if (Weapon.ownerRef[weaponEntityRef] !== playerEntityRef) continue
       const weaponLvl = Weapon.level[weaponEntityRef]
-      const weaponType = Weapon.type[weaponEntityRef] as WeaponType
-      const weaponValues = WeaponData[weaponType]
+      const weaponType = Weapon.type[weaponEntityRef] as WeaponId
+      const weaponValues = SimulationData.weapons[weaponType]!
 
       weapons.push({
         type: ShopItemType.Weapon,
@@ -170,7 +170,7 @@ export class GameScene extends AbstractGameScene {
     for (const itemEntityRef of this._world!.filterItem) {
       if (Item.ownerRef[itemEntityRef] !== playerEntityRef) continue
       const itemId = Item.id[itemEntityRef] as ItemId
-      const itemValues = ItemsData[itemId]
+      const itemValues = SimulationData.items[itemId]!
 
       items.push({
         itemId,

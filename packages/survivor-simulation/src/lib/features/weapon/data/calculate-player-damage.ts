@@ -1,7 +1,8 @@
 import { EntityRef } from '@p228/ecs'
+import { SimulationData } from '../../../simulation-data'
 import { Player } from '../../player/components/player'
 import { Weapon } from '../components/weapon'
-import { WeaponData, WeaponType } from './weapon-type'
+import { WeaponId } from './weapon-type'
 
 const PLAYER_DAMAGE_BUFFER = {
   damage: 0,
@@ -13,7 +14,7 @@ export function calculatePlayerDamage(
 ) {
   const playerEntityRef = Weapon.ownerRef[weaponEntityRef]
   const weaponLvl = Weapon.level[weaponEntityRef]
-  const weaponValues = WeaponData[Weapon.type[weaponEntityRef] as WeaponType]
+  const weaponValues = SimulationData.weapons[Weapon.type[weaponEntityRef] as WeaponId]
   const critChance = Player.critChance[playerEntityRef] + weaponValues.critChance[weaponLvl]
   const critDamage = Player.critDamage[playerEntityRef] + weaponValues.critDamage[weaponLvl]
 

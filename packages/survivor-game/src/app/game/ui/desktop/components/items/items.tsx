@@ -1,4 +1,4 @@
-import { ItemId, ShopItemType, WeaponType } from '@p228/survivor-simulation'
+import { ItemId, ShopItemType, WeaponId } from '@p228/survivor-simulation'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
@@ -33,7 +33,7 @@ export const Items: FC<ItemsProps> = ({onNext}) => {
       ...item,
       locked,
       slot: idx,
-      itemClass: item.type === ShopItemType.Weapon ? WeaponType[item.itemId] : `item item-${ItemId[item.itemId]}`,
+      itemClass: item.type === ShopItemType.Weapon ? WeaponId[item.itemId] : `item item-${ItemId[item.itemId]}`,
     }
   })
 
@@ -41,7 +41,7 @@ export const Items: FC<ItemsProps> = ({onNext}) => {
     return {
       ...weapon,
       hasBought: true,
-      itemClass: WeaponType[weapon.itemId],
+      itemClass: WeaponId[weapon.itemId],
     }
   })
 

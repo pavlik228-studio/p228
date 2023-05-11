@@ -2,15 +2,16 @@ import type { ColliderHandle } from '@dimforge/rapier2d'
 import { EntityRef } from '@p228/ecs'
 import { IVector2Like } from '@p228/math'
 import { SurvivorWorld } from '@p228/survivor-simulation'
+import { SimulationData } from '../../../../simulation-data'
 import { Weapon } from '../../components/weapon'
 import { WeaponTargetsAttackedPool } from '../../misc/weapon-targets-attacked-pool'
 import { calculatePlayerCooldown } from '../calculate-player-cooldown'
-import { IWeapon, WeaponAttackType, WeaponData, WeaponType } from '../weapon-type'
+import { IWeapon, WeaponAttackType, WeaponId } from '../weapon-type'
 
 export abstract class AbstractWeaponAttack<TWeaponAttackType extends WeaponAttackType> {
   public readonly abstract attackType: WeaponAttackType
   protected _weaponEntityRef!: EntityRef
-  protected _weaponType!: WeaponType
+  protected _weaponType!: WeaponId
   protected _weaponValues!: IWeapon<TWeaponAttackType>
   protected _attackedTargets!: Array<ColliderHandle>
 
@@ -63,10 +64,10 @@ export abstract class AbstractWeaponAttack<TWeaponAttackType extends WeaponAttac
     Weapon.startedAt[this._weaponEntityRef] = 0
   }
 
-  public setContext(weaponEntityRef: EntityRef, weaponType: WeaponType, attackedTargets: Array<ColliderHandle>): void {
+  public setContext(weaponEntityRef: EntityRef, weaponType: WeaponId, attackedTargets: Array<ColliderHandle>): void {
     this._weaponEntityRef = weaponEntityRef
     this._weaponType = weaponType
-    this._weaponValues = WeaponData[weaponType] as any
+    this._weaponValues = SimulationData.weapons[weaponType] as any
     this._attackedTargets = attackedTargets
   }
 }

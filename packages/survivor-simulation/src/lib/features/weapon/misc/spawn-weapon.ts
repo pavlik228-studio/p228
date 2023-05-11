@@ -1,9 +1,10 @@
 import { EntityManager, EntityRef } from '@p228/ecs'
 import { Transform2d } from '@p228/engine'
 import { IVector2Like, MathOps } from '@p228/math'
+import { SimulationData } from '../../../simulation-data'
 import { Player } from '../../player/components/player'
 import { Weapon } from '../components/weapon'
-import { WeaponData, WeaponType } from '../data/weapon-type'
+import { WeaponId } from '../data/weapon-type'
 
 const MAX_WEAPON_COUNT = 6
 const WEAPON_RADIUS = 90
@@ -11,7 +12,7 @@ const WEAPON_RADIUS = 90
 export function spawnWeapon(
   entityManager: EntityManager,
   ownerEntityRef: EntityRef,
-  weaponType: WeaponType,
+  weaponType: WeaponId,
   level: number,
   ownerPosition: IVector2Like,
 ): void {
@@ -23,7 +24,7 @@ export function spawnWeapon(
 
   Weapon.type[weaponEntityRef] = weaponType
   Weapon.level[weaponEntityRef] = level
-  Weapon.attackType[weaponEntityRef] = WeaponData[weaponType].attackType
+  Weapon.attackType[weaponEntityRef] = SimulationData.weapons[weaponType].attackType
   Weapon.offsetX[weaponEntityRef] = offsetX
   Weapon.offsetY[weaponEntityRef] = offsetY
 

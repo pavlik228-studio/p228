@@ -1,3 +1,4 @@
+import { loadSimulationData } from '@p228/survivor-simulation'
 import { Assets } from 'pixi.js'
 import FontFaceObserver from 'fontfaceobserver'
 import React, { FC, Suspense, useEffect, useState } from 'react'
@@ -24,7 +25,7 @@ export const GamePage: FC = () => {
       sofiaSansFontPromise,
       russoOneFontPromise,
       gameSceneAssetsPromise,
-      // loadWeaponsConfig(),
+      loadSimulationData(),
     ]).then(() => setIsLoaded(true))
 
     import('@dimforge/rapier2d').then((rapier) => {

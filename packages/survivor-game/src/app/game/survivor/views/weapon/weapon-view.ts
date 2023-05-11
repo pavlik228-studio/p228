@@ -1,7 +1,7 @@
 import { Interpolation, Transform2d } from '@p228/engine'
 import { MathOps } from '@p228/math'
 import { EntityView } from '@p228/renderer-2d'
-import { SurvivorWorld, Weapon, WeaponType } from '@p228/survivor-simulation'
+import { SurvivorWorld, Weapon, WeaponId } from '@p228/survivor-simulation'
 import { Assets, Sprite, Spritesheet } from 'pixi.js'
 import { GameSceneAssets } from '../../../resource-manifest'
 import { GameScene } from '../../game-scene'
@@ -10,7 +10,9 @@ import { PlayerGroup } from '../../layer-groups'
 export class WeaponView extends EntityView<SurvivorWorld, GameScene> {
   public onCreate(world: SurvivorWorld): void {
     const spriteSheet = Assets.get(GameSceneAssets.Weapons) as Spritesheet
-    const sprite = Sprite.from(spriteSheet.textures[WeaponType[Weapon.type[this.entityRef] as any]])
+    let spriteTitle = WeaponId[Weapon.type[this.entityRef] as any]
+    if (spriteTitle.startsWith('Weapon')) spriteTitle = 'DestructiveAssaultRiffle'
+    const sprite = Sprite.from(spriteSheet.textures[spriteTitle])
     sprite.parentGroup = PlayerGroup
     sprite.scale.set(spriteSheet.resolution * 0.4)
     this.position.set(Transform2d.x[this.entityRef], -Transform2d.y[this.entityRef])

@@ -1,4 +1,4 @@
-import { WeaponAttackType, WeaponData, WeaponType } from '@p228/survivor-simulation'
+import { SimulationData, WeaponAttackType, WeaponId } from '@p228/survivor-simulation'
 import type { TFunction } from 'i18next'
 
 const excludedWeaponStats = {
@@ -15,8 +15,8 @@ const formaters: { [key: string]: (value: any, t: TFunction) => string } = {
   critDamage: (value: number) => `${Math.round((value * 100 * 10)) / 10}%`,
 }
 
-export function extractWeaponStats(weaponType: WeaponType, level: number, t: TFunction): [ string, string ][] {
-  const weaponValues = WeaponData[weaponType]
+export function extractWeaponStats(weaponType: WeaponId, level: number, t: TFunction): [ string, string ][] {
+  const weaponValues = SimulationData.weapons[weaponType]
 
   return Object.entries(weaponValues)
     .filter(([ key ]) => !excludedWeaponStats.hasOwnProperty(key))

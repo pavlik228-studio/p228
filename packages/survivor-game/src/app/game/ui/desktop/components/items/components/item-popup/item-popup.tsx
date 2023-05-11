@@ -1,4 +1,4 @@
-import { ItemId, ShopActions, ShopItemType, WeaponType } from '@p228/survivor-simulation'
+import { ItemId, ShopActions, ShopItemType, WeaponId } from '@p228/survivor-simulation'
 import { TFunction } from 'i18next'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -102,7 +102,7 @@ const getItemStats = (t: TFunction, item?: IViewItem) => {
   if (!item) return []
   return item.type === ShopItemType.Item
     ? extractItemStats(item.itemId as ItemId)
-    : extractWeaponStats(item.itemId as WeaponType, item.level, t)
+    : extractWeaponStats(item.itemId as WeaponId, item.level, t)
 }
 
 const extractItemStats = (itemId: ItemId): [ string, string ][] => {
@@ -112,5 +112,5 @@ const extractItemStats = (itemId: ItemId): [ string, string ][] => {
 const getItemTitle = (item: IViewItem) => {
   return item.type === ShopItemType.Item
     ? ItemId[item.itemId]
-    : `weapons.${WeaponType[item.itemId]}`
+    : `weapons.${WeaponId[item.itemId]}`
 }

@@ -2,14 +2,15 @@ import { EntityRef } from '@p228/ecs'
 import { Transform2d } from '@p228/engine'
 import { VECTOR2_BUFFER_1 } from '@p228/math'
 import { SurvivorWorld } from '@p228/survivor-simulation'
+import { SimulationData } from '../../../simulation-data'
 import { Gameplay, GameplayStage } from '../../gameplay/gameplay.component'
-import { ItemId } from '../../item/data/items-data'
+import { ItemId } from '../../item/data/items-type'
 import { spawnItem } from '../../item/misc/spawn-item'
-import { WeaponData, WeaponType } from '../../weapon/data/weapon-type'
+import { WeaponId } from '../../weapon/data/weapon-type'
 import { spawnWeapon } from '../../weapon/misc/spawn-weapon'
 import { Player } from '../components/player'
 import { PRNG } from './prng'
-import { IShopItem, IShopStateItem, ShopItems, ShopItemType } from './shop-items'
+import { IShopItem, IShopStateItem, ShopItemType, getShopItems } from './shop-items'
 
 const MAX_SHOP_ITEMS = 6
 
@@ -37,7 +38,7 @@ export class ShopActions {
     const itemsLevel = Gameplay.data.itemsLevel
     let tmpShopItems = new Array<IShopItem>()
 
-    for (const item of ShopItems) {
+    for (const item of getShopItems()) {
       if (item.level > itemsLevel) {
         if (this._prng.nextFloat() <= playerLuck) {
           tmpShopItems.push(item)
@@ -50,7 +51,7 @@ export class ShopActions {
     tmpShopItems.filter((item) => {
       if (item.type !== ShopItemType.Weapon) return true
 
-      return WeaponData[item.itemId as WeaponType].price[item.level] > 0
+      return SimulationData.weapons[item.itemId as WeaponId]!.price[item.level] > 0
     })
 
     const shopBoughtSlots = Player.shopBoughtSlots.get(playerEntityRef)
@@ -93,12 +94,11 @@ export class ShopActions {
 
     const shopBoughtSlots = Player.shopBoughtSlots.get(playerEntityRef)
     shopBoughtSlots[itemSlot] = 1
-    debugger
 
     if (item.type === ShopItemType.Item) {
       spawnItem(world, playerEntityRef, item.itemId as ItemId)
     } else if (item.type === ShopItemType.Weapon) {
-      const weaponId = item.itemId as WeaponType
+      const weaponId = item.itemId as WeaponId
       VECTOR2_BUFFER_1.set(Transform2d.x[playerEntityRef], Transform2d.y[playerEntityRef])
       spawnWeapon(world.entityManager, playerEntityRef, weaponId, item.level, VECTOR2_BUFFER_1)
     } else {
